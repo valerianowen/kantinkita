@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Beranda</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/home.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="ov" class="ov" data-action="drawer-close"></div>
+
+  <nav id="drw" class="drw" aria-label="Menu navigasi">
+    <div class="drw-top">
+      <div class="hdr-logo">
+        <div class="hdr-box">K</div>
+        <span class="hdr-name">Kantin<em>Kita</em></span>
+      </div>
+      <button class="ico-btn" data-action="drawer-close" aria-label="Tutup menu">✕</button>
+    </div>
+
+    <div class="drw-user">
+      <div class="drw-av">F</div>
+      <div>
+        <div class="drw-name">Febri Ramadhan</div>
+        <div class="drw-nim">NIM: 2024110234</div>
+      </div>
+    </div>
+
+    <div class="drw-sec">
+      <div class="drw-stl">Mahasiswa</div>
+      <button class="drw-a" data-action="go" data-target="beranda">🏠 Beranda</button>
+      <button class="drw-a" data-action="go" data-target="cari">🔍 Cari Menu</button>
+      <button class="drw-a" data-action="go" data-target="keranjang">🛒 Keranjang</button>
+      <button class="drw-a" data-action="go" data-target="status">📋 Pesanan Aktif</button>
+    </div>
+
+    <div class="drw-sec">
+      <div class="drw-stl">Penjual</div>
+      <button class="drw-a" data-action="go" data-target="dasbor">🏪 Dasbor Stan</button>
+      <button class="drw-a" data-action="go" data-target="laporan">📊 Laporan</button>
+    </div>
+
+    <button class="drw-out" data-action="go" data-target="login">
+      🚪 Keluar
+    </button>
+  </nav>
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-beranda">
+
+    <header class="hdr">
+      <button
+        class="ham"
+        data-action="drawer-open"
+        aria-label="Buka menu"
+        aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="hdr-logo">
+        <div class="hdr-box">K</div>
+        <span class="hdr-name">Kantin<em>Kita</em></span>
+      </div>
+
+      <div class="sp"></div>
+      <button class="ico-btn" aria-label="Notifikasi">🔔</button>
+    </header>
+
+    <div class="page">
+
+      <section class="sec">
+        <div class="sh">
+          <div>
+            <p class="hdr-sub">Lokasi kamu</p>
+            <strong>📍 Gedung B</strong>
+          </div>
+          <p>Halo, <strong>Febri</strong>!</p>
+        </div>
+
+        <button
+          class="srb"
+          data-action="go"
+          data-target="cari">
+          <span>🔍</span>
+          <span>Mau makan apa hari ini?</span>
+        </button>
+      </section>
+
+      <section class="bnr">
+        <h2 class="bnr-t">
+          Istirahat jam 12.00?<br>
+          Ambil pesananmu jam 12.15 ✨
+        </h2>
+        <button
+          class="bnr-b"
+          data-action="go"
+          data-target="cari">
+          Pesan Sekarang
+        </button>
+      </section>
+
+      <section class="qg">
+        <button class="qi" data-action="go" data-target="cari">
+          <span class="qic qi-y">⚡</span>
+          <span class="ql">Pickup Cepat</span>
+        </button>
+        <button class="qi" data-action="go" data-target="cari">
+          <span class="qic qi-b">🕒</span>
+          <span class="ql">Terjadwal</span>
+        </button>
+        <button class="qi" data-action="go" data-target="cari">
+          <span class="qic qi-g">💰</span>
+          <span class="ql">Hemat</span>
+        </button>
+        <button class="qi" data-action="go" data-target="status">
+          <span class="qic qi-r">🔄</span>
+          <span class="ql">Pesan Ulang</span>
+        </button>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Menu Kantin</h2>
+        </div>
+
+        <div class="ct" role="tablist">
+          <button class="ctb on" data-action="home-filter" data-cat="semua">Semua</button>
+          <button class="ctb" data-action="home-filter" data-cat="nasi">🍳 Nasi</button>
+          <button class="ctb" data-action="home-filter" data-cat="mie">🍜 Mie</button>
+          <button class="ctb" data-action="home-filter" data-cat="ayam">🍗 Ayam</button>
+          <button class="ctb" data-action="home-filter" data-cat="minuman">🥤 Minuman</button>
+          <button class="ctb" data-action="home-filter" data-cat="diskon">🔥 Diskon</button>
+        </div>
+
+        <button class="sc" data-action="go" data-target="menu">
+          <div class="sb sba">🍳</div>
+          <div class="sd">
+            <h3 class="sn">Stan A – Nasi &amp; Ayam</h3>
+            <p class="sm">120 m · Buka sampai 14.00 · ⭐ 4.8</p>
+            <div class="st">
+              <span class="bdg by">Antrean 3</span>
+              <span class="bdg bg">±10 menit</span>
+              <span class="bdg br">Diskon 10%</span>
+            </div>
+          </div>
+        </button>
+
+        <article class="mi" data-cat="nasi semua">
+          <div class="fi fi-s fi-y">🍳</div>
+          <div class="mb2">
+            <h3 class="mn">Nasi Goreng Spesial</h3>
+            <p class="md">Telur ceplok, ayam suwir, kerupuk</p>
+            <p class="mp">Rp 15.000</p>
+          </div>
+          <button class="badd" data-action="cart-add"
+            data-item-id="nasi-goreng"
+            data-item-name="Nasi Goreng Spesial"
+            data-item-price="15000"
+            data-item-emoji="🍳"
+            aria-label="Tambah Nasi Goreng Spesial">+</button>
+        </article>
+
+        <article class="mi" data-cat="ayam semua">
+          <div class="fi fi-s fi-r">🍗</div>
+          <div class="mb2">
+            <h3 class="mn">Ayam Geprek</h3>
+            <p class="md">Ayam krispi, sambal geprek, lalapan</p>
+            <p class="mp">Rp 17.000</p>
+          </div>
+          <button class="badd" data-action="cart-add"
+            data-item-id="ayam-geprek"
+            data-item-name="Ayam Geprek"
+            data-item-price="17000"
+            data-item-emoji="🍗"
+            aria-label="Tambah Ayam Geprek">+</button>
+        </article>
+
+        <article class="mi" data-cat="minuman semua">
+          <div class="fi fi-s fi-b">🥤</div>
+          <div class="mb2">
+            <h3 class="mn">Es Teh Manis</h3>
+            <p class="md">Teh segar, es batu, gula aren</p>
+            <p class="mp">Rp 5.000</p>
+          </div>
+          <button class="badd" data-action="cart-add"
+            data-item-id="es-teh"
+            data-item-name="Es Teh Manis"
+            data-item-price="5000"
+            data-item-emoji="🥤"
+            aria-label="Tambah Es Teh Manis">+</button>
+        </article>
+
+        <article class="mi" data-cat="diskon semua">
+          <div class="fi fi-s fi-o">🍱</div>
+          <div class="mb2">
+            <h3 class="mn">Paket Hemat</h3>
+            <p class="md">Nasi + Es Teh · Hemat Rp 3.000</p>
+            <p class="mp">Rp 18.000</p>
+          </div>
+          <button class="badd" data-action="cart-add"
+            data-item-id="paket-hemat"
+            data-item-name="Paket Hemat"
+            data-item-price="18000"
+            data-item-emoji="🍱"
+            aria-label="Tambah Paket Hemat">+</button>
+        </article>
+
+        <button class="sc" data-action="go" data-target="menu">
+          <div class="sb sbb">🍜</div>
+          <div class="sd">
+            <h3 class="sn">Stan B – Mie &amp; Bakso</h3>
+            <p class="sm">80 m · Buka sampai 13.30 · ⭐ 4.6</p>
+            <span class="bdg bg">±7 menit</span>
+          </div>
+        </button>
+
+        <article class="mi" data-cat="mie semua">
+          <div class="fi fi-s fi-o">🍜</div>
+          <div class="mb2">
+            <h3 class="mn">Mie Ayam Spesial</h3>
+            <p class="md">Mie kenyal, ayam, pangsit rebus</p>
+            <p class="mp">Rp 13.000</p>
+          </div>
+          <button class="badd" data-action="cart-add"
+            data-item-id="mie-ayam"
+            data-item-name="Mie Ayam Spesial"
+            data-item-price="13000"
+            data-item-emoji="🍜"
+            aria-label="Tambah Mie Ayam Spesial">+</button>
+        </article>
+
+        <div class="al ay2 hid" id="no-res" role="status">
+          Tidak ada menu untuk kategori ini.
+        </div>
+      </section>
+    </div>
+
+    <nav class="bnv">
+      <button class="bni on" data-action="go" data-target="beranda">
+        <span class="bnic">🏠</span>Beranda
+      </button>
+      <button class="bni" data-action="go" data-target="cari">
+        <span class="bnic">🔍</span>Cari
+      </button>
+      <button class="bni" data-action="go" data-target="keranjang">
+        <span class="bnic">🛒<span class="cb">0</span></span>Keranjang
+      </button>
+      <button class="bni" data-action="go" data-target="status">
+        <span class="bnic">📋</span>Pesanan
+      </button>
+      <button class="bni" data-action="drawer-open">
+        <span class="bnic">☰</span>Menu
+      </button>
+    </nav>
+
+  </div>
+</main>
+</div>
+
+</body>
+</html>

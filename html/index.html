@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | KantinKita</title>
+
+  <!-- GOOGLE FONTS -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- JAVASCRIPT -->
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/login.js"></script>
+
+</head>
+
+<body>
+
+  <div class="wrap">
+
+    <main class="app">
+
+      <!-- NOTIFIKASI -->
+      <div id="tc" role="status" aria-live="polite"></div>
+
+      <!-- HALAMAN LOGIN -->
+      <section class="screen on" id="s-login">
+
+        <div class="page wh">
+
+          <!-- BAGIAN LOGO -->
+          <div class="lh">
+
+            <div class="ll">
+              K
+            </div>
+
+            <div class="lt">
+              KantinKita
+            </div>
+
+            <p class="ls">
+              Pesan makan di kantin kampus
+              tanpa harus antre!
+            </p>
+
+          </div>
+
+          <!-- FORM LOGIN -->
+          <div class="lf">
+
+            <h1>Masuk</h1>
+
+            <p>
+              Selamat datang kembali 👋
+              <br>
+              Masukkan akun untuk melanjutkan.
+            </p>
+
+            <form id="loginForm" novalidate>
+
+              <!-- INPUT NIM ATAU EMAIL -->
+              <div class="fg">
+
+                <label class="fl" for="nim">
+                  NIM atau Email
+                </label>
+
+                <div class="fw2">
+
+                  <span class="fic">🏫</span>
+
+                  <input
+                    type="text"
+                    class="fi2 ic"
+                    id="nim"
+                    name="nim"
+                    placeholder="Masukkan NIM atau email"
+                    autocomplete="username"
+                    required
+                  >
+
+                </div>
+
+                <div
+                  class="ferr"
+                  id="e-nim"
+                  role="alert">
+                  ⚠ NIM atau email tidak boleh kosong.
+                </div>
+
+              </div>
+
+              <!-- INPUT PASSWORD -->
+              <div class="fg">
+
+                <label class="fl" for="pw">
+                  Kata Sandi
+                </label>
+
+                <div class="fw2">
+
+                  <span class="fic">🔒</span>
+
+                  <input
+                    type="password"
+                    class="fi2 ic"
+                    id="pw"
+                    name="password"
+                    placeholder="Masukkan kata sandi"
+                    autocomplete="current-password"
+                    minlength="6"
+                    required
+                  >
+
+                  <button
+                    type="button"
+                    class="fsw"
+                    id="showpw"
+                    aria-label="Tampilkan kata sandi"
+                  >
+                    Lihat
+                  </button>
+
+                </div>
+
+                <div
+                  class="ferr"
+                  id="e-pw"
+                  role="alert">
+                  ⚠ Kata sandi minimal 6 karakter.
+                </div>
+
+              </div>
+
+              <!-- LUPA PASSWORD -->
+              <div class="row">
+
+                <a href="#" id="forgot-password">
+                  Lupa kata sandi?
+                </a>
+
+              </div>
+
+              <!-- TOMBOL LOGIN -->
+              <button
+                type="submit"
+                class="btn bs bfull blg"
+                id="loginBtn"
+              >
+                Masuk
+              </button>
+
+            </form>
+
+            <!-- PENDAFTARAN -->
+            <p>
+              Belum punya akun?
+              <a href="#" id="register-link">
+                Daftar sekarang
+              </a>
+            </p>
+
+            <hr>
+
+            <!-- AKSES PENJUAL -->
+            <button
+              type="button"
+              class="btn bo bfull"
+              data-action="go"
+              data-target="dasbor"
+            >
+              🏪 Masuk sebagai Penjual
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

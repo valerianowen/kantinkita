@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Pembayaran</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/payment.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-bayar">
+
+    <header class="hdr">
+      <button class="ico-btn" data-action="go" data-target="keranjang">←</button>
+      <h1 class="hdr-title">Pembayaran</h1>
+    </header>
+
+    <div class="page wh">
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Total Pembayaran</h2>
+        </div>
+
+        <div class="pt">
+          <span class="pl">Total Bayar</span>
+          <strong class="pv" id="pay-total">Rp 0</strong>
+        </div>
+
+        <div class="al ay2">
+          ⏳ Selesaikan pembayaran untuk memproses pesanan.
+        </div>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Detail Pesanan</h2>
+        </div>
+
+        <div id="pay-detail"></div>
+
+        <div class="pt">
+          <span class="pl">Total</span>
+          <span class="pv" id="pay-tot2">Rp 0</span>
+        </div>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Pilih Metode Pembayaran</h2>
+        </div>
+
+        <div
+          class="pi on"
+          role="radio"
+          tabindex="0"
+          aria-checked="true"
+          data-action="pay-select"
+          data-keydown-action="pay-select">
+
+          <div class="pc">📱</div>
+          <div class="f1">
+            <div class="pn">QRIS</div>
+            <div class="pd">GoPay, OVO, DANA, m-Banking</div>
+          </div>
+          <div class="prd"></div>
+        </div>
+
+        <div
+          class="pi"
+          role="radio"
+          tabindex="0"
+          aria-checked="false"
+          data-action="pay-select"
+          data-keydown-action="pay-select">
+
+          <div class="pc">💛</div>
+          <div class="f1">
+            <div class="pn">Saldo e-Wallet</div>
+            <div class="pd">Pembayaran digital</div>
+          </div>
+          <div class="prd"></div>
+        </div>
+
+        <div
+          class="pi"
+          role="radio"
+          tabindex="0"
+          aria-checked="false"
+          data-action="pay-select"
+          data-keydown-action="pay-select">
+
+          <div class="pc">💵</div>
+          <div class="f1">
+            <div class="pn">Tunai saat Ambil</div>
+            <div class="pd">Bayar langsung di kantin</div>
+          </div>
+          <div class="prd"></div>
+        </div>
+      </section>
+
+      <div class="al an2">
+        🔔 Ini adalah simulasi pembayaran prototipe.
+        Tidak ada transaksi uang sungguhan.
+      </div>
+
+    </div>
+
+    <div class="stk">
+      <button
+        class="btn bs bfull blg"
+        id="pay-btn"
+        data-action="pay">
+        Bayar Sekarang
+      </button>
+    </div>
+  </div>
+
+</main>
+</div>
+</body>
+</html>
