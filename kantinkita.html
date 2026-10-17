@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,1253 +6,2413 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KantinKita – Prototipe</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-/* ============================================================
-   DESIGN TOKENS – KantinKita
-   Kuning #FFC107 (primary 30%) + Merah #E53935 (secondary 10%)
-   Netral putih/abu (60%) · 8-point Grid · Inter
-   ============================================================ */
-:root{
-  --y:#FFC107;--yd:#F59E0B;--yl:#FFFBEB;--yb:#FCD34D;
-  --r:#E53935;--rd:#C62828;--rl:#FEF2F2;
-  --g:#16A34A;--gl:#F0FDF4;
-  --n0:#FFF;--n50:#F9FAFB;--n100:#F3F4F6;--n200:#E5E7EB;
-  --n300:#D1D5DB;--n400:#9CA3AF;--n500:#6B7280;
-  --n600:#4B5563;--n700:#374151;--n900:#111827;
-  --F:'Inter',-apple-system,sans-serif;
-  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;
-  --s6:24px;--s8:32px;--s10:40px;--s12:48px;--s20:80px;
-  --rS:8px;--rM:12px;--rL:16px;--rXL:20px;--r2:28px;--rF:999px;
-  --sh1:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --sh2:0 4px 12px rgba(0,0,0,.08);
-  --sh3:0 8px 24px rgba(0,0,0,.12);
-  --sh4:0 16px 48px rgba(0,0,0,.18);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{height:100%}
-body{font-family:var(--F);background:var(--n200);-webkit-font-smoothing:antialiased;height:100%}
-button{cursor:pointer;font-family:inherit;border:none;background:none}
-a{color:inherit;text-decoration:none}
-input,textarea,select{font-family:inherit}
-img,svg{display:block;max-width:100%}
 
-/* APP WRAPPER */
-.wrap{min-height:100vh;display:flex;justify-content:center;background:var(--n200)}
-@media(min-width:600px){
-  .wrap{padding:24px 0;background:#E8E8E8}
+<style>
+/* ==============================================
+   DESIGN SYSTEM KANTINKITA
+============================================== */
+:root {
+  --y: #FFC107;
+  --yd: #F59E0B;
+  --yl: #FFFBEB;
+  --r: #E53935;
+  --rd: #C62828;
+  --rl: #FEF2F2;
+  --g: #16A34A;
+  --gl: #F0FDF4;
+  --n0: #FFFFFF;
+  --n50: #F9FAFB;
+  --n100: #F3F4F6;
+  --n200: #E5E7EB;
+  --n300: #D1D5DB;
+  --n400: #9CA3AF;
+  --n500: #6B7280;
+  --n700: #374151;
+  --n900: #111827;
+  --radius: 12px;
+  --font: 'Inter', sans-serif;
 }
-.app{width:100%;max-width:480px;min-height:100vh;position:relative;background:var(--n50)}
-@media(min-width:600px){
-  .app{border-radius:24px;box-shadow:var(--sh4);overflow:hidden;min-height:calc(100vh - 48px)}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--n200);
+  color: var(--n900);
+}
+
+button, input, textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.app {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background: var(--n50);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .wrap {
+    padding: 24px;
+  }
+
+  .app {
+    border-radius: 24px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.18);
+  }
 }
 
 /* SCREENS */
-.screen{display:none;flex-direction:column;height:100vh;overflow:hidden;background:var(--n50)}
-.screen.on{display:flex}
-.page{flex:1;overflow-y:auto;overflow-x:hidden;background:var(--n100);-webkit-overflow-scrolling:touch}
-.page.wh{background:var(--n0)}
+.screen {
+  display: none;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.screen.on {
+  display: flex;
+}
+
+.page {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--n100);
+}
+
+.sec {
+  background: white;
+  margin-bottom: 8px;
+}
+
+.hid {
+  display: none !important;
+}
 
 /* HEADER */
-.hdr{height:56px;background:var(--n0);border-bottom:1px solid var(--n200);display:flex;align-items:center;gap:var(--s3);padding:0 var(--s4);flex-shrink:0;z-index:10}
-.hdr-logo{display:flex;align-items:center;gap:var(--s2)}
-.hdr-box{width:34px;height:34px;background:var(--y);border-radius:var(--rS);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:var(--n900);flex-shrink:0}
-.hdr-name{font-size:17px;font-weight:800;color:var(--n900)}
-.hdr-name em{color:var(--r);font-style:normal}
-.hdr-title{flex:1;font-size:17px;font-weight:700}
-.hdr-sub{font-size:11px;color:var(--n500)}
-.sp{flex:1}
-.ico-btn{width:40px;height:40px;border-radius:var(--rF);background:var(--n100);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;cursor:pointer;transition:background .15s}
-.ico-btn:hover{background:var(--n200)}
+.hdr {
+  height: 56px;
+  padding: 0 16px;
+  background: white;
+  border-bottom: 1px solid var(--n200);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
 
-/* HAMBURGER */
-.ham{width:40px;height:40px;border-radius:var(--rF);background:var(--n100);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;flex-shrink:0;transition:background .15s}
-.ham:hover{background:var(--n200)}
-.ham span{width:20px;height:2px;background:var(--n700);border-radius:2px;transition:all .3s ease;display:block}
-.ham.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.ham.on span:nth-child(2){opacity:0;transform:scaleX(0)}
-.ham.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.hdr-title {
+  font-size: 17px;
+  font-weight: 700;
+  flex: 1;
+}
 
-/* OVERLAY + DRAWER */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
-.ov.on{opacity:1;visibility:visible}
-.drw{position:fixed;top:0;left:0;bottom:0;width:min(310px,85vw);background:var(--n0);z-index:400;transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow-y:auto}
-.drw.on{transform:translateX(0)}
-.drw-top{padding:var(--s5);border-bottom:1px solid var(--n100);display:flex;align-items:center;justify-content:space-between}
-.drw-user{display:flex;align-items:center;gap:var(--s3);padding:var(--s4);background:var(--yl);border-radius:var(--rL);margin:var(--s4) var(--s4) var(--s2)}
-.drw-av{width:46px;height:46px;border-radius:var(--rF);background:var(--y);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:white;flex-shrink:0}
-.drw-name{font-weight:700;font-size:14px}
-.drw-nim{font-size:11px;color:var(--n500)}
-.drw-sec{margin:4px var(--s4) var(--s3)}
-.drw-stl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--n400);margin-bottom:var(--s2);padding-left:var(--s2)}
-.drw-a{display:flex;align-items:center;gap:var(--s3);padding:var(--s3);border-radius:var(--rM);font-size:14px;font-weight:500;color:var(--n700);margin-bottom:2px;transition:background .15s;cursor:pointer}
-.drw-a:hover,.drw-a.on{background:var(--yl);color:var(--n900);font-weight:600}
-.drw-ic{width:34px;height:34px;border-radius:var(--rS);background:var(--n100);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.drw-a.on .drw-ic{background:var(--y)}
-.drw-out{margin:auto var(--s4) var(--s6);padding:var(--s3);border-radius:var(--rM);color:var(--r);font-weight:600;font-size:14px;display:flex;align-items:center;gap:var(--s3);cursor:pointer}
-.drw-out:hover{background:var(--rl)}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.logo-box {
+  width: 34px;
+  height: 34px;
+  background: var(--y);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+.logo em {
+  color: var(--r);
+  font-style: normal;
+}
+
+.ico-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--n100);
+  font-size: 18px;
+}
+
+/* BUTTON */
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.bp2 {
+  background: var(--y);
+  color: var(--n900);
+}
+
+.bs {
+  background: var(--r);
+  color: white;
+}
+
+.bo {
+  background: white;
+  color: var(--n700);
+  border: 1.5px solid var(--n300);
+}
+
+.bfull {
+  width: 100%;
+}
+
+.bsm {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.badd {
+  width: 34px;
+  height: 34px;
+  background: var(--y);
+  color: var(--n900);
+  font-size: 22px;
+  font-weight: 700;
+  border-radius: 8px;
+}
 
 /* BOTTOM NAV */
-.bnv{height:72px;background:var(--n0);border-top:1px solid var(--n200);display:flex;align-items:flex-start;padding-top:10px;flex-shrink:0}
-.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:500;color:var(--n400);padding:4px;cursor:pointer;transition:color .2s}
-.bni.on{color:var(--yd)}
-.bnic{width:28px;height:28px;border-radius:var(--rS);display:flex;align-items:center;justify-content:center;font-size:17px;position:relative}
-.bni.on .bnic{background:var(--yl)}
-.cb{position:absolute;top:-4px;right:-6px;min-width:18px;height:18px;background:var(--r);border-radius:var(--rF);display:none;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;padding:0 4px}
-.cb.on{display:flex}
+.bnv {
+  height: 72px;
+  background: white;
+  border-top: 1px solid var(--n200);
+  display: flex;
+  flex-shrink: 0;
+  padding-top: 8px;
+}
 
-/* TOAST */
-#tc{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:600;display:flex;flex-direction:column;gap:var(--s2);pointer-events:none;width:min(400px,calc(100vw - 32px))}
-.toast{background:var(--n900);color:white;padding:var(--s3) var(--s4);border-radius:var(--rL);font-size:14px;font-weight:500;display:flex;align-items:center;gap:var(--s2);box-shadow:var(--sh3);opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s;pointer-events:auto}
-.toast.on{opacity:1;transform:translateY(0)}
-.toast.err{background:var(--rd)}
+.bni {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: var(--n400);
+  font-size: 10px;
+  cursor: pointer;
+}
 
-/* MODAL SHEET */
-.mb{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:flex-end;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
-.mb.on{opacity:1;visibility:visible}
-.ms{background:var(--n0);border-radius:var(--r2) var(--r2) 0 0;width:100%;max-height:85vh;overflow-y:auto;padding-bottom:var(--s8);transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
-.mb.on .ms{transform:translateY(0)}
-.mh{width:40px;height:4px;background:var(--n200);border-radius:var(--rF);margin:var(--s3) auto var(--s4)}
-.mt{font-size:18px;font-weight:800;padding:0 var(--s4);margin-bottom:var(--s4)}
+.bni.on {
+  color: var(--yd);
+  font-weight: 700;
+}
 
-/* BANNER */
-.bnr{background:var(--y);border-radius:var(--rXL);padding:var(--s5);margin:var(--s4);position:relative;overflow:hidden}
-.bnr::before{content:'';position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.1)}
-.bnr::after{content:'';position:absolute;right:30px;bottom:-40px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.07)}
-.bnr-t{font-size:17px;font-weight:800;color:var(--n900);line-height:1.35;margin-bottom:var(--s3);position:relative}
-.bnr-b{display:inline-block;background:var(--n900);color:white;font-size:13px;font-weight:700;padding:var(--s2) var(--s4);border-radius:var(--rF);position:relative;cursor:pointer}
-.bnr-r{background:var(--r)}
-.bnr-r .bnr-t{color:white}
-.bnr-r .bnr-b{background:white;color:var(--n900)}
+.bnic {
+  position: relative;
+  font-size: 23px;
+}
 
-/* QUICK GRID */
-.qg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:var(--s2) var(--s4) var(--s3);background:var(--n0)}
-.qi{display:flex;flex-direction:column;align-items:center;gap:var(--s2);padding:var(--s2) var(--s1);border-radius:var(--rM);cursor:pointer;transition:background .15s}
-.qi:hover{background:var(--n100)}
-.qic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
-.qi-y{background:var(--yl)}.qi-r{background:var(--rl)}.qi-b{background:#EFF6FF}.qi-g{background:var(--gl)}
-.ql{font-size:10px;font-weight:600;color:var(--n600);text-align:center;line-height:1.3}
+.cb {
+  position: absolute;
+  right: -9px;
+  top: -4px;
+  background: var(--r);
+  color: white;
+  border-radius: 20px;
+  font-size: 10px;
+  padding: 2px 5px;
+  display: none;
+}
 
-/* CATEGORY TABS */
-.ct{display:flex;gap:var(--s2);overflow-x:auto;padding:var(--s2) var(--s4) var(--s3);background:var(--n0);scrollbar-width:none}
-.ct::-webkit-scrollbar{display:none}
-.ctb{display:inline-flex;align-items:center;height:32px;padding:0 var(--s4);border-radius:var(--rF);font-size:13px;font-weight:600;white-space:nowrap;border:1.5px solid var(--n300);color:var(--n600);background:var(--n0);cursor:pointer;transition:all .2s;flex-shrink:0}
-.ctb:hover{border-color:var(--y);color:var(--n900)}
-.ctb.on{background:var(--y);border-color:var(--y);color:var(--n900);font-weight:700}
+.cb.on {
+  display: inline-block;
+}
 
-/* STAN CARD */
-.sc{display:block;margin:0 var(--s4) var(--s3);background:var(--n0);border-radius:var(--rL);overflow:hidden;box-shadow:var(--sh1);cursor:pointer;transition:transform .2s,box-shadow .2s}
-.sc:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
-.sb{height:110px;display:flex;align-items:center;justify-content:center;font-size:46px}
-.sba{background:var(--y)}
-.sbb{background:var(--rl)}
-.sd{padding:var(--s3) var(--s4)}
-.sn{font-size:16px;font-weight:700;margin-bottom:2px}
-.sm{font-size:12px;color:var(--n500);margin-bottom:var(--s2)}
-.st{display:flex;flex-wrap:wrap;gap:var(--s1)}
+/* CARDS */
+.mi {
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--n100);
+}
 
-/* MENU ITEM */
-.mi{display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s4);background:var(--n0);border-bottom:1px solid var(--n100);transition:background .15s}
-.mi:hover{background:var(--n50)}
-.mi.hid{display:none!important}
-.fi{border-radius:var(--rM);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px}
-.fi-s{width:56px;height:56px;font-size:24px}
-.fi-m{width:64px;height:64px;font-size:28px}
-.fi-y{background:var(--yl)}
-.fi-r{background:var(--rl)}
-.fi-b{background:#DBEAFE}
-.fi-o{background:#FFEDD5}
-.fi-g{background:#DCFCE7}
-.mb2{flex:1;min-width:0}
-.mn{font-size:14px;font-weight:700;margin-bottom:2px}
-.md{font-size:12px;color:var(--n500);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mp{font-size:14px;font-weight:700}
+.mi.hid {
+  display: none;
+}
 
-/* BADGES */
-.bdg{display:inline-flex;align-items:center;border-radius:var(--rS);padding:2px var(--s2);font-size:10px;font-weight:700;white-space:nowrap}
-.by{background:var(--yl);color:#92640D;border:1px solid var(--yb)}
-.br{background:var(--rl);color:var(--r)}
-.bg{background:var(--gl);color:var(--g)}
-.bd{background:var(--n900);color:white}
-.bn{background:var(--n100);color:var(--n500)}
-.bp{border-radius:var(--rF);padding:4px var(--s3)}
+.fi {
+  width: 60px;
+  height: 60px;
+  background: var(--yl);
+  border-radius: 12px;
+  font-size: 28px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);border-radius:var(--rF);font-family:var(--F);font-size:14px;font-weight:700;padding:0 var(--s5);height:44px;cursor:pointer;border:none;transition:all .2s;white-space:nowrap}
-.bp2{background:var(--y);color:var(--n900)}.bp2:hover{background:var(--yd)}
-.bs{background:var(--r);color:white}.bs:hover{background:var(--rd)}
-.bo{background:transparent;color:var(--n700);border:1.5px solid var(--n300)}.bo:hover{border-color:var(--n500)}
-.bg2{background:var(--n100);color:var(--n700)}.bg2:hover{background:var(--n200)}
-.bfull{width:100%;border-radius:var(--rL)}
-.blg{height:52px;font-size:16px}
-.bsm{height:32px;font-size:12px;padding:0 var(--s3);border-radius:var(--rS)}
-.badd{width:32px;height:32px;border-radius:var(--rS);background:var(--y);color:var(--n900);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;cursor:pointer;border:none;transition:all .15s;line-height:1}
-.badd:hover{background:var(--yd);transform:scale(1.05)}
-.badd:active{transform:scale(.95)}
-.qc{display:inline-flex;align-items:center;gap:var(--s2)}
-.qb{width:30px;height:30px;border-radius:var(--rS);border:1.5px solid var(--n300);background:white;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;cursor:pointer;transition:all .15s}
-.qb:hover{border-color:var(--y);background:var(--yl)}
-.qbp{background:var(--y);border-color:var(--y)}.qbp:hover{background:var(--yd)}
-.qv{font-size:16px;font-weight:700;min-width:24px;text-align:center}
+.fi-r {
+  background: var(--rl);
+}
 
-/* FORMS */
-.fg{margin-bottom:var(--s4)}
-.fl{display:block;font-size:13px;font-weight:600;color:var(--n700);margin-bottom:var(--s2)}
-.fw2{position:relative}
-.fi2{width:100%;height:52px;background:var(--n100);border:1.5px solid transparent;border-radius:var(--rM);padding:0 var(--s4);font-size:15px;color:var(--n900);outline:none;transition:all .2s}
-.fi2:focus{background:white;border-color:var(--y)}
-.fi2.err{background:var(--rl);border-color:var(--r)}
-.fi2.ic{padding-left:46px}
-.fic{position:absolute;left:var(--s4);top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none}
-.fsw{position:absolute;right:var(--s4);top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--yd);cursor:pointer}
-.ferr{font-size:12px;color:var(--r);font-weight:500;margin-top:var(--s1);display:none;align-items:center;gap:4px}
-.ferr.on{display:flex}
+.fi-b {
+  background: #DBEAFE;
+}
 
-/* TOGGLE */
-.tog{position:relative;width:50px;height:28px;cursor:pointer;flex-shrink:0}
-.tog input{opacity:0;width:0;height:0;position:absolute}
-.tt{position:absolute;inset:0;border-radius:14px;background:var(--n300);transition:background .3s}
-.tog input:checked + .tt{background:var(--y)}
-.th{position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:white;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:left .3s}
-.tog input:checked ~ .th{left:24px}
+.fi-o {
+  background: #FFEDD5;
+}
 
-/* PROGRESS / STEPS */
-.prg{height:6px;background:var(--n200);border-radius:var(--rF);overflow:hidden}
-.pf{height:100%;background:var(--y);border-radius:var(--rF);transition:width .5s}
-.pf.rd{background:var(--r)}
-.steps{display:flex;align-items:flex-start;padding:var(--s4)}
-.stp{flex:1;display:flex;flex-direction:column;align-items:center;gap:var(--s2);font-size:10px;font-weight:500;color:var(--n400);position:relative;text-align:center}
-.stp:not(:last-child)::after{content:'';position:absolute;top:12px;left:50%;width:100%;height:2px;background:var(--n200);z-index:0}
-.stp.dn:not(:last-child)::after{background:var(--y)}
-.sd2{width:24px;height:24px;border-radius:50%;border:2px solid var(--n300);background:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;z-index:1;position:relative}
-.stp.dn{color:var(--yd)}.stp.dn .sd2{background:var(--y);border-color:var(--y);color:var(--n900)}
-.stp.ac .sd2{border-color:var(--y);box-shadow:0 0 0 4px rgba(255,193,7,.25)}
+.mb2 {
+  flex: 1;
+  min-width: 0;
+}
 
-/* ALERTS */
-.al{border-radius:var(--rM);padding:var(--s3) var(--s4);font-size:13px;font-weight:500;display:flex;align-items:flex-start;gap:var(--s2);line-height:1.5;margin:var(--s2) var(--s4)}
-.ay2{background:var(--yl);color:#92640D;border:1px solid var(--yb)}
-.ar2{background:var(--rl);color:var(--rd);border:1px solid #FECACA}
-.ag2{background:var(--gl);color:var(--g);border:1px solid #BBF7D0}
-.an2{background:var(--n100);color:var(--n700)}
+.mn {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
 
-/* PRICE ROWS */
-.pr{display:flex;justify-content:space-between;align-items:center;padding:var(--s2) var(--s4);font-size:14px}
-.pl{color:var(--n500)}.pv{font-weight:600;color:var(--n900)}
-.pt{display:flex;justify-content:space-between;align-items:center;padding:var(--s3) var(--s4);border-top:1px solid var(--n200)}
-.pt .pl{font-size:15px;font-weight:700;color:var(--n900)}
-.pt .pv{font-size:20px;font-weight:800;color:var(--r)}
+.md {
+  font-size: 12px;
+  color: var(--n500);
+  margin-bottom: 5px;
+}
 
-/* PAYMENT */
-.pi{display:flex;align-items:center;gap:var(--s3);padding:var(--s4);border-bottom:1px solid var(--n100);cursor:pointer;transition:background .15s}
-.pi:hover{background:var(--n50)}.pi.on{background:var(--yl)}
-.pc{width:44px;height:44px;border-radius:var(--rM);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.pn{font-size:14px;font-weight:700}
-.pd{font-size:12px;color:var(--n500)}
-.prd{width:20px;height:20px;border-radius:50%;border:2px solid var(--n300);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .2s}
-.pi.on .prd{border-color:var(--y)}
-.prd::after{content:'';width:10px;height:10px;border-radius:50%;background:transparent;transition:background .2s}
-.pi.on .prd::after{background:var(--y)}
+.mp {
+  font-size: 14px;
+  font-weight: 700;
+}
 
-/* LOGIN */
-.lh{background:var(--r);padding:60px 24px 48px;display:flex;flex-direction:column;align-items:center;gap:var(--s4);position:relative;overflow:hidden}
-.lh::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:32px;background:var(--n0);border-radius:28px 28px 0 0}
-.ll{width:80px;height:80px;background:white;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:var(--n900);box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.lt{font-size:26px;font-weight:900;color:white;text-shadow:0 2px 8px rgba(0,0,0,.2)}
-.ls{font-size:14px;color:rgba(255,255,255,.85)}
-.lf{background:var(--n0);padding:var(--s8) var(--s5) var(--s6)}
+.bdg {
+  display: inline-flex;
+  padding: 3px 8px;
+  background: var(--yl);
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+}
 
-/* COUNTDOWN */
-.cdn{text-align:center;background:var(--n50);border-radius:var(--rL);margin:var(--s2) var(--s4);padding:var(--s5) var(--s4)}
-.cdnn{font-size:52px;font-weight:900;color:var(--n900);line-height:1}
-.cdnu{font-size:20px;font-weight:600;color:var(--n500)}
-.cdnl{font-size:13px;color:var(--n500);margin-top:var(--s2)}
+.bdg.red {
+  background: var(--rl);
+  color: var(--r);
+}
 
-/* SELLER CARDS */
-.oc{background:var(--n0);border-radius:var(--rM);margin:0 var(--s4) var(--s3);border:1.5px solid var(--n200);overflow:hidden}
-.och{padding:var(--s3) var(--s4);background:var(--n50);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--n200)}
-.oct{font-size:14px;font-weight:700}
-.ocb{padding:var(--s3) var(--s4)}
-.ocf{padding:var(--s3) var(--s4);border-top:1px solid var(--n200);display:flex;gap:var(--s2)}
+.bdg.green {
+  background: var(--gl);
+  color: var(--g);
+}
 
-/* STATS */
-.sts{display:flex;gap:var(--s3);padding:var(--s3) var(--s4) var(--s1)}
-.stc{flex:1;background:var(--n0);border-radius:var(--rM);padding:var(--s3);border:1px solid var(--n200)}
-.stl{font-size:11px;color:var(--n500);margin-bottom:4px}
-.stv{font-size:22px;font-weight:800;color:var(--n900)}
-.stv.red{color:var(--r)}
-.stt{font-size:10px;font-weight:600;color:var(--g);margin-top:2px}
+/* FILTER */
+.ct {
+  background: white;
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
 
-/* STATUS PANEL */
-.sp2{display:flex;border:1.5px solid var(--n300);border-radius:var(--rM);overflow:hidden;margin:0 var(--s4) var(--s3)}
-.spb{flex:1;text-align:center;padding:var(--s3);font-size:13px;font-weight:600;color:var(--n500);border-right:1px solid var(--n300);cursor:pointer;transition:all .2s}
-.spb:last-child{border-right:none}
-.s-op{background:var(--gl);color:var(--g)}
-.s-bz{background:var(--yl);color:#92640D}
-.s-cl{background:var(--rl);color:var(--r)}
+.ctb {
+  border: 1.5px solid var(--n300);
+  background: white;
+  color: var(--n700);
+  border-radius: 22px;
+  padding: 8px 14px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+}
 
-/* BAR CHART */
-.bc{display:flex;align-items:flex-end;gap:var(--s2);height:80px;padding:0 var(--s4)}
-.bar{flex:1;border-radius:4px 4px 0 0;background:var(--n200);transition:height .5s}
-.bar.hi{background:var(--y)}
-.bl{display:flex;gap:var(--s2);padding:4px var(--s4) 0}
-.bl span{flex:1;text-align:center;font-size:10px;color:var(--n400)}
-
-/* LIVE PILL */
-.lp{background:var(--n900);color:white;border-radius:var(--rL);padding:var(--s3) var(--s4);margin:0 var(--s4) var(--s3);display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:500;cursor:pointer;box-shadow:var(--sh3)}
-.ld{width:8px;height:8px;border-radius:50%;background:#4ADE80;display:inline-block;margin-right:var(--s2);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-/* STICK */
-.stk{background:var(--n0);border-top:1px solid var(--n200);padding:var(--s3) var(--s4);flex-shrink:0}
+.ctb.on {
+  background: var(--y);
+  border-color: var(--y);
+  color: var(--n900);
+}
 
 /* SEARCH */
-.srb{display:flex;align-items:center;gap:var(--s3);background:var(--n100);border-radius:var(--rF);padding:0 var(--s4);height:48px;border:1.5px solid transparent;transition:all .2s;margin:var(--s2) var(--s4) var(--s3)}
-.srb:focus-within{background:white;border-color:var(--y)}
-.sri{flex:1;border:none;background:transparent;outline:none;font-size:15px;color:var(--n900)}
-.sri::placeholder{color:var(--n400)}
+.srb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--n100);
+  border-radius: 24px;
+  padding: 0 12px;
+  height: 42px;
+  flex: 1;
+  border: 1.5px solid transparent;
+}
 
-/* MISC */
-.sec{background:var(--n0);margin-bottom:var(--s2)}
-.sh{display:flex;align-items:center;justify-content:space-between;padding:var(--s3) var(--s4) var(--s1)}
-.stit{font-size:16px;font-weight:700}
-.sl{font-size:13px;font-weight:600;color:var(--r);cursor:pointer}
-.div{height:8px;background:var(--n100)}
-.row{display:flex;align-items:center;gap:var(--s3)}
-.f1{flex:1}
-.hid{display:none!important}
-.rt{font-weight:700;font-size:14px;color:#D97706}
-.star{font-size:36px;cursor:pointer;transition:transform .1s}
-.star:hover{transform:scale(1.2)}
-@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.ani{animation:fi .3s ease forwards}
+.srb:focus-within {
+  background: white;
+  border-color: var(--y);
+}
+
+.sri {
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-size: 14px;
+}
+
+.results {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--n200);
+  font-size: 13px;
+}
+
+.no-result {
+  margin: 16px;
+  padding: 20px;
+  text-align: center;
+  background: var(--yl);
+  color: #92640D;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+/* LOGIN */
+.lh {
+  background: var(--r);
+  text-align: center;
+  color: white;
+  padding: 64px 24px 48px;
+}
+
+.ll {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: white;
+  color: var(--n900);
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  font-weight: 900;
+  margin: 0 auto 16px;
+}
+
+.lt {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.lf {
+  background: white;
+  padding: 32px 20px;
+}
+
+.fg {
+  margin-bottom: 16px;
+}
+
+.fl {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.fi2 {
+  width: 100%;
+  padding: 14px;
+  border: 1.5px solid var(--n200);
+  border-radius: 12px;
+  background: var(--n100);
+  outline: none;
+}
+
+.fi2:focus {
+  border-color: var(--y);
+  background: white;
+}
+
+.ferr {
+  display: none;
+  color: var(--r);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.ferr.on {
+  display: block;
+}
+
+/* BERANDA */
+.bnr {
+  margin: 16px;
+  background: var(--y);
+  padding: 24px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.bnr h2 {
+  font-size: 18px;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.bnr span {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 20px;
+  background: var(--n900);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.qg {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  background: white;
+  padding: 12px 8px;
+}
+
+.qi {
+  text-align: center;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.qic {
+  background: var(--yl);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 8px;
+  font-size: 22px;
+}
+
+.sc {
+  margin: 12px 16px;
+  border-radius: 16px;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  cursor: pointer;
+}
+
+.sb {
+  height: 100px;
+  background: var(--y);
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+}
+
+.sd {
+  padding: 14px;
+}
+
+.sn {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.sm {
+  color: var(--n500);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+/* CART */
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--n200);
+  background: white;
+}
+
+.qb {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--n300);
+  border-radius: 8px;
+  background: white;
+  font-weight: 700;
+}
+
+.qb.plus {
+  background: var(--y);
+  border-color: var(--y);
+}
+
+.stk {
+  background: white;
+  padding: 16px;
+  border-top: 1px solid var(--n200);
+}
+
+.pr {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.pr.total {
+  border-top: 1px solid var(--n200);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.empty {
+  padding: 50px 20px;
+  text-align: center;
+  background: white;
+}
+
+/* DRAWER */
+.ov {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 300;
+  display: none;
+}
+
+.ov.on {
+  display: block;
+}
+
+.drw {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(310px,85vw);
+  background: white;
+  z-index: 400;
+  transform: translateX(-100%);
+  transition: transform .3s;
+  padding: 20px 16px;
+  overflow-y: auto;
+}
+
+.drw.on {
+  transform: translateX(0);
+}
+
+.drw-a {
+  padding: 14px;
+  margin: 4px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.drw-a:hover {
+  background: var(--yl);
+}
+
+.ham {
+  font-size: 22px;
+  background: var(--n100);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+/* TOAST */
+#tc {
+  position: fixed;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 600;
+  width: min(400px,90vw);
+}
+
+.toast {
+  padding: 14px 18px;
+  background: var(--n900);
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+/* MODAL */
+.mb {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 500;
+  display: none;
+  align-items: flex-end;
+}
+
+.mb.on {
+  display: flex;
+}
+
+.ms {
+  width: 100%;
+  background: white;
+  padding: 24px 16px 32px;
+  border-radius: 24px 24px 0 0;
+}
+
+.star {
+  border: none;
+  background: none;
+  color: var(--n300);
+  font-size: 36px;
+  cursor: pointer;
+}
+
+/* SELLER */
+.sts {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.stc {
+  flex: 1;
+  padding: 14px;
+  background: white;
+  border-radius: 12px;
+}
+
+.stv {
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: 5px;
+}
+
+.oc {
+  background: white;
+  margin: 12px 16px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--n200);
+}
+
+.oc h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.oc p {
+  font-size: 12px;
+  color: var(--n500);
+  margin-bottom: 12px;
+}
+
+/* REPORT */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 130px;
+  padding: 16px;
+}
+
+.bar-col {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--n500);
+}
+
+.bar {
+  width: 100%;
+  background: var(--y);
+  border-radius: 6px 6px 0 0;
+  margin-bottom: 6px;
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
 <div class="app">
 
-<!-- SHARED: Overlay -->
-<div class="ov" id="ov" onclick="Drawer.close()"></div>
+<!-- OVERLAY DAN DRAWER -->
+<div id="ov" class="ov" onclick="Drawer.close()"></div>
 
-<!-- SHARED: Nav Drawer (Hamburger) -->
-<nav class="drw" id="drw" aria-label="Menu navigasi">
-  <div class="drw-top">
-    <div class="hdr-logo"><div class="hdr-box">K</div><span class="hdr-name">Kantin<em>Kita</em></span></div>
-    <button class="ico-btn" onclick="Drawer.close()" aria-label="Tutup menu">&#10005;</button>
+<nav id="drw" class="drw" aria-label="Menu navigasi">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div class="logo">
+      <div class="logo-box">K</div>
+      <span>Kantin<em>Kita</em></span>
+    </div>
+    <button class="ico-btn" onclick="Drawer.close()" aria-label="Tutup menu">✕</button>
   </div>
-  <div class="drw-user">
-    <div class="drw-av">F</div>
-    <div><div class="drw-name">Febri Ramadhan</div><div class="drw-nim">NIM: 2024110234</div></div>
+
+  <div style="background:var(--yl);padding:16px;border-radius:12px;margin-bottom:20px">
+    <strong>Febri Ramadhan</strong>
+    <p style="font-size:12px;color:var(--n500);margin-top:4px">NIM: 2024110234</p>
   </div>
-  <div class="drw-sec">
-    <div class="drw-stl">Mahasiswa</div>
-    <div class="drw-a" onclick="go('beranda')"><span class="drw-ic">&#127968;</span>Beranda</div>
-    <div class="drw-a" onclick="go('cari')"><span class="drw-ic">&#128269;</span>Cari Menu</div>
-    <div class="drw-a" onclick="go('keranjang')"><span class="drw-ic">&#128722;</span>Keranjang</div>
-    <div class="drw-a" onclick="go('status')"><span class="drw-ic">&#128203;</span>Pesanan Aktif</div>
+
+  <p style="font-size:11px;color:var(--n500);margin:12px">MAHASISWA</p>
+  <div class="drw-a" onclick="go('beranda')">🏠 Beranda</div>
+  <div class="drw-a" onclick="go('cari')">🔎 Cari Menu</div>
+  <div class="drw-a" onclick="go('keranjang')">🛒 Keranjang</div>
+  <div class="drw-a" onclick="go('status')">📋 Pesanan Aktif</div>
+
+  <p style="font-size:11px;color:var(--n500);margin:20px 12px 12px">PENJUAL</p>
+  <div class="drw-a" onclick="go('dasbor')">🏪 Dasbor Stan</div>
+  <div class="drw-a" onclick="go('laporan')">📊 Laporan Penjualan</div>
+
+  <div class="drw-a" onclick="go('login')" style="color:var(--r);margin-top:30px">
+    🚪 Keluar
   </div>
-  <div class="drw-sec">
-    <div class="drw-stl">Penjual</div>
-    <div class="drw-a" onclick="go('dasbor')"><span class="drw-ic">&#127974;</span>Dasbor Stan</div>
-    <div class="drw-a" onclick="go('laporan')"><span class="drw-ic">&#128202;</span>Laporan</div>
-  </div>
-  <div class="drw-out" onclick="go('login')"><span class="drw-ic" style="background:var(--rl)">&#128682;</span>Keluar</div>
 </nav>
 
-<!-- TOAST container -->
-<div id="tc"></div>
+<div id="tc" role="status" aria-live="polite"></div>
 
-<!-- ============================================================
+
+<!-- =========================================
      SCREEN 1: LOGIN
-     ============================================================ -->
+========================================= -->
 <div class="screen on" id="s-login">
-  <div class="page wh" style="overflow-y:auto">
+  <div class="page" style="background:white">
     <div class="lh">
       <div class="ll">K</div>
       <div class="lt">KantinKita</div>
-      <div class="ls">Pesan makan kantin kampus &#8212; tanpa antri</div>
+      <p style="font-size:13px">Pesan makan kantin kampus — tanpa antri</p>
     </div>
+
     <div class="lf">
-      <h1 style="font-size:22px;font-weight:800;margin-bottom:4px">Masuk</h1>
-      <p style="font-size:14px;color:var(--n500);margin-bottom:24px">Selamat datang kembali &#128075;</p>
+      <h1 style="font-size:23px;margin-bottom:6px">Masuk</h1>
+      <p style="color:var(--n500);font-size:14px;margin-bottom:26px">
+        Selamat datang kembali 👋
+      </p>
+
       <form id="loginForm" novalidate>
         <div class="fg">
-          <label class="fl" for="nim">NIM atau Email</label>
-          <div class="fw2">
-            <span class="fic">&#127979;</span>
-            <input class="fi2 ic" type="text" id="nim" placeholder="2024110234 atau email@kampus.ac.id" autocomplete="username">
-          </div>
-          <div class="ferr" id="e-nim">&#9888; NIM atau email tidak boleh kosong</div>
+          <label for="nim" class="fl">NIM atau Email</label>
+          <input id="nim" class="fi2" placeholder="2024110234 atau email@kampus.ac.id">
+          <div class="ferr" id="e-nim">NIM atau email tidak boleh kosong.</div>
         </div>
+
         <div class="fg">
-          <label class="fl" for="pw">Kata Sandi</label>
-          <div class="fw2">
-            <span class="fic">&#128274;</span>
-            <input class="fi2 ic" type="password" id="pw" placeholder="Kata sandi akun kamu" autocomplete="current-password">
-            <span class="fsw" id="showpw" onclick="togglePw()">Lihat</span>
-          </div>
-          <div class="ferr" id="e-pw">&#9888; Kata sandi minimal 6 karakter</div>
+          <label for="pw" class="fl">Kata Sandi</label>
+          <input id="pw" class="fi2" type="password" placeholder="Kata sandi akun kamu">
+          <div class="ferr" id="e-pw">Kata sandi minimal 6 karakter.</div>
         </div>
-        <div style="text-align:right;margin-bottom:20px"><span style="font-size:13px;font-weight:600;color:var(--r);cursor:pointer">Lupa kata sandi?</span></div>
-        <button type="submit" id="loginBtn" class="btn bs bfull blg" style="margin-bottom:14px">Masuk</button>
+
+        <button type="button" onclick="togglePw()" style="color:var(--yd);font-size:12px;margin-bottom:20px">
+          Lihat / Sembunyikan Password
+        </button>
+
+        <button type="submit" class="btn bs bfull" id="loginBtn">Masuk</button>
       </form>
-      <p style="text-align:center;font-size:13px;color:var(--n500);padding:10px 0">Belum punya akun? <span style="color:var(--r);font-weight:700;cursor:pointer">Daftar sekarang</span></p>
-      <hr style="border:none;border-top:1px solid var(--n200);margin:10px 0 14px">
-      <button class="btn bo bfull" onclick="go('dasbor')" style="font-size:14px">&#127974; Masuk sebagai Penjual</button>
+
+      <p style="font-size:13px;color:var(--n500);text-align:center;margin:24px 0">
+        Belum punya akun? <strong style="color:var(--r)">Daftar sekarang</strong>
+      </p>
+
+      <button class="btn bo bfull" onclick="go('dasbor')">
+        🏪 Masuk sebagai Penjual
+      </button>
     </div>
   </div>
 </div>
 
-<!-- ============================================================
+
+<!-- =========================================
      SCREEN 2: BERANDA
-     ============================================================ -->
+========================================= -->
 <div class="screen" id="s-beranda">
   <header class="hdr">
-    <button class="ham" id="ham" onclick="Drawer.open()" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="hdr-logo"><div class="hdr-box">K</div><span class="hdr-name">Kantin<em>Kita</em></span></div>
-    <div class="sp"></div>
-    <button class="ico-btn" aria-label="Notifikasi">&#128276;</button>
-    <div style="width:36px;height:36px;border-radius:50%;background:var(--y);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:white;flex-shrink:0">F</div>
-  </header>
-  <div class="page">
-    <div class="sec" style="padding:10px 16px 4px;display:flex;justify-content:space-between;align-items:center">
-      <div><div style="font-size:11px;color:var(--n500);font-weight:500">Lokasi kamu</div><div style="font-size:15px;font-weight:700">&#128205; Gedung B &#9660;</div></div>
-      <div style="font-size:12px;color:var(--n500)">Halo, <strong>Febri</strong>!</div>
+    <button class="ham" onclick="Drawer.open()" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+    <div class="logo">
+      <div class="logo-box">K</div>
+      <span>Kantin<em>Kita</em></span>
     </div>
-    <div style="padding:4px 16px 8px;background:var(--n0)">
-      <div class="srb" onclick="go('cari')" style="cursor:pointer">
-        <span style="font-size:18px;color:var(--n400)">&#128269;</span>
-        <span style="color:var(--n400);font-size:15px">Mau makan apa hari ini?</span>
+
+    <div style="flex:1"></div>
+    <button class="ico-btn" aria-label="Notifikasi">🔔</button>
+  </header>
+
+  <div class="page">
+    <div class="sec" style="padding:16px">
+      <p style="color:var(--n500);font-size:11px">Lokasi kamu</p>
+      <strong>📍 Gedung B</strong>
+      <p style="text-align:right;font-size:12px">Halo, Febri!</p>
+
+      <div class="srb" onclick="go('cari')" style="margin-top:14px;cursor:pointer">
+        🔎
+        <span style="font-size:14px;color:var(--n400)">Mau makan apa hari ini?</span>
       </div>
     </div>
-    <div class="bnr" onclick="go('cari')" style="cursor:pointer">
-      <div class="bnr-t">Istirahat jam 12.00?<br>Ambil pesananmu jam 12.15 &#10024;</div>
-      <div class="bnr-b">Pesan Sekarang</div>
+
+    <div class="bnr" onclick="go('cari')">
+      <h2>Istirahat jam 12.00?<br>Ambil pesananmu jam 12.15 ✨</h2>
+      <span>Pesan Sekarang</span>
     </div>
+
     <div class="qg">
-      <div class="qi" onclick="go('cari')"><div class="qic qi-y">&#9889;</div><span class="ql">Pickup Cepat</span></div>
-      <div class="qi" onclick="go('cari')"><div class="qic qi-b">&#128336;</div><span class="ql">Terjadwal</span></div>
-      <div class="qi" onclick="go('cari')"><div class="qic qi-g">&#128176;</div><span class="ql">Hemat</span></div>
-      <div class="qi" onclick="go('status')"><div class="qic qi-r">&#128260;</div><span class="ql">Pesan Ulang</span></div>
-    </div>
-    <div class="div"></div>
-    <!-- INTERACTIVE: Category Filter Tabs -->
-    <div class="sec">
-      <div class="sh"><h2 class="stit">Menu Kantin</h2></div>
-      <div class="ct" role="tablist">
-        <button class="ctb on" data-cat="semua" onclick="filterMenu(this)" role="tab">Semua</button>
-        <button class="ctb" data-cat="nasi" onclick="filterMenu(this)" role="tab">&#127859; Nasi</button>
-        <button class="ctb" data-cat="mie" onclick="filterMenu(this)" role="tab">&#127836; Mie</button>
-        <button class="ctb" data-cat="ayam" onclick="filterMenu(this)" role="tab">&#127831; Ayam</button>
-        <button class="ctb" data-cat="minuman" onclick="filterMenu(this)" role="tab">&#129400; Minuman</button>
-        <button class="ctb" data-cat="diskon" onclick="filterMenu(this)" role="tab">&#128293; Diskon</button>
+      <div class="qi" onclick="go('cari')">
+        <div class="qic">⚡</div>Pickup Cepat
       </div>
-      <div id="no-res" class="al ay2 hid" style="margin:12px 16px" role="status">Tidak ada menu untuk kategori ini.</div>
-      <!-- Stan A Card -->
+      <div class="qi" onclick="go('cari')">
+        <div class="qic">🕒</div>Terjadwal
+      </div>
+      <div class="qi" onclick="go('cari')">
+        <div class="qic">💰</div>Hemat
+      </div>
+      <div class="qi" onclick="go('status')">
+        <div class="qic">🔄</div>Pesan Ulang
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 style="padding:16px;font-size:17px">Menu Kantin</h2>
+
+      <div class="ct" id="home-tabs">
+        <button class="ctb on" data-cat="semua" onclick="filterMenu(this)">Semua</button>
+        <button class="ctb" data-cat="nasi" onclick="filterMenu(this)">🍳 Nasi</button>
+        <button class="ctb" data-cat="mie" onclick="filterMenu(this)">🍜 Mie</button>
+        <button class="ctb" data-cat="ayam" onclick="filterMenu(this)">🍗 Ayam</button>
+        <button class="ctb" data-cat="minuman" onclick="filterMenu(this)">🥤 Minuman</button>
+        <button class="ctb" data-cat="diskon" onclick="filterMenu(this)">🔥 Diskon</button>
+      </div>
+
       <div class="sc" onclick="go('menu')">
-        <div class="sb sba">&#127859;</div>
+        <div class="sb">🍳</div>
         <div class="sd">
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><h3 class="sn">Stan A &ndash; Nasi &amp; Ayam</h3><span class="rt">&#9733; 4.8</span></div>
-          <div class="sm">120 m &middot; Buka s/d 14.00 &middot; 230 ulasan</div>
-          <div class="st"><span class="bdg by bp">Antrean 3</span><span class="bdg bg bp">&#177;10 mnt</span><span class="bdg bd bp">Terlaris</span><span class="bdg br bp">&#128293; &minus;10%</span></div>
+          <div class="sn">Stan A – Nasi & Ayam ⭐ 4.8</div>
+          <div class="sm">120 m · Buka s/d 14.00 · 230 ulasan</div>
+          <span class="bdg">Antrean 3</span>
+          <span class="bdg green">±10 mnt</span>
+          <span class="bdg red">Diskon 10%</span>
         </div>
       </div>
-      <!-- Menu items (filterable) -->
+
       <div class="mi" data-cat="nasi semua">
-        <div class="fi fi-s fi-y">&#127859;</div>
-        <div class="mb2"><div class="mn">Nasi Goreng Spesial <span class="bdg bd" style="font-size:9px">Terlaris</span></div><div class="md">Telur ceplok, ayam suwir, kerupuk</div><div class="mp">Rp 15.000</div></div>
-        <button class="badd" onclick="event.stopPropagation();Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'&#127859;')">+</button>
+        <div class="fi">🍳</div>
+        <div class="mb2">
+          <div class="mn">Nasi Goreng Spesial</div>
+          <div class="md">Telur ceplok, ayam suwir, kerupuk</div>
+          <div class="mp">Rp 15.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'🍳')">+</button>
       </div>
+
       <div class="mi" data-cat="ayam semua">
-        <div class="fi fi-s fi-r">&#127831;</div>
-        <div class="mb2"><div class="mn">Ayam Geprek <span class="bdg br" style="font-size:9px">Sisa 3!</span></div><div class="md">Ayam krispi, sambal geprek, lalapan</div><div class="mp">Rp 17.000</div></div>
-        <button class="badd" onclick="event.stopPropagation();Cart.add('ayam-geprek','Ayam Geprek',17000,'&#127831;')">+</button>
+        <div class="fi fi-r">🍗</div>
+        <div class="mb2">
+          <div class="mn">Ayam Geprek</div>
+          <div class="md">Ayam krispi, sambal geprek, lalapan</div>
+          <div class="mp">Rp 17.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'🍗')">+</button>
       </div>
+
       <div class="mi" data-cat="minuman semua">
-        <div class="fi fi-s fi-b">&#129400;</div>
-        <div class="mb2"><div class="mn">Es Teh Manis</div><div class="md">Teh segar, es batu, gula aren</div><div class="mp">Rp 5.000</div></div>
-        <button class="badd" onclick="event.stopPropagation();Cart.add('es-teh','Es Teh Manis',5000,'&#129400;')">+</button>
+        <div class="fi fi-b">🥤</div>
+        <div class="mb2">
+          <div class="mn">Es Teh Manis</div>
+          <div class="md">Teh segar, es batu, gula aren</div>
+          <div class="mp">Rp 5.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('es-teh','Es Teh Manis',5000,'🥤')">+</button>
       </div>
+
       <div class="mi" data-cat="diskon semua">
-        <div class="fi fi-s fi-o">&#129372;</div>
-        <div class="mb2"><div class="mn">Paket Hemat <span class="bdg br" style="font-size:9px">&minus;15%</span></div><div class="md">Nasi + Es Teh &bull; hemat Rp 3.000</div><div class="mp">Rp 18.000 <span style="color:var(--n400);text-decoration:line-through;font-size:11px">Rp 21.000</span></div></div>
-        <button class="badd" onclick="event.stopPropagation();Cart.add('paket-hemat','Paket Hemat',18000,'&#129372;')">+</button>
+        <div class="fi fi-o">🥙</div>
+        <div class="mb2">
+          <div class="mn">Paket Hemat</div>
+          <div class="md">Nasi + Es Teh · Hemat Rp 3.000</div>
+          <div class="mp">Rp 18.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('paket-hemat','Paket Hemat',18000,'🥙')">+</button>
       </div>
-      <!-- Stan B -->
-      <div class="sc" onclick="go('menu')" style="margin-top:4px">
-        <div class="sb sbb">&#127836;</div>
+
+      <div class="sc" onclick="go('menu')">
+        <div class="sb" style="background:var(--rl)">🍜</div>
         <div class="sd">
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><h3 class="sn">Stan B &ndash; Mie &amp; Bakso</h3><span class="rt">&#9733; 4.6</span></div>
-          <div class="sm">80 m &middot; Buka s/d 13.30 &middot; 118 ulasan</div>
-          <div class="st"><span class="bdg by bp">Antrean 1</span><span class="bdg bg bp">&#177;7 mnt</span><span class="bdg bn bp">Halal</span></div>
+          <div class="sn">Stan B – Mie & Bakso ⭐ 4.6</div>
+          <div class="sm">80 m · Buka s/d 13.30 · 118 ulasan</div>
+          <span class="bdg green">±7 mnt</span>
         </div>
       </div>
+
       <div class="mi" data-cat="mie semua">
-        <div class="fi fi-s fi-o">&#127836;</div>
-        <div class="mb2"><div class="mn">Mie Ayam Spesial</div><div class="md">Mie kenyal, ayam, pangsit rebus</div><div class="mp">Rp 13.000</div></div>
-        <button class="badd" onclick="event.stopPropagation();Cart.add('mie-ayam','Mie Ayam Spesial',13000,'&#127836;')">+</button>
-      </div>
-    </div>
-    <!-- Live Pill -->
-    <div class="lp" onclick="go('status')"><div><span class="ld"></span>Pesanan #A-27 &middot; siap 12.15</div><span style="font-weight:700;color:var(--y)">Lihat &rarr;</span></div>
-    <div style="height:8px"></div>
-  </div>
-  <nav class="bnv">
-    <div class="bni on" onclick="go('beranda')"><div class="bnic">&#127968;</div>Beranda</div>
-    <div class="bni" onclick="go('cari')"><div class="bnic">&#128269;</div>Cari</div>
-    <div class="bni" onclick="go('keranjang')"><div class="bnic" style="position:relative">&#128722;<span class="cb" id="cart-badge-b">0</span></div>Keranjang</div>
-    <div class="bni" onclick="go('status')"><div class="bnic">&#128203;</div>Pesanan</div>
-    <div class="bni" onclick="Drawer.open()"><div class="bnic">&#9776;</div>Menu</div>
-  </nav>
-</div>
-
-<!-- ============================================================
-     SCREEN 3: CARI & FILTER
-     ============================================================ -->
-<div class="screen" id="s-cari">
-  <header class="hdr">
-    <button class="ico-btn" onclick="go('beranda')" style="font-size:20px">&#8592;</button>
-    <div class="srb" style="flex:1;margin:0;height:40px">
-      <span style="font-size:18px;color:var(--n400)">&#128269;</span>
-      <input class="sri" id="search-input" placeholder="nasi goreng, ayam, mie..." autofocus>
-    </div>
-    <button class="btn bsm bp2" onclick="Toast.show('Mencari menu...')">Cari</button>
-  </header>
-  <div class="page">
-    <div class="ct" role="tablist">
-      <button class="ctb on" data-cat2="semua" onclick="filterSearch(this)" role="tab">Semua</button>
-      <button class="ctb" data-cat2="cepat" onclick="filterSearch(this)" role="tab">&#9889; Tercepat</button>
-      <button class="ctb" data-cat2="murah" onclick="filterSearch(this)" role="tab">&#128176; Termurah</button>
-      <button class="ctb" data-cat2="diskon" onclick="filterSearch(this)" role="tab">&#128293; Diskon</button>
-    </div>
-    <div style="background:var(--n0);border-bottom:1px solid var(--n100);padding:8px 16px;display:flex;justify-content:space-between"><span style="font-size:14px;font-weight:700">4 menu ditemukan</span><span style="font-size:12px;color:var(--n500)">Urutkan &#9660;</span></div>
-    <div class="sec">
-      <div class="mi" data-cat2="semua cepat">
-        <div class="fi fi-m fi-y">&#127859;</div>
-        <div class="mb2"><div class="mn">Nasi Goreng Spesial <span class="bdg bd" style="font-size:9px">Terlaris</span></div><div class="md">Stan A &middot; Rp 15.000</div><div style="margin-top:4px"><span class="bdg bg">&#177;8 mnt</span></div></div>
-        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'&#127859;')">+</button>
-      </div>
-      <div class="mi" data-cat2="semua murah">
-        <div class="fi fi-m fi-r">&#127831;</div>
-        <div class="mb2"><div class="mn">Ayam Geprek</div><div class="md">Stan A &middot; Rp 17.000</div><div style="margin-top:4px"><span class="bdg bg">&#177;10 mnt</span></div></div>
-        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'&#127831;')">+</button>
-      </div>
-      <div class="mi" data-cat2="semua cepat murah">
-        <div class="fi fi-m fi-o">&#127836;</div>
-        <div class="mb2"><div class="mn">Mie Ayam Spesial</div><div class="md">Stan B &middot; Rp 13.000</div><div style="margin-top:4px"><span class="bdg bg">&#177;7 mnt</span></div></div>
-        <button class="badd" onclick="Cart.add('mie-ayam','Mie Ayam Spesial',13000,'&#127836;')">+</button>
-      </div>
-      <div class="mi" data-cat2="semua diskon">
-        <div class="fi fi-m fi-o">&#129372;</div>
-        <div class="mb2"><div class="mn">Paket Hemat <span class="bdg br" style="font-size:9px">&minus;15%</span></div><div class="md">Stan A &middot; Rp 18.000</div><div style="margin-top:4px"><span class="bdg by">Hemat Rp 3rb</span></div></div>
-        <button class="badd" onclick="Cart.add('paket-hemat','Paket Hemat',18000,'&#129372;')">+</button>
-      </div>
-      <div id="no-res2" class="al ay2 hid" role="status">Tidak ada menu untuk filter ini.</div>
-    </div>
-  </div>
-  <nav class="bnv">
-    <div class="bni" onclick="go('beranda')"><div class="bnic">&#127968;</div>Beranda</div>
-    <div class="bni on" onclick="go('cari')"><div class="bnic">&#128269;</div>Cari</div>
-    <div class="bni" onclick="go('keranjang')"><div class="bnic" style="position:relative">&#128722;<span class="cb" id="cart-badge-c">0</span></div>Keranjang</div>
-    <div class="bni" onclick="go('status')"><div class="bnic">&#128203;</div>Pesanan</div>
-    <div class="bni" onclick="Drawer.open()"><div class="bnic">&#9776;</div>Menu</div>
-  </nav>
-</div>
-
-<!-- ============================================================
-     SCREEN 4: MENU STAN
-     ============================================================ -->
-<div class="screen" id="s-menu">
-  <header class="hdr">
-    <button class="ico-btn" onclick="go('beranda')" style="font-size:20px">&#8592;</button>
-    <h1 class="hdr-title">Stan A &ndash; Nasi &amp; Ayam</h1>
-    <button class="ico-btn">&#9825;</button>
-  </header>
-  <div class="page">
-    <div style="height:110px;background:var(--y);display:flex;align-items:center;justify-content:center;font-size:52px">&#127859;</div>
-    <div class="sec" style="padding:14px 16px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px"><h2 style="font-size:19px;font-weight:800">Stan A &ndash; Nasi &amp; Ayam</h2><span class="rt">&#9733; 4.8</span></div>
-      <p style="font-size:12px;color:var(--n500);margin-bottom:10px">120 m &middot; Buka s/d 14.00 &middot; 230 ulasan</p>
-      <div class="al ay2" style="margin:0">&#127859; Antrean 3 pesanan &middot; siap dalam &#177;10 menit</div>
-    </div>
-    <div class="ct" role="tablist">
-      <button class="ctb on" data-cat3="semua" onclick="filterMenu3(this)" role="tab">&#11088; Terlaris</button>
-      <button class="ctb" data-cat3="nasi" onclick="filterMenu3(this)" role="tab">Nasi</button>
-      <button class="ctb" data-cat3="lauk" onclick="filterMenu3(this)" role="tab">Lauk</button>
-      <button class="ctb" data-cat3="minuman" onclick="filterMenu3(this)" role="tab">Minuman</button>
-    </div>
-    <div class="div"></div>
-    <div class="sec">
-      <div class="mi" data-cat3="nasi semua">
-        <div class="fi fi-m fi-y">&#127859;</div>
-        <div class="mb2"><div class="mn">Nasi Goreng Spesial <span class="bdg bd" style="font-size:9px">Terlaris</span></div><div class="md">Telur ceplok, ayam suwir, kerupuk. Tersedia pedas/tidak.</div><div class="mp">Rp 15.000</div></div>
-        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'&#127859;')">+</button>
-      </div>
-      <div class="mi" data-cat3="lauk semua">
-        <div class="fi fi-m fi-r">&#127831;</div>
-        <div class="mb2"><div class="mn">Ayam Geprek <span class="bdg br" style="font-size:9px">Sisa 3!</span></div><div class="md">Ayam goreng krispi, sambal geprek, lalapan.</div><div class="mp">Rp 17.000</div></div>
-        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'&#127831;')">+</button>
-      </div>
-      <div class="mi" data-cat3="nasi semua" style="opacity:.5;pointer-events:none">
-        <div class="fi fi-m fi-o">&#127822;</div>
-        <div class="mb2"><div class="mn">Soto Ayam</div><div class="md"><em>Stok habis hari ini</em> &middot; Rp 14.000</div></div>
-        <span class="bdg br" style="padding:8px 12px">Habis</span>
-      </div>
-      <div class="mi" data-cat3="minuman semua">
-        <div class="fi fi-m fi-b">&#129400;</div>
-        <div class="mb2"><div class="mn">Es Teh Manis</div><div class="md">Teh hitam segar, es batu, gula aren.</div><div class="mp">Rp 5.000</div></div>
-        <button class="badd" onclick="Cart.add('es-teh','Es Teh Manis',5000,'&#129400;')">+</button>
-      </div>
-    </div>
-    <div style="height:72px"></div>
-  </div>
-  <div class="stk">
-    <div class="row">
-      <div class="f1"><div style="font-size:11px;color:var(--n500)">Keranjang</div><div style="font-weight:700;font-size:15px" id="menu-cart-sum">Tambahkan menu dulu...</div></div>
-      <button class="btn bp2 bsm" onclick="go('keranjang')" style="padding:0 18px;height:38px">Lanjut &rarr;</button>
-    </div>
-  </div>
-  <nav class="bnv">
-    <div class="bni" onclick="go('beranda')"><div class="bnic">&#127968;</div>Beranda</div>
-    <div class="bni" onclick="go('cari')"><div class="bnic">&#128269;</div>Cari</div>
-    <div class="bni" onclick="go('keranjang')"><div class="bnic" style="position:relative">&#128722;<span class="cb" id="cart-badge-m">0</span></div>Keranjang</div>
-    <div class="bni" onclick="go('status')"><div class="bnic">&#128203;</div>Pesanan</div>
-    <div class="bni" onclick="Drawer.open()"><div class="bnic">&#9776;</div>Menu</div>
-  </nav>
-</div>
-
-<!-- ============================================================
-     SCREEN 5: KERANJANG
-     ============================================================ -->
-<div class="screen" id="s-keranjang">
-  <header class="hdr">
-    <button class="ico-btn" onclick="go('menu')" style="font-size:20px">&#8592;</button>
-    <h1 class="hdr-title">Keranjang</h1>
-    <button class="ico-btn" onclick="Cart.clear();renderCart();Toast.show('Keranjang dikosongkan','err')">&#128465;</button>
-  </header>
-  <div class="page wh" style="overflow-y:auto">
-    <div id="cart-empty" class="hid" style="text-align:center;padding:60px 20px">
-      <div style="font-size:52px;margin-bottom:12px">&#128722;</div>
-      <h2 style="font-size:18px;font-weight:700;margin-bottom:8px">Keranjang masih kosong</h2>
-      <p style="color:var(--n500);margin-bottom:20px">Tambahkan menu dari stan favoritmu</p>
-      <button class="btn bp2" onclick="go('beranda')">Lihat Menu</button>
-    </div>
-    <div id="cart-content">
-      <div style="padding:14px 16px 6px">
-        <div style="font-size:13px;font-weight:700;color:var(--n500);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Stan A &ndash; Nasi &amp; Ayam</div>
-        <div id="cart-items"></div>
-      </div>
-      <div class="div"></div>
-      <div style="padding:14px 16px">
-        <label class="fl" for="catatan">Catatan Pesanan</label>
-        <textarea id="catatan" style="width:100%;border:1.5px solid var(--n200);border-radius:var(--rM);padding:10px 14px;font-family:var(--F);font-size:14px;resize:none;outline:none;background:var(--n100)" rows="2" placeholder="cth. tanpa sambal, nasi sedikit..."></textarea>
-      </div>
-      <div class="div"></div>
-      <div style="padding:14px 16px">
-        <h2 style="font-size:15px;font-weight:700;margin-bottom:10px">Pilih Jam Ambil</h2>
-        <div class="al ay2" style="margin:0 0 12px">&#128161; Istirahatmu 12.00&ndash;12.45 &middot; disarankan <strong>12.15</strong></div>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <label style="display:flex;align-items:center;justify-content:space-between;padding:12px;border:1.5px solid var(--y);border-radius:var(--rM);cursor:pointer;background:var(--yl)">
-            <div><input type="radio" name="jam" value="12.15" checked style="margin-right:8px"><strong>12.15</strong> &mdash; Ramai</div>
-            <span class="bdg by">Disarankan</span>
-          </label>
-          <label style="display:flex;align-items:center;justify-content:space-between;padding:12px;border:1.5px solid var(--n200);border-radius:var(--rM);cursor:pointer">
-            <div><input type="radio" name="jam" value="12.45" style="margin-right:8px"><strong>12.45</strong> &mdash; Sepi &bull; Hemat 10%</div>
-            <span class="bdg bg">Diskon</span>
-          </label>
-          <label style="display:flex;align-items:center;justify-content:space-between;padding:12px;border:1.5px solid var(--n200);border-radius:var(--rM);opacity:.5">
-            <div><input type="radio" name="jam" disabled style="margin-right:8px"><strong>13.15</strong> &mdash; Penuh</div>
-            <span class="bdg bn">Penuh</span>
-          </label>
+        <div class="fi fi-o">🍜</div>
+        <div class="mb2">
+          <div class="mn">Mie Ayam Spesial</div>
+          <div class="md">Mie kenyal, ayam, pangsit rebus</div>
+          <div class="mp">Rp 13.000</div>
         </div>
+        <button class="badd" onclick="Cart.add('mie-ayam','Mie Ayam Spesial',13000,'🍜')">+</button>
       </div>
-      <div class="div"></div>
-      <div style="padding:12px 0 4px">
-        <div class="pr"><span class="pl">Subtotal</span><span class="pv" id="cart-sub">Rp 0</span></div>
-        <div class="pr"><span class="pl">Diskon</span><span class="pv" style="color:var(--g)">Rp 0</span></div>
-        <div class="pt"><span class="pl">Total Bayar</span><span class="pv" id="cart-tot">Rp 0</span></div>
-      </div>
+
+      <div id="no-res" class="no-result hid">Tidak ada menu untuk kategori ini.</div>
     </div>
+
     <div style="height:16px"></div>
   </div>
-  <div class="stk"><button class="btn bs bfull blg" onclick="go('bayar')">Lanjut Bayar</button></div>
+
+  <nav class="bnv">
+    <div class="bni on" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
 </div>
 
-<!-- ============================================================
+
+<!-- =========================================
+     SCREEN 3: CARI DAN FILTER
+========================================= -->
+<div class="screen" id="s-cari">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('beranda')">←</button>
+
+    <div class="srb">
+      <span>🔎</span>
+      <input
+        class="sri"
+        id="search-input"
+        type="search"
+        placeholder="nasi goreng, ayam, mie..."
+        aria-label="Cari menu makanan"
+        oninput="searchMenus()"
+        onkeydown="if(event.key==='Enter')searchMenus()"
+      >
+    </div>
+
+    <button class="btn bsm bp2" onclick="searchMenus()">Cari</button>
+  </header>
+
+  <div class="page">
+    <div class="ct" id="search-tabs" role="tablist">
+      <button class="ctb on" data-cat2="semua" onclick="filterSearch(this)" role="tab">Semua</button>
+      <button class="ctb" data-cat2="cepat" onclick="filterSearch(this)" role="tab">⚡ Tercepat</button>
+      <button class="ctb" data-cat2="murah" onclick="filterSearch(this)" role="tab">💰 Termurah</button>
+      <button class="ctb" data-cat2="diskon" onclick="filterSearch(this)" role="tab">🔥 Diskon</button>
+    </div>
+
+    <div class="results">
+      <strong id="search-count" role="status" aria-live="polite">5 menu ditemukan</strong>
+      <span style="color:var(--n500)">Menu tersedia</span>
+    </div>
+
+    <div class="sec" id="search-menu-list">
+
+      <div class="mi" data-cat2="semua cepat">
+        <div class="fi">🍳</div>
+        <div class="mb2">
+          <div class="mn">Nasi Goreng Spesial</div>
+          <div class="md">Stan A · Rp 15.000</div>
+          <span class="bdg green">±8 mnt</span>
+        </div>
+        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'🍳')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua murah">
+        <div class="fi fi-r">🍗</div>
+        <div class="mb2">
+          <div class="mn">Ayam Geprek</div>
+          <div class="md">Stan A · Rp 17.000</div>
+          <span class="bdg green">±10 mnt</span>
+        </div>
+        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'🍗')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua cepat murah">
+        <div class="fi fi-o">🍜</div>
+        <div class="mb2">
+          <div class="mn">Mie Ayam Spesial</div>
+          <div class="md">Stan B · Rp 13.000</div>
+          <span class="bdg green">±7 mnt</span>
+        </div>
+        <button class="badd" onclick="Cart.add('mie-ayam','Mie Ayam Spesial',13000,'🍜')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua diskon">
+        <div class="fi fi-o">🥙</div>
+        <div class="mb2">
+          <div class="mn">Paket Hemat</div>
+          <div class="md">Stan A · Rp 18.000</div>
+          <span class="bdg red">Diskon 15%</span>
+        </div>
+        <button class="badd" onclick="Cart.add('paket-hemat','Paket Hemat',18000,'🥙')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua murah">
+        <div class="fi fi-b">🥤</div>
+        <div class="mb2">
+          <div class="mn">Es Teh Manis</div>
+          <div class="md">Stan A · Rp 5.000</div>
+          <span class="bdg green">Minuman</span>
+        </div>
+        <button class="badd" onclick="Cart.add('es-teh','Es Teh Manis',5000,'🥤')">+</button>
+      </div>
+
+      <div id="no-res2" class="no-result hid" role="status">
+        Tidak ada menu yang cocok dengan pencarian.
+      </div>
+
+    </div>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni on" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 4: MENU STAN
+========================================= -->
+<div class="screen" id="s-menu">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('beranda')">←</button>
+    <h1 class="hdr-title">Stan A – Nasi & Ayam</h1>
+    <button class="ico-btn">♡</button>
+  </header>
+
+  <div class="page">
+    <div style="height:115px;background:var(--y);display:grid;place-items:center;font-size:52px">🍳</div>
+
+    <div class="sec" style="padding:16px">
+      <h2 style="font-size:18px;margin-bottom:8px">Stan A – Nasi & Ayam</h2>
+      <p style="font-size:12px;color:var(--n500);margin-bottom:12px">
+        120 m · Buka s/d 14.00 · ⭐ 4.8
+      </p>
+      <div class="no-result" style="margin:0;padding:12px">
+        Antrean 3 pesanan · Siap dalam ±10 menit
+      </div>
+    </div>
+
+    <div class="ct" id="stan-tabs">
+      <button class="ctb on" data-cat3="semua" onclick="filterMenu3(this)">Semua</button>
+      <button class="ctb" data-cat3="nasi" onclick="filterMenu3(this)">Nasi</button>
+      <button class="ctb" data-cat3="lauk" onclick="filterMenu3(this)">Lauk</button>
+      <button class="ctb" data-cat3="minuman" onclick="filterMenu3(this)">Minuman</button>
+    </div>
+
+    <div class="sec" id="stan-menu-list">
+      <div class="mi" data-cat3="semua nasi">
+        <div class="fi">🍳</div>
+        <div class="mb2">
+          <div class="mn">Nasi Goreng Spesial</div>
+          <div class="md">Telur ceplok, ayam suwir, kerupuk</div>
+          <div class="mp">Rp 15.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'🍳')">+</button>
+      </div>
+
+      <div class="mi" data-cat3="semua lauk">
+        <div class="fi fi-r">🍗</div>
+        <div class="mb2">
+          <div class="mn">Ayam Geprek</div>
+          <div class="md">Ayam krispi, sambal geprek</div>
+          <div class="mp">Rp 17.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'🍗')">+</button>
+      </div>
+
+      <div class="mi" data-cat3="semua nasi" style="opacity:.5;pointer-events:none">
+        <div class="fi fi-o">🍲</div>
+        <div class="mb2">
+          <div class="mn">Soto Ayam</div>
+          <div class="md">Stok habis hari ini</div>
+          <div class="mp">Rp 14.000</div>
+        </div>
+        <span class="bdg red">Habis</span>
+      </div>
+
+      <div class="mi" data-cat3="semua minuman">
+        <div class="fi fi-b">🥤</div>
+        <div class="mb2">
+          <div class="mn">Es Teh Manis</div>
+          <div class="md">Teh segar, es batu, gula aren</div>
+          <div class="mp">Rp 5.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('es-teh','Es Teh Manis',5000,'🥤')">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stk" style="display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <p style="font-size:11px;color:var(--n500)">Keranjang</p>
+      <strong id="menu-cart-sum" style="font-size:13px">Tambahkan menu dulu...</strong>
+    </div>
+    <button class="btn bp2 bsm" onclick="go('keranjang')">Lanjut →</button>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 5: KERANJANG
+========================================= -->
+<div class="screen" id="s-keranjang">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('menu')">←</button>
+    <h1 class="hdr-title">Keranjang</h1>
+    <button class="ico-btn" onclick="Cart.clear();renderCart();Toast.show('Keranjang dikosongkan')">🗑</button>
+  </header>
+
+  <div class="page">
+    <div id="cart-empty" class="empty hid">
+      <div style="font-size:50px;margin-bottom:12px">🛒</div>
+      <h2 style="font-size:18px;margin-bottom:10px">Keranjang masih kosong</h2>
+      <p style="font-size:13px;color:var(--n500);margin-bottom:20px">
+        Tambahkan menu dari stan favoritmu
+      </p>
+      <button class="btn bp2" onclick="go('beranda')">Lihat Menu</button>
+    </div>
+
+    <div id="cart-content">
+      <div style="padding:16px;background:white">
+        <h3 style="font-size:14px;margin-bottom:10px">Menu yang dipesan</h3>
+      </div>
+
+      <div id="cart-items"></div>
+
+      <div class="sec" style="padding:16px;margin-top:8px">
+        <label for="catatan" class="fl">Catatan Pesanan</label>
+        <textarea id="catatan" class="fi2" rows="2" placeholder="Contoh: tanpa sambal"></textarea>
+      </div>
+
+      <div class="sec" style="padding:16px">
+        <h3 style="font-size:15px;margin-bottom:14px">Pilih Jam Ambil</h3>
+
+        <label style="display:block;margin-bottom:14px;font-size:13px">
+          <input type="radio" name="jam" value="12.15" checked>
+          <strong>12.15</strong> — Disarankan
+        </label>
+
+        <label style="display:block;margin-bottom:14px;font-size:13px">
+          <input type="radio" name="jam" value="12.45">
+          <strong>12.45</strong> — Sepi
+        </label>
+
+        <label style="display:block;font-size:13px;opacity:.5">
+          <input type="radio" name="jam" disabled>
+          <strong>13.15</strong> — Penuh
+        </label>
+      </div>
+
+      <div class="sec" style="padding:12px 0">
+        <div class="pr">
+          <span>Subtotal</span>
+          <strong id="cart-sub">Rp 0</strong>
+        </div>
+
+        <div class="pr total">
+          <span>Total</span>
+          <span id="cart-tot">Rp 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stk">
+    <button class="btn bs bfull" onclick="checkout()">Lanjut ke Pembayaran →</button>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni on" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
      SCREEN 6: PEMBAYARAN
-     ============================================================ -->
+========================================= -->
 <div class="screen" id="s-bayar">
   <header class="hdr">
-    <button class="ico-btn" onclick="go('keranjang')" style="font-size:20px">&#8592;</button>
+    <button class="ico-btn" onclick="go('keranjang')">←</button>
     <h1 class="hdr-title">Pembayaran</h1>
   </header>
-  <div class="page wh" style="overflow-y:auto">
-    <div style="text-align:center;padding:28px 16px 20px;background:var(--n0)">
-      <div style="font-size:12px;color:var(--n500);margin-bottom:4px">Total Bayar</div>
-      <div style="font-size:40px;font-weight:900;line-height:1" id="pay-total">Rp 0</div>
-      <div style="margin-top:12px"><span class="bdg by bp" style="font-size:13px;padding:8px 16px">&#8987; Bayar dalam <strong id="pay-timer">09:58</strong></span></div>
-    </div>
-    <div style="padding:14px 16px;background:var(--n0);border-bottom:1px solid var(--n100)">
-      <h2 style="font-size:14px;font-weight:700;margin-bottom:10px">Detail Pesanan</h2>
+
+  <div class="page">
+    <div class="sec" style="padding:16px">
+      <h3 style="margin-bottom:12px;font-size:15px">Ringkasan Pesanan</h3>
       <div id="pay-detail"></div>
-      <div class="pt"><span class="pl">Total</span><span class="pv" id="pay-tot2">Rp 0</span></div>
-    </div>
-    <div class="div"></div>
-    <div style="padding:12px 0 0">
-      <h2 style="font-size:14px;font-weight:700;padding:0 16px 10px">Metode Pembayaran</h2>
-      <div class="pi on" onclick="selectPay(this)">
-        <div class="pc" style="background:var(--gl)">&#128241;</div>
-        <div class="f1"><div class="pn">QRIS <span class="bdg bn" style="font-size:9px">Terakhir</span></div><div class="pd">GoPay, OVO, Dana, m-Banking</div></div>
-        <div class="prd"></div>
-      </div>
-      <div class="pi" onclick="selectPay(this)">
-        <div class="pc" style="background:var(--yl)">&#128155;</div>
-        <div class="f1"><div class="pn">Saldo e-Wallet</div><div class="pd">Terhubung &middot; Rp 84.000</div></div>
-        <div class="prd"></div>
-      </div>
-      <div class="pi" onclick="selectPay(this)">
-        <div class="pc" style="background:var(--n50)">&#128181;</div>
-        <div class="f1"><div class="pn">Tunai saat ambil</div><div class="pd">Bayar langsung ke penjual</div></div>
-        <div class="prd"></div>
+      <div class="pr total">
+        <span>Total Bayar</span>
+        <span id="pay-total">Rp 0</span>
       </div>
     </div>
-    <div class="al an2">&#128276; Sinyal lemah? Pesanan tetap tersimpan. Bisa bayar tunai saat ambil.</div>
-    <div style="height:80px"></div>
+
+    <div class="sec" style="padding:16px">
+      <h3 style="font-size:15px;margin-bottom:16px">Pilih Metode Pembayaran</h3>
+
+      <label style="display:block;margin-bottom:18px;font-size:14px">
+        <input type="radio" name="payment" value="qris" checked>
+        📱 QRIS
+      </label>
+
+      <label style="display:block;margin-bottom:18px;font-size:14px">
+        <input type="radio" name="payment" value="transfer">
+        🏦 Transfer Bank
+      </label>
+
+      <label style="display:block;font-size:14px">
+        <input type="radio" name="payment" value="tunai">
+        💵 Bayar di Kantin
+      </label>
+    </div>
   </div>
-  <div class="stk no-nav" style="border-top:1px solid var(--n200)">
-    <button class="btn bs bfull blg" id="pay-btn" onclick="doPay()">Bayar Sekarang</button>
-    <p style="text-align:center;font-size:11px;color:var(--n400);margin-top:8px">&#128274; Transaksi aman &middot; Terenkripsi SSL</p>
+
+  <div class="stk">
+    <p style="font-size:12px;color:var(--n500);margin-bottom:8px">Total Pembayaran</p>
+    <h2 id="pay-tot2" style="margin-bottom:16px">Rp 0</h2>
+    <button class="btn bs bfull" id="pay-btn" onclick="doPay()">Bayar Sekarang</button>
   </div>
 </div>
 
-<!-- ============================================================
+
+<!-- =========================================
      SCREEN 7: STATUS PESANAN
-     ============================================================ -->
+========================================= -->
 <div class="screen" id="s-status">
   <header class="hdr">
-    <button class="ico-btn" onclick="go('beranda')" style="font-size:20px">&#8592;</button>
-    <div class="f1"><div class="hdr-title">Pesanan #A-27</div><div class="hdr-sub">Stan A &ndash; Nasi &amp; Ayam</div></div>
+    <button class="ico-btn" onclick="go('beranda')">←</button>
+    <h1 class="hdr-title">Status Pesanan</h1>
   </header>
-  <div class="page wh" style="overflow-y:auto">
-    <div class="cdn" aria-live="polite">
-      <div style="font-size:13px;color:var(--n500);margin-bottom:4px">Siap dalam</div>
-      <div style="display:flex;align-items:baseline;justify-content:center;gap:6px">
-        <span class="cdnn" id="status-timer">8</span>
-        <span class="cdnu">menit</span>
+
+  <div class="page">
+    <div class="sec" style="text-align:center;padding:30px 16px">
+      <div style="font-size:48px;margin-bottom:14px">✅</div>
+      <h2 style="font-size:19px;margin-bottom:10px">Pesanan Diproses</h2>
+      <p style="font-size:13px;color:var(--n500)">
+        Pesanan kamu sedang disiapkan oleh penjual.
+      </p>
+    </div>
+
+    <div class="sec" style="text-align:center;padding:24px 16px">
+      <p style="font-size:13px;color:var(--n500)">Estimasi Siap Dalam</p>
+      <div id="status-timer" role="status"
+        style="font-size:52px;font-weight:900;margin:14px">
+        8:00
       </div>
-      <div style="margin:12px 0 6px"><div class="prg"><div class="pf" style="width:60%"></div></div></div>
-      <div class="cdnl">Slot 12.15 &middot; Stan A, Gedung B</div>
+      <span class="bdg green">Sedang disiapkan</span>
     </div>
-    <div class="sec" style="padding:0">
-      <h2 style="font-size:14px;font-weight:700;padding:12px 16px 0">Alur Pesanan</h2>
-      <div class="steps">
-        <div class="stp dn"><div class="sd2">&#10003;</div>Diterima</div>
-        <div class="stp dn"><div class="sd2">&#10003;</div>Konfirmasi</div>
-        <div class="stp ac"><div class="sd2"></div>Dimasak</div>
-        <div class="stp"><div class="sd2"></div>Siap</div>
-        <div class="stp"><div class="sd2"></div>Diambil</div>
-      </div>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:20px">Perjalanan Pesanan</h3>
+      <p style="margin-bottom:16px">✅ Pesanan diterima</p>
+      <p style="margin-bottom:16px">✅ Pembayaran dikonfirmasi</p>
+      <p style="margin-bottom:16px">🟡 Pesanan sedang dimasak</p>
+      <p style="color:var(--n400)">⚪ Siap diambil</p>
     </div>
-    <div class="div"></div>
-    <div style="text-align:center;padding:16px">
-      <h2 style="font-size:14px;font-weight:700;margin-bottom:14px">Kode Pengambilan</h2>
-      <div style="display:inline-block;border:3px solid var(--n900);border-radius:12px;padding:8px;margin-bottom:10px">
-        <svg width="104" height="104" viewBox="0 0 104 104" xmlns="http://www.w3.org/2000/svg" aria-label="Kode QR pesanan A-27">
-          <rect width="104" height="104" fill="white"/>
-          <rect x="6" y="6" width="28" height="28" rx="2" fill="#111827"/><rect x="10" y="10" width="20" height="20" rx="1" fill="white"/><rect x="14" y="14" width="12" height="12" rx="1" fill="#111827"/>
-          <rect x="70" y="6" width="28" height="28" rx="2" fill="#111827"/><rect x="74" y="10" width="20" height="20" rx="1" fill="white"/><rect x="78" y="14" width="12" height="12" rx="1" fill="#111827"/>
-          <rect x="6" y="70" width="28" height="28" rx="2" fill="#111827"/><rect x="10" y="74" width="20" height="20" rx="1" fill="white"/><rect x="14" y="78" width="12" height="12" rx="1" fill="#111827"/>
-          <rect x="40" y="6" width="6" height="6" fill="#111827"/><rect x="50" y="6" width="6" height="6" fill="#111827"/><rect x="60" y="6" width="6" height="6" fill="#111827"/>
-          <rect x="40" y="16" width="6" height="6" fill="#111827"/><rect x="50" y="16" width="6" height="6" fill="#111827"/>
-          <rect x="40" y="40" width="6" height="6" fill="#111827"/><rect x="52" y="40" width="6" height="6" fill="#111827"/><rect x="64" y="40" width="6" height="6" fill="#111827"/><rect x="76" y="40" width="6" height="6" fill="#111827"/><rect x="88" y="40" width="6" height="6" fill="#111827"/>
-          <rect x="40" y="52" width="6" height="6" fill="#111827"/><rect x="64" y="52" width="6" height="6" fill="#111827"/><rect x="88" y="52" width="6" height="6" fill="#111827"/>
-          <rect x="40" y="64" width="6" height="6" fill="#111827"/><rect x="52" y="64" width="6" height="6" fill="#111827"/><rect x="76" y="64" width="6" height="6" fill="#111827"/>
-          <rect x="52" y="76" width="6" height="6" fill="#111827"/><rect x="64" y="76" width="6" height="6" fill="#111827"/><rect x="88" y="76" width="6" height="6" fill="#111827"/>
-          <rect x="40" y="88" width="6" height="6" fill="#111827"/><rect x="76" y="88" width="6" height="6" fill="#111827"/><rect x="88" y="88" width="6" height="6" fill="#111827"/>
-        </svg>
-      </div>
-      <div style="font-size:26px;font-weight:900;letter-spacing:4px">A &ndash; 27</div>
-      <p style="font-size:12px;color:var(--n500);margin-top:6px">Tidak bisa scan? Tunjukkan nomor <strong>A-27</strong></p>
-    </div>
-    <div class="div"></div>
-    <div style="padding:14px 16px">
-      <h2 style="font-size:14px;font-weight:700;margin-bottom:10px">Detail Pesanan</h2>
-      <div class="pr"><span class="pl">Nasi Goreng Spesial &#215;1</span><span class="pv">Rp 15.000</span></div>
-      <div class="pr"><span class="pl">Ayam Geprek &#215;1</span><span class="pv">Rp 17.000</span></div>
-      <div class="pt"><span class="pl">Total</span><span class="pv">Rp 32.000</span></div>
-      <div class="pr"><span class="pl">Metode</span><span class="pv">QRIS &#9989; Lunas</span></div>
-    </div>
-    <div class="al ag2">&#128276; Kamu akan dapat notifikasi saat pesanan siap. Tenang, balik ke kelas dulu!</div>
-    <div style="padding:12px 16px 20px;display:flex;gap:10px">
-      <button class="btn bo" style="flex:1;height:40px;font-size:13px">Hubungi Stan</button>
-      <button class="btn bp2" style="flex:1;height:40px;font-size:13px" onclick="Modal.open('ratingM')">&#11088; Beri Rating</button>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:8px">Nomor Pesanan</h3>
+      <h2>#A-27</h2>
     </div>
   </div>
+
+  <div class="stk">
+    <button class="btn bp2 bfull" onclick="Modal.open('ratingM')">⭐ Beri Rating</button>
+  </div>
+
   <nav class="bnv">
-    <div class="bni" onclick="go('beranda')"><div class="bnic">&#127968;</div>Beranda</div>
-    <div class="bni" onclick="go('cari')"><div class="bnic">&#128269;</div>Cari</div>
-    <div class="bni" onclick="go('keranjang')"><div class="bnic" style="position:relative">&#128722;<span class="cb" id="cart-badge-s">0</span></div>Keranjang</div>
-    <div class="bni on" onclick="go('status')"><div class="bnic">&#128203;</div>Pesanan</div>
-    <div class="bni" onclick="Drawer.open()"><div class="bnic">&#9776;</div>Menu</div>
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni on" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
   </nav>
 </div>
 
-<!-- ============================================================
-     SCREEN 8: DASBOR STAN (PENJUAL)
-     ============================================================ -->
+
+<!-- =========================================
+     SCREEN 8: DASBOR PENJUAL
+========================================= -->
 <div class="screen" id="s-dasbor">
   <header class="hdr">
-    <button class="ham" id="ham2" onclick="Drawer.open()" aria-label="Buka menu"><span></span><span></span><span></span></button>
-    <div class="f1"><div class="hdr-title">Dasbor Stan A</div><div class="hdr-sub">Nasi &amp; Ayam &middot; Aktif</div></div>
-    <div style="width:36px;height:36px;border-radius:50%;background:var(--y);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--n900)">IK</div>
+    <button class="ham" onclick="Drawer.open()" aria-label="Buka menu" aria-expanded="false">☰</button>
+    <h1 class="hdr-title">Dasbor Stan</h1>
+    <button class="ico-btn" onclick="go('laporan')">📊</button>
   </header>
+
   <div class="page">
-    <div style="padding:12px 16px 8px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--n500);margin-bottom:8px">Status Operasi</div>
-      <div class="sp2" role="tablist">
-        <div class="spb s-op" data-st="s-op" onclick="setStatus(this,'Buka')" role="tab">&#9989; Buka</div>
-        <div class="spb" data-st="s-bz" onclick="setStatus(this,'Sibuk')" role="tab">&#128564; Sibuk</div>
-        <div class="spb" data-st="s-cl" onclick="setStatus(this,'Tutup')" role="tab">&#128308; Tutup</div>
-      </div>
+    <div class="sec" style="padding:16px">
+      <h2 style="font-size:18px;margin-bottom:8px">Stan A – Nasi & Ayam</h2>
+      <p style="font-size:13px;color:var(--n500);margin-bottom:14px">
+        Kelola pesanan dan status stan.
+      </p>
+
+      <label style="display:flex;align-items:center;gap:10px;font-size:14px">
+        <input id="stan-open" type="checkbox" checked onchange="toggleStan(this)">
+        Stan Buka
+      </label>
+
+      <span id="stan-status" class="bdg green" style="margin-top:12px">Buka</span>
     </div>
-    <div class="sec" style="border-radius:var(--rL);margin:0 16px 10px;overflow:hidden">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--n100)">
-        <div><div style="font-weight:600;font-size:14px">Waktu siap (menit)</div><div style="font-size:12px;color:var(--n500)">Estimasi untuk pelanggan</div></div>
-        <div class="qc"><button class="qb" onclick="adjTime(-5)">&#8722;</button><span class="qv" id="wv">10</span><button class="qb qbp" onclick="adjTime(5)">+</button></div>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px">
-        <div><div style="font-weight:600;font-size:14px">Terima pesanan baru</div><div style="font-size:12px;color:var(--n500)">Matikan jika dapur penuh</div></div>
-        <label class="tog"><input type="checkbox" checked onchange="Toast.show(this.checked?'Pesanan baru diterima':'Pesanan baru ditutup')"><div class="tt"></div><div class="th"></div></label>
-      </div>
-    </div>
+
     <div class="sts">
-      <div class="stc"><div class="stl">Pendapatan hari ini</div><div class="stv" style="font-size:18px">Rp 640rb</div><div class="stt">+12%</div></div>
-      <div class="stc"><div class="stl">Total Pesanan</div><div class="stv red">42</div><div class="stt">+8</div></div>
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Pesanan Baru</p>
+        <div class="stv" id="seller-new-count">2</div>
+      </div>
+
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Diproses</p>
+        <div class="stv" id="seller-process-count">0</div>
+      </div>
+
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Siap</p>
+        <div class="stv" id="seller-ready-count">0</div>
+      </div>
     </div>
-    <div class="al ay2">&#128293; Jam sibuk 12.00&ndash;13.00 &middot; 8 pesanan menunggu konfirmasi</div>
-    <!-- Order Filter Tabs -->
-    <div class="ct" role="tablist">
-      <button class="ctb on" onclick="switchOTab(this,'o-baru')" role="tab">Baru (2)</button>
-      <button class="ctb" onclick="switchOTab(this,'o-proses')" role="tab">Diproses (3)</button>
-      <button class="ctb" onclick="switchOTab(this,'o-siap')" role="tab">Siap (2)</button>
+
+    <div class="ct" id="order-tabs">
+      <button class="ctb on" data-order-tab="baru" onclick="switchOTab(this,'baru')">Baru</button>
+      <button class="ctb" data-order-tab="proses" onclick="switchOTab(this,'proses')">Diproses</button>
+      <button class="ctb" data-order-tab="siap" onclick="switchOTab(this,'siap')">Siap</button>
     </div>
-    <!-- Orders: Baru -->
-    <div id="o-baru">
-      <div class="oc"><div class="och"><span class="oct">#A-27 &middot; Febri Ramadhan</span><span class="bdg by bp">12.15 &middot; 1 mnt</span></div><div class="ocb"><div style="font-size:13px;color:var(--n500);margin-bottom:6px">Nasi Goreng &#215;1, Ayam Geprek &#215;1</div><div style="display:flex;justify-content:space-between"><div style="font-weight:800;font-size:15px">Rp 32.000</div><span class="bdg bg">QRIS &#9989; Lunas</span></div></div><div class="ocf"><button class="btn bo bsm" style="flex:1" onclick="rejOrd(this,'A-27')">Tolak</button><button class="btn bp2 bsm" style="flex:2" onclick="accOrd(this,'A-27')">&#10003; Terima</button></div></div>
-      <div class="oc"><div class="och"><span class="oct">#A-28 &middot; Putri Aulia</span><span class="bdg by bp">12.15 &middot; 2 mnt</span></div><div class="ocb"><div style="font-size:13px;color:var(--n500);margin-bottom:6px">Mie Goreng &#215;2</div><div style="display:flex;justify-content:space-between"><div style="font-weight:800;font-size:15px">Rp 26.000</div><span class="bdg bn">Tunai</span></div></div><div class="ocf"><button class="btn bo bsm" style="flex:1" onclick="rejOrd(this,'A-28')">Tolak</button><button class="btn bp2 bsm" style="flex:2" onclick="accOrd(this,'A-28')">&#10003; Terima</button></div></div>
+
+    <div id="seller-orders"></div>
+
+    <div class="sec" style="padding:16px">
+      <h3 style="font-size:15px;margin-bottom:12px">Estimasi Waktu Masak</h3>
+
+      <div style="display:flex;gap:14px;align-items:center">
+        <button class="qb" onclick="adjTime(-1)">−</button>
+        <strong><span id="wv">10</span> menit</strong>
+        <button class="qb plus" onclick="adjTime(1)">+</button>
+      </div>
     </div>
-    <div id="o-proses" class="hid">
-      <div class="oc"><div class="och"><span class="oct">#A-25 &middot; Rafi S.</span><span class="bdg y2 bp" style="background:var(--yl);color:#92640D;border:1px solid var(--yb)">Dimasak</span></div><div class="ocb"><div style="font-size:13px;color:var(--n500)">Es Teh &#215;2, Nasi Goreng &#215;1</div></div></div>
+
+    <div style="padding:16px">
+      <button class="btn bp2 bfull" onclick="Modal.open('scanM')">
+        📷 Konfirmasi Pengambilan
+      </button>
     </div>
-    <div id="o-siap" class="hid">
-      <div class="al ag2" style="margin:12px">&#9989; 2 pesanan siap diambil. Notifikasi sudah dikirim ke pelanggan.</div>
-    </div>
-    <div style="height:80px"></div>
   </div>
+
   <nav class="bnv">
-    <div class="bni on" onclick="go('dasbor')"><div class="bnic">&#127974;</div>Pesanan</div>
-    <div class="bni"><div class="bnic">&#128230;</div>Stok</div>
-    <div class="bni"><div class="bnic">&#128337;</div>Jadwal</div>
-    <div class="bni" onclick="go('laporan')"><div class="bnic">&#128202;</div>Laporan</div>
-    <div class="bni" onclick="Drawer.open()"><div class="bnic">&#9776;</div>Menu</div>
+    <div class="bni on" onclick="go('dasbor')"><div class="bnic">🏪</div>Dasbor</div>
+    <div class="bni" onclick="go('laporan')"><div class="bnic">📊</div>Laporan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
   </nav>
 </div>
 
-<!-- ============================================================
-     SCREEN 9: LAPORAN
-     ============================================================ -->
+
+<!-- =========================================
+     SCREEN 9: LAPORAN PENJUALAN
+========================================= -->
 <div class="screen" id="s-laporan">
   <header class="hdr">
-    <button class="ico-btn" onclick="go('dasbor')" style="font-size:20px">&#8592;</button>
-    <div class="hdr-title">Laporan Penjualan</div>
-    <button class="btn bsm bp2" style="flex-shrink:0;height:30px;padding:0 12px" onclick="Toast.show('Laporan berhasil diunduh')">&#128228; Ekspor</button>
+    <button class="ico-btn" onclick="go('dasbor')">←</button>
+    <h1 class="hdr-title">Laporan Penjualan</h1>
   </header>
+
   <div class="page">
-    <div class="ct" role="tablist">
-      <button class="ctb on" onclick="setPeriod(this,'hari')">Hari ini</button>
-      <button class="ctb" onclick="setPeriod(this,'minggu')">Minggu ini</button>
-      <button class="ctb" onclick="setPeriod(this,'bulan')">Bulan ini</button>
+    <div class="ct" id="report-tabs">
+      <button class="ctb on" onclick="setPeriod(this,'hari')">Hari Ini</button>
+      <button class="ctb" onclick="setPeriod(this,'minggu')">Minggu Ini</button>
+      <button class="ctb" onclick="setPeriod(this,'bulan')">Bulan Ini</button>
     </div>
+
     <div class="sts">
-      <div class="stc" style="border-color:var(--yb)"><div class="stl">Pendapatan</div><div class="stv" style="font-size:18px" id="rev">Rp 1,2 jt</div><div class="stt" id="revt">+12%</div></div>
-      <div class="stc" style="border-color:var(--yb)"><div class="stl">Total Pesanan</div><div class="stv red" id="ord">78</div><div class="stt" id="ordt">+8</div></div>
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Pendapatan</p>
+        <div class="stv" id="rev" style="font-size:20px">Rp 1,2 jt</div>
+        <span id="revt" class="bdg green">+12%</span>
+      </div>
+
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Total Pesanan</p>
+        <div class="stv" id="ord">78</div>
+        <span id="ordt" class="bdg green">+8 pesanan</span>
+      </div>
     </div>
-    <div class="sec" style="padding:14px 0 12px">
-      <h2 class="stit" style="padding:0 16px 10px">Pesanan per Jam</h2>
-      <div class="bc"><div class="bar" style="height:20%"></div><div class="bar" style="height:40%"></div><div class="bar hi" style="height:100%"></div><div class="bar hi" style="height:82%"></div><div class="bar" style="height:35%"></div><div class="bar" style="height:12%"></div></div>
-      <div class="bl"><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span></div>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:16px">Grafik Penjualan</h3>
+
+      <div class="bar-chart">
+        <div class="bar-col"><div class="bar" style="height:35px"></div>Sen</div>
+        <div class="bar-col"><div class="bar" style="height:70px"></div>Sel</div>
+        <div class="bar-col"><div class="bar" style="height:55px"></div>Rab</div>
+        <div class="bar-col"><div class="bar" style="height:85px"></div>Kam</div>
+        <div class="bar-col"><div class="bar" style="height:110px"></div>Jum</div>
+        <div class="bar-col"><div class="bar" style="height:80px"></div>Sab</div>
+        <div class="bar-col"><div class="bar" style="height:60px"></div>Min</div>
+      </div>
     </div>
-    <div class="sec" style="padding:14px 16px">
-      <h2 style="font-size:15px;font-weight:700;margin-bottom:12px">Menu Terlaris</h2>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--n100)"><div style="width:24px;height:24px;border-radius:50%;background:var(--y);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">1</div><div style="flex:1;font-weight:600;font-size:14px">Es Teh Manis</div><span class="bdg bd">41&#215;</span></div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--n100)"><div style="width:24px;height:24px;border-radius:50%;background:var(--n200);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">2</div><div style="flex:1;font-weight:600;font-size:14px">Nasi Goreng Spesial</div><span class="bdg bd">32&#215;</span></div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 0"><div style="width:24px;height:24px;border-radius:50%;background:var(--n100);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0">3</div><div style="flex:1;font-weight:600;font-size:14px">Ayam Geprek</div><span class="bdg bd">24&#215;</span></div>
-    </div>
-    <div class="sec" style="padding:14px 16px;margin-bottom:80px">
-      <h2 style="font-size:15px;font-weight:700;margin-bottom:10px">Rekap Pembayaran</h2>
-      <div class="pr"><span class="pl">QRIS</span><span class="pv">82% &middot; Rp 984.000</span></div>
-      <div class="pr"><span class="pl">Tunai saat ambil</span><span class="pv">18% &middot; Rp 216.000</span></div>
-      <div class="pt"><span class="pl">Total</span><span class="pv" style="color:var(--n900);font-size:16px" id="tot-rep">Rp 1.200.000</span></div>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:16px">Ringkasan Pendapatan</h3>
+
+      <div class="pr">
+        <span>Total Penjualan</span>
+        <strong id="tot-rep">Rp 1.200.000</strong>
+      </div>
+
+      <div class="pr">
+        <span>Menu Terlaris</span>
+        <strong>Nasi Goreng Spesial</strong>
+      </div>
     </div>
   </div>
+
   <nav class="bnv">
-    <div class="bni" onclick="go('dasbor')"><div class="bnic">&#127974;</div>Pesanan</div>
-    <div class="bni"><div class="bnic">&#128230;</div>Stok</div>
-    <div class="bni"><div class="bnic">&#128337;</div>Jadwal</div>
-    <div class="bni on" onclick="go('laporan')"><div class="bnic">&#128202;</div>Laporan</div>
-    <div class="bni" onclick="Drawer.open()"><div class="bnic">&#9776;</div>Menu</div>
+    <div class="bni" onclick="go('dasbor')"><div class="bnic">🏪</div>Dasbor</div>
+    <div class="bni on" onclick="go('laporan')"><div class="bnic">📊</div>Laporan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
   </nav>
 </div>
 
-<!-- ============================================================
-     MODALS (shared, always in DOM)
-     ============================================================ -->
-<!-- Rating Modal -->
-<div class="mb" id="ratingM" role="dialog" aria-modal="true" aria-label="Form rating pesanan" onclick="if(event.target===this)Modal.close('ratingM')">
-  <div class="ms">
-    <div class="mh"></div>
-    <div class="mt">&#11088; Beri Rating Pesanan</div>
-    <div style="padding:0 16px">
-      <div style="display:flex;justify-content:center;gap:8px;margin-bottom:20px" role="group" aria-label="Pilih bintang">
-        <span class="star" onclick="setStar(1)">&#9734;</span><span class="star" onclick="setStar(2)">&#9734;</span><span class="star" onclick="setStar(3)">&#9734;</span><span class="star" onclick="setStar(4)">&#9734;</span><span class="star" onclick="setStar(5)">&#9734;</span>
-      </div>
-      <div class="fg">
-        <label class="fl" for="ulasan">Ceritakan pengalamanmu</label>
-        <textarea id="ulasan" style="width:100%;border:1.5px solid var(--n200);border-radius:var(--rM);padding:10px 14px;font-family:var(--F);font-size:14px;resize:none;outline:none" rows="3" placeholder="Makanannya enak dan cepat..."></textarea>
-      </div>
-      <button class="btn bs bfull" onclick="submitRating()">Kirim Rating</button>
-    </div>
-  </div>
-</div>
-<input type="hidden" id="star-val" value="0">
 
-<!-- Scan Modal -->
-<div class="mb" id="scanM" role="dialog" aria-modal="true" onclick="if(event.target===this)Modal.close('scanM')">
+<!-- =========================================
+     MODAL RATING
+========================================= -->
+<div class="mb" id="ratingM" role="dialog" aria-modal="true"
+     onclick="if(event.target===this)Modal.close('ratingM')">
   <div class="ms">
-    <div class="mh"></div>
-    <div class="mt">&#128247; Scan Tiket</div>
-    <div style="padding:0 16px 20px">
-      <p style="color:var(--n500);margin-bottom:16px">Masukkan nomor pesanan pelanggan</p>
-      <div style="display:flex;gap:8px;margin-bottom:16px">
-        <input class="fi2" id="scan-in" placeholder="cth: A-27" style="flex:1">
-        <button class="btn bp2 bsm" style="flex-shrink:0;padding:0 16px;height:52px" onclick="confirmScan()">Konfirmasi</button>
-      </div>
-      <button class="btn bo bfull" onclick="Modal.close('scanM')">Tutup</button>
+    <h2 style="font-size:20px;margin-bottom:12px">⭐ Beri Rating Pesanan</h2>
+
+    <p style="font-size:13px;color:var(--n500);margin-bottom:16px">
+      Bagaimana pengalaman pesan makananmu?
+    </p>
+
+    <div id="rating-stars" style="text-align:center;margin:20px 0">
+      <button class="star" onclick="setStar(1)">☆</button>
+      <button class="star" onclick="setStar(2)">☆</button>
+      <button class="star" onclick="setStar(3)">☆</button>
+      <button class="star" onclick="setStar(4)">☆</button>
+      <button class="star" onclick="setStar(5)">☆</button>
     </div>
+
+    <textarea class="fi2" id="rating-comment" rows="3"
+      placeholder="Tulis ulasan kamu..."></textarea>
+
+    <button class="btn bs bfull" style="margin-top:16px" onclick="submitRating()">
+      Kirim Rating
+    </button>
+
+    <button class="btn bo bfull" style="margin-top:10px"
+      onclick="Modal.close('ratingM')">
+      Batal
+    </button>
   </div>
 </div>
 
-</div><!-- .app -->
-</div><!-- .wrap -->
+
+<!-- =========================================
+     MODAL KONFIRMASI PESANAN
+========================================= -->
+<div class="mb" id="scanM" role="dialog" aria-modal="true"
+     onclick="if(event.target===this)Modal.close('scanM')">
+  <div class="ms">
+    <h2 style="font-size:20px;margin-bottom:16px">📷 Konfirmasi Pengambilan</h2>
+
+    <label for="scan-in" class="fl">Nomor Pesanan</label>
+    <input class="fi2" id="scan-in" placeholder="Contoh: A-27">
+
+    <button class="btn bp2 bfull" style="margin-top:16px"
+      onclick="confirmScan()">
+      Konfirmasi
+    </button>
+
+    <button class="btn bo bfull" style="margin-top:10px"
+      onclick="Modal.close('scanM')">
+      Tutup
+    </button>
+  </div>
+</div>
+
+</div>
+</div>
+
 
 <script>
 'use strict';
 
-/* ── ROUTER ─────────────────────────────────────────────────── */
+/* ==============================================
+   ROUTER / NAVIGASI
+============================================== */
+
 function go(id) {
-  document.querySelectorAll('.screen').forEach(s => {
-    s.classList.remove('on');
-    const p = s.querySelector('.page');
-    if (p) p.scrollTop = 0;
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.remove('on');
   });
-  const t = document.getElementById('s-' + id);
-  if (t) t.classList.add('on');
+
+  const tujuan = document.getElementById('s-' + id);
+
+  if (!tujuan) {
+    console.error('Halaman tidak ditemukan:', id);
+    return;
+  }
+
+  tujuan.classList.add('on');
   Drawer.close();
-  // Page-specific init
+
+  const page = tujuan.querySelector('.page');
+  if (page) page.scrollTop = 0;
+
+  if (id === 'cari') searchMenus();
   if (id === 'keranjang') renderCart();
+  if (id === 'menu') updateMenuCartSummary();
   if (id === 'bayar') initPayPage();
   if (id === 'status') startStatusTimer();
-  if (id === 'menu') updateMenuCartSummary();
+  if (id === 'dasbor') renderOrders();
+
+  if (id === 'login') {
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = false;
+    btn.textContent = 'Masuk';
+  }
 }
 
-/* ── CART ───────────────────────────────────────────────────── */
+/* ==============================================
+   TOAST
+============================================== */
+
+const Toast = {
+  show(message) {
+    const container = document.getElementById('tc');
+    const toast = document.createElement('div');
+
+    toast.className = 'toast';
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+};
+
+/* ==============================================
+   DRAWER / HAMBURGER
+============================================== */
+
+const Drawer = {
+  open() {
+    document.getElementById('drw').classList.add('on');
+    document.getElementById('ov').classList.add('on');
+    document.body.style.overflow = 'hidden';
+
+    document.querySelectorAll('.ham').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'true');
+    });
+  },
+
+  close() {
+    document.getElementById('drw').classList.remove('on');
+    document.getElementById('ov').classList.remove('on');
+    document.body.style.overflow = '';
+
+    document.querySelectorAll('.ham').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+};
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    Drawer.close();
+    document.querySelectorAll('.mb.on').forEach(modal => {
+      Modal.close(modal.id);
+    });
+  }
+});
+
+/* ==============================================
+   PENCARIAN MENU - SUDAH DIPERBAIKI
+============================================== */
+
+function searchMenus() {
+  const input = document.getElementById('search-input');
+
+  if (!input) return;
+
+  const keyword = input.value
+    .trim()
+    .toLocaleLowerCase('id-ID');
+
+  const activeTab = document.querySelector(
+    '#search-tabs .ctb.on'
+  );
+
+  const category = activeTab
+    ? activeTab.dataset.cat2
+    : 'semua';
+
+  const items = document.querySelectorAll(
+    '#search-menu-list .mi[data-cat2]'
+  );
+
+  let total = 0;
+
+  items.forEach(item => {
+    const nama = item.querySelector('.mn')
+      .textContent
+      .toLocaleLowerCase('id-ID');
+
+    const detail = item.querySelector('.md')
+      .textContent
+      .toLocaleLowerCase('id-ID');
+
+    const kategori = item.dataset.cat2.split(' ');
+
+    const cocokKeyword =
+      nama.includes(keyword) ||
+      detail.includes(keyword);
+
+    const cocokKategori =
+      category === 'semua' ||
+      kategori.includes(category);
+
+    const tampil = cocokKeyword && cocokKategori;
+
+    item.classList.toggle('hid', !tampil);
+
+    if (tampil) total++;
+  });
+
+  document.getElementById('search-count').textContent =
+    total + ' menu ditemukan';
+
+  const noResult = document.getElementById('no-res2');
+
+  noResult.classList.toggle('hid', total > 0);
+
+  if (total === 0) {
+    noResult.textContent = keyword
+      ? 'Tidak ditemukan menu untuk "' + input.value.trim() + '".'
+      : 'Tidak ada menu untuk filter ini.';
+  }
+}
+
+function filterSearch(button) {
+  document.querySelectorAll('#search-tabs .ctb')
+    .forEach(tab => {
+      tab.classList.remove('on');
+      tab.setAttribute('aria-selected', 'false');
+    });
+
+  button.classList.add('on');
+  button.setAttribute('aria-selected', 'true');
+
+  searchMenus();
+}
+
+/* ==============================================
+   FILTER BERANDA
+============================================== */
+
+function filterMenu(button) {
+  const category = button.dataset.cat;
+
+  document.querySelectorAll('#home-tabs .ctb')
+    .forEach(tab => tab.classList.remove('on'));
+
+  button.classList.add('on');
+
+  let total = 0;
+
+  document.querySelectorAll(
+    '#s-beranda .mi[data-cat]'
+  ).forEach(item => {
+    const categories = item.dataset.cat.split(' ');
+    const cocok =
+      category === 'semua' ||
+      categories.includes(category);
+
+    item.classList.toggle('hid', !cocok);
+
+    if (cocok) total++;
+  });
+
+  document.getElementById('no-res')
+    .classList.toggle('hid', total > 0);
+}
+
+/* ==============================================
+   FILTER MENU STAN
+============================================== */
+
+function filterMenu3(button) {
+  const category = button.dataset.cat3;
+
+  document.querySelectorAll('#stan-tabs .ctb')
+    .forEach(tab => tab.classList.remove('on'));
+
+  button.classList.add('on');
+
+  document.querySelectorAll(
+    '#stan-menu-list .mi[data-cat3]'
+  ).forEach(item => {
+    const categories = item.dataset.cat3.split(' ');
+
+    const cocok =
+      category === 'semua' ||
+      categories.includes(category);
+
+    item.classList.toggle('hid', !cocok);
+  });
+}
+
+/* ==============================================
+   KERANJANG DENGAN LOCALSTORAGE
+============================================== */
+
 const Cart = {
   items: [],
+
   init() {
-    try { this.items = JSON.parse(localStorage.getItem('kk-cart')||'[]'); } catch(e){this.items=[];}
+    try {
+      const data = JSON.parse(
+        localStorage.getItem('kk-cart') || '[]'
+      );
+
+      this.items = Array.isArray(data) ? data : [];
+    } catch (error) {
+      this.items = [];
+    }
+
     this.refreshBadges();
   },
+
   add(id, name, price, emoji) {
-    const ex = this.items.find(i=>i.id===id);
-    if (ex) ex.qty++;
-    else this.items.push({id, name, price:+price, emoji:emoji||'&#127859;', qty:1});
-    this.save(); this.refreshBadges();
-    Toast.show(name+' ditambahkan ke keranjang');
+    const existing = this.items.find(item => item.id === id);
+
+    if (existing) {
+      existing.qty++;
+    } else {
+      this.items.push({
+        id,
+        name,
+        price: Number(price),
+        emoji,
+        qty: 1
+      });
+    }
+
+    this.save();
+    this.refreshBadges();
     updateMenuCartSummary();
+
+    Toast.show(name + ' ditambahkan ke keranjang');
   },
-  updateQty(id, d) {
-    const item = this.items.find(i=>i.id===id);
+
+  updateQty(id, delta) {
+    const item = this.items.find(item => item.id === id);
+
     if (!item) return;
-    item.qty = Math.max(0, item.qty + d);
-    if (item.qty===0) this.remove(id, true);
-    else { this.save(); this.refreshBadges(); renderCart(); }
+
+    item.qty += delta;
+
+    if (item.qty <= 0) {
+      this.items = this.items.filter(item => item.id !== id);
+    }
+
+    this.save();
+    this.refreshBadges();
+    renderCart();
   },
-  remove(id, silent) {
-    this.items = this.items.filter(i=>i.id!==id);
-    this.save(); this.refreshBadges(); renderCart();
-    if (!silent) Toast.show('Item dihapus dari keranjang');
+
+  remove(id) {
+    this.items = this.items.filter(item => item.id !== id);
+    this.save();
+    this.refreshBadges();
+    renderCart();
   },
-  clear() { this.items=[]; this.save(); this.refreshBadges(); },
-  getCount() { return this.items.reduce((s,i)=>s+i.qty,0); },
-  getTotal() { return this.items.reduce((s,i)=>s+i.price*i.qty,0); },
-  fmt(n) { return 'Rp '+(n||0).toLocaleString('id-ID'); },
-  save() { try{localStorage.setItem('kk-cart',JSON.stringify(this.items));}catch(e){} },
+
+  clear() {
+    this.items = [];
+    this.save();
+    this.refreshBadges();
+  },
+
+  getCount() {
+    return this.items.reduce(
+      (total, item) => total + item.qty,
+      0
+    );
+  },
+
+  getTotal() {
+    return this.items.reduce(
+      (total, item) => total + item.price * item.qty,
+      0
+    );
+  },
+
+  fmt(number) {
+    return 'Rp ' + Number(number).toLocaleString('id-ID');
+  },
+
+  save() {
+    try {
+      localStorage.setItem(
+        'kk-cart',
+        JSON.stringify(this.items)
+      );
+    } catch (error) {
+      console.warn('Keranjang tidak dapat disimpan.');
+    }
+  },
+
   refreshBadges() {
-    const n = this.getCount();
-    document.querySelectorAll('.cb').forEach(el=>{el.textContent=n;el.classList.toggle('on',n>0);});
+    const count = this.getCount();
+
+    document.querySelectorAll('.cb').forEach(badge => {
+      badge.textContent = count;
+      badge.classList.toggle('on', count > 0);
+    });
   }
 };
 
 function renderCart() {
   const empty = document.getElementById('cart-empty');
   const content = document.getElementById('cart-content');
-  const itemsEl = document.getElementById('cart-items');
-  if (!itemsEl) return;
-  if (Cart.items.length===0) {
-    if(empty) empty.classList.remove('hid');
-    if(content) content.classList.add('hid');
+  const container = document.getElementById('cart-items');
+
+  if (Cart.items.length === 0) {
+    empty.classList.remove('hid');
+    content.classList.add('hid');
     return;
   }
-  if(empty) empty.classList.add('hid');
-  if(content) content.classList.remove('hid');
-  itemsEl.innerHTML = Cart.items.map(item=>`
-    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--n100)">
-      <div style="font-size:24px">${item.emoji}</div>
-      <div style="flex:1"><div style="font-weight:700;font-size:14px">${item.name}</div><div style="font-size:12px;color:var(--n500)">${Cart.fmt(item.price)}</div></div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="qb" onclick="Cart.updateQty('${item.id}',-1)">&#8722;</button>
-        <span class="qv">${item.qty}</span>
-        <button class="qb qbp" onclick="Cart.updateQty('${item.id}',1)">+</button>
-      </div>
-      <div style="font-weight:700;font-size:14px;min-width:72px;text-align:right">${Cart.fmt(item.price*item.qty)}</div>
-    </div>`).join('');
-  const tot = Cart.getTotal();
-  const sub = document.getElementById('cart-sub');
-  const grand = document.getElementById('cart-tot');
-  if(sub) sub.textContent = Cart.fmt(tot);
-  if(grand) grand.textContent = Cart.fmt(tot);
+
+  empty.classList.add('hid');
+  content.classList.remove('hid');
+
+  container.innerHTML = '';
+
+  Cart.items.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'cart-row';
+
+    const icon = document.createElement('span');
+    icon.style.fontSize = '25px';
+    icon.textContent = item.emoji;
+
+    const info = document.createElement('div');
+    info.style.flex = '1';
+
+    const name = document.createElement('strong');
+    name.style.fontSize = '13px';
+    name.textContent = item.name;
+
+    const price = document.createElement('p');
+    price.style.fontSize = '12px';
+    price.style.color = 'var(--n500)';
+    price.textContent = Cart.fmt(item.price);
+
+    info.append(name, price);
+
+    const minus = document.createElement('button');
+    minus.className = 'qb';
+    minus.textContent = '−';
+    minus.addEventListener('click', () => {
+      Cart.updateQty(item.id, -1);
+    });
+
+    const quantity = document.createElement('strong');
+    quantity.textContent = item.qty;
+
+    const plus = document.createElement('button');
+    plus.className = 'qb plus';
+    plus.textContent = '+';
+    plus.addEventListener('click', () => {
+      Cart.updateQty(item.id, 1);
+    });
+
+    row.append(icon, info, minus, quantity, plus);
+    container.appendChild(row);
+  });
+
+  document.getElementById('cart-sub').textContent =
+    Cart.fmt(Cart.getTotal());
+
+  document.getElementById('cart-tot').textContent =
+    Cart.fmt(Cart.getTotal());
 }
 
 function updateMenuCartSummary() {
-  const el = document.getElementById('menu-cart-sum');
-  if (!el) return;
-  const n = Cart.getCount(), t = Cart.getTotal();
-  el.textContent = n>0 ? n+' item \u00B7 '+Cart.fmt(t) : 'Tambahkan menu dulu...';
-}
+  const element = document.getElementById('menu-cart-sum');
 
-/* ── DRAWER ─────────────────────────────────────────────────── */
-const Drawer = {
-  open() {
-    document.getElementById('drw').classList.add('on');
-    document.getElementById('ov').classList.add('on');
-    document.querySelectorAll('.ham').forEach(h=>h.classList.add('on'));
-    document.body.style.overflow='hidden';
-  },
-  close() {
-    document.getElementById('drw').classList.remove('on');
-    document.getElementById('ov').classList.remove('on');
-    document.querySelectorAll('.ham').forEach(h=>h.classList.remove('on'));
-    document.body.style.overflow='';
+  if (Cart.getCount() === 0) {
+    element.textContent = 'Tambahkan menu dulu...';
+  } else {
+    element.textContent =
+      Cart.getCount() + ' item · ' +
+      Cart.fmt(Cart.getTotal());
   }
-};
-document.addEventListener('keydown', e => { if(e.key==='Escape') Drawer.close(); });
+}
 
-/* ── TOAST ──────────────────────────────────────────────────── */
-const Toast = {
-  show(msg, type) {
-    const tc = document.getElementById('tc');
-    if (!tc) return;
-    const t = document.createElement('div');
-    t.className = 'toast'+(type==='err'?' err':'');
-    t.innerHTML = '<span>'+(type==='err'?'&#9888;':'&#10003;')+'</span>'+msg;
-    tc.appendChild(t);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('on')));
-    setTimeout(()=>{t.classList.remove('on');setTimeout(()=>t.remove(),350);},3000);
+function checkout() {
+  if (Cart.getCount() === 0) {
+    Toast.show('Keranjang masih kosong.');
+    return;
   }
-};
 
-/* ── MODAL ──────────────────────────────────────────────────── */
-const Modal = {
-  open(id) { document.getElementById(id).classList.add('on'); document.body.style.overflow='hidden'; },
-  close(id) { document.getElementById(id).classList.remove('on'); document.body.style.overflow=''; }
-};
-
-/* ── CATEGORY FILTER (Beranda) ──────────────────────────────── */
-function filterMenu(el) {
-  const cat = el.dataset.cat;
-  document.querySelectorAll('[data-cat]').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('[data-cat]').forEach(item=>{
-    if (item===el) return;
-    const match = !cat || cat==='semua' || item.dataset.cat.split(' ').includes(cat);
-    item.classList.toggle('hid', !match);
-  });
-  const any = document.querySelectorAll('[data-cat]:not(.ctb):not(.hid)').length>0;
-  const nr = document.getElementById('no-res');
-  if(nr) nr.classList.toggle('hid', any);
+  go('bayar');
 }
 
-/* ── CATEGORY FILTER (Cari) ─────────────────────────────────── */
-function filterSearch(el) {
-  const cat = el.dataset.cat2;
-  document.querySelectorAll('[data-cat2]').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('[data-cat2]').forEach(item=>{
-    if(item===el) return;
-    const match = !cat || cat==='semua' || item.dataset.cat2.split(' ').includes(cat);
-    item.classList.toggle('hid', !match);
-  });
-  const any = document.querySelectorAll('[data-cat2]:not(.ctb):not(.hid)').length>0;
-  const nr = document.getElementById('no-res2');
-  if(nr) nr.classList.toggle('hid', any);
-}
+/* ==============================================
+   LOGIN VALIDATION
+============================================== */
 
-/* ── CATEGORY FILTER (Menu Stan) ────────────────────────────── */
-function filterMenu3(el) {
-  const cat = el.dataset.cat3;
-  document.querySelectorAll('[data-cat3]').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('[data-cat3]').forEach(item=>{
-    if(item===el) return;
-    const match = !cat || cat==='semua' || item.dataset.cat3.split(' ').includes(cat);
-    item.classList.toggle('hid', !match);
-  });
-}
+document.getElementById('loginForm')
+  .addEventListener('submit', function(event) {
+    event.preventDefault();
 
-/* ── LOGIN FORM VALIDATION ──────────────────────────────────── */
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const nim = document.getElementById('nim');
-  const pw = document.getElementById('pw');
-  let ok = true;
-  const eNim = document.getElementById('e-nim');
-  const ePw = document.getElementById('e-pw');
-  if (!nim.value.trim()) { nim.classList.add('err'); eNim.classList.add('on'); ok=false; }
-  else { nim.classList.remove('err'); eNim.classList.remove('on'); }
-  if (pw.value.length < 6) { pw.classList.add('err'); ePw.classList.add('on'); ok=false; }
-  else { pw.classList.remove('err'); ePw.classList.remove('on'); }
-  if (ok) {
+    const nim = document.getElementById('nim');
+    const pw = document.getElementById('pw');
+
+    const validNim = nim.value.trim() !== '';
+    const validPw = pw.value.length >= 6;
+
+    document.getElementById('e-nim')
+      .classList.toggle('on', !validNim);
+
+    document.getElementById('e-pw')
+      .classList.toggle('on', !validPw);
+
+    if (!validNim || !validPw) return;
+
     const btn = document.getElementById('loginBtn');
-    btn.textContent='Masuk...'; btn.disabled=true;
-    setTimeout(()=>go('beranda'),800);
-  }
-});
+
+    btn.disabled = true;
+    btn.textContent = 'Masuk...';
+
+    setTimeout(() => {
+      go('beranda');
+    }, 600);
+  });
+
 function togglePw() {
   const pw = document.getElementById('pw');
-  const sw = document.getElementById('showpw');
-  if(pw.type==='password'){pw.type='text';sw.textContent='Sembunyikan';}
-  else{pw.type='password';sw.textContent='Lihat';}
+
+  pw.type = pw.type === 'password'
+    ? 'text'
+    : 'password';
 }
 
-/* ── PAYMENT PAGE ───────────────────────────────────────────── */
+/* ==============================================
+   PEMBAYARAN
+============================================== */
+
 function initPayPage() {
-  const el = document.getElementById('pay-total');
-  const el2 = document.getElementById('pay-tot2');
-  const det = document.getElementById('pay-detail');
-  const tot = Cart.getTotal()||32000;
-  if(el) el.textContent = Cart.fmt(tot);
-  if(el2) el2.textContent = Cart.fmt(tot);
-  if(det) {
-    const items = Cart.items.length>0 ? Cart.items : [{name:'Nasi Goreng Spesial',price:15000,qty:1},{name:'Ayam Geprek',price:17000,qty:1}];
-    det.innerHTML = items.map(i=>`<div class="pr"><span class="pl">${i.name} &#215;${i.qty}</span><span class="pv">${Cart.fmt(i.price*i.qty)}</span></div>`).join('');
-  }
-}
-function selectPay(el) {
-  document.querySelectorAll('.pi').forEach(i=>{i.classList.remove('on');i.setAttribute('aria-checked','false');});
-  el.classList.add('on'); el.setAttribute('aria-checked','true');
-}
-function doPay() {
-  const btn = document.getElementById('pay-btn');
-  btn.textContent='Memproses...'; btn.disabled=true;
-  setTimeout(()=>{Cart.clear();go('status');},1000);
+  const detail = document.getElementById('pay-detail');
+
+  detail.innerHTML = '';
+
+  Cart.items.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'pr';
+
+    const name = document.createElement('span');
+    name.textContent = item.name + ' × ' + item.qty;
+
+    const price = document.createElement('strong');
+    price.textContent = Cart.fmt(item.price * item.qty);
+
+    row.append(name, price);
+    detail.appendChild(row);
+  });
+
+  document.getElementById('pay-total').textContent =
+    Cart.fmt(Cart.getTotal());
+
+  document.getElementById('pay-tot2').textContent =
+    Cart.fmt(Cart.getTotal());
 }
 
-/* ── STATUS TIMER ───────────────────────────────────────────── */
-let statusInterval = null;
-function startStatusTimer() {
-  const el = document.getElementById('status-timer');
-  if (!el) return;
-  if (statusInterval) clearInterval(statusInterval);
-  let secs = 480;
-  function update() {
-    const m=Math.floor(secs/60), s=secs%60;
-    el.textContent = m>0 ? m+':'+String(s).padStart(2,'0') : String(s);
-    if(secs>0) secs--;
+function doPay() {
+  if (Cart.getCount() === 0) {
+    Toast.show('Tidak ada pesanan untuk dibayar.');
+    return;
   }
+
+  const btn = document.getElementById('pay-btn');
+
+  btn.disabled = true;
+  btn.textContent = 'Memproses...';
+
+  setTimeout(() => {
+    Cart.clear();
+
+    btn.disabled = false;
+    btn.textContent = 'Bayar Sekarang';
+
+    go('status');
+    Toast.show('Pembayaran berhasil diproses!');
+  }, 800);
+}
+
+/* ==============================================
+   STATUS PESANAN
+============================================== */
+
+let statusInterval = null;
+let statusSeconds = 480;
+
+function startStatusTimer() {
+  const element = document.getElementById('status-timer');
+
+  if (statusInterval) {
+    clearInterval(statusInterval);
+  }
+
+  function update() {
+    const minutes = Math.floor(statusSeconds / 60);
+    const seconds = statusSeconds % 60;
+
+    element.textContent =
+      minutes + ':' + String(seconds).padStart(2, '0');
+
+    if (statusSeconds > 0) {
+      statusSeconds--;
+    }
+  }
+
   update();
+
   statusInterval = setInterval(update, 1000);
 }
 
-/* ── RATING MODAL ───────────────────────────────────────────── */
-let starVal = 0;
-function setStar(n) {
-  starVal = n;
-  document.getElementById('star-val').value = n;
-  document.querySelectorAll('.star').forEach((s,i)=>{
-    s.textContent = i<n ? '\u2605' : '\u2606';
-    s.style.color = i<n ? 'var(--y)' : 'var(--n300)';
-  });
-}
-function submitRating() {
-  if(!starVal){Toast.show('Pilih rating terlebih dahulu','err');return;}
-  Modal.close('ratingM'); Toast.show('Rating berhasil dikirim! Terima kasih');
-  setStar(0);
-}
+/* ==============================================
+   MODAL DAN RATING
+============================================== */
 
-/* ── SELLER FUNCTIONS ───────────────────────────────────────── */
-let waktuVal = 10;
-function adjTime(d) {
-  waktuVal = Math.max(1, Math.min(60, waktuVal+d));
-  const el = document.getElementById('wv');
-  if(el) el.textContent=waktuVal;
-  Toast.show('Estimasi waktu: '+waktuVal+' menit');
-}
-function setStatus(el, label) {
-  document.querySelectorAll('.spb').forEach(t=>t.classList.remove('s-op','s-bz','s-cl'));
-  el.classList.add(el.dataset.st);
-  Toast.show('Status stan diubah: '+label);
-}
-function switchOTab(el, panelId) {
-  document.querySelectorAll('.ct .ctb').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  ['o-baru','o-proses','o-siap'].forEach(id=>{
-    const p=document.getElementById(id);
-    if(p) p.classList.toggle('hid', id!==panelId);
-  });
-}
-function accOrd(btn, id) { btn.closest('.oc').remove(); Toast.show('Pesanan #'+id+' diterima'); }
-function rejOrd(btn, id) {
-  if(confirm('Tolak pesanan #'+id+'?')) {btn.closest('.oc').remove(); Toast.show('Pesanan #'+id+' ditolak','err');}
-}
-function confirmScan() {
-  const v = document.getElementById('scan-in').value.trim();
-  if(!v){Toast.show('Masukkan nomor pesanan','err');return;}
-  Modal.close('scanM'); Toast.show('Pesanan '+v+' dikonfirmasi selesai diambil');
-}
+const Modal = {
+  open(id) {
+    document.getElementById(id).classList.add('on');
+    document.body.style.overflow = 'hidden';
+  },
 
-/* ── LAPORAN PERIOD FILTER ──────────────────────────────────── */
-const periods = {
-  'hari':  {rev:'Rp 1,2 jt', revt:'+12%', ord:'78', ordt:'+8 pesanan', tot:'Rp 1.200.000'},
-  'minggu':{rev:'Rp 7,4 jt', revt:'+5%',  ord:'412',ordt:'+22 pesanan',tot:'Rp 7.400.000'},
-  'bulan': {rev:'Rp 28 jt',  revt:'+18%', ord:'1.680',ordt:'+120',     tot:'Rp 28.000.000'},
+  close(id) {
+    document.getElementById(id).classList.remove('on');
+    document.body.style.overflow = '';
+  }
 };
-function setPeriod(el, key) {
-  document.querySelectorAll('#s-laporan .ctb').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  const d = periods[key];
-  ['rev','revt','ord','ordt','tot-rep'].forEach(id=>{
-    const e=document.getElementById(id);
-    if(e) e.textContent=d[id.replace('-rep','')||id]||d.tot;
-  });
-  document.getElementById('rev').textContent=d.rev;
-  document.getElementById('revt').textContent=d.revt;
-  document.getElementById('ord').textContent=d.ord;
-  document.getElementById('ordt').textContent=d.ordt;
-  document.getElementById('tot-rep').textContent=d.tot;
-  Toast.show('Data periode diperbarui');
+
+let starVal = 0;
+
+function setStar(value) {
+  starVal = value;
+
+  document.querySelectorAll('#rating-stars .star')
+    .forEach((star, index) => {
+      const active = index < value;
+      star.textContent = active ? '★' : '☆';
+      star.style.color = active ? 'var(--y)' : 'var(--n300)';
+    });
 }
 
-/* ── INIT ───────────────────────────────────────────────────── */
+function submitRating() {
+  if (starVal === 0) {
+    Toast.show('Pilih rating terlebih dahulu.');
+    return;
+  }
+
+  Modal.close('ratingM');
+  Toast.show('Terima kasih! Rating berhasil dikirim.');
+
+  setStar(0);
+  document.getElementById('rating-comment').value = '';
+}
+
+/* ==============================================
+   DASBOR PENJUAL
+============================================== */
+
+let waktuVal = 10;
+
+function adjTime(delta) {
+  waktuVal = Math.max(1, Math.min(60, waktuVal + delta));
+
+  document.getElementById('wv').textContent = waktuVal;
+}
+
+function toggleStan(input) {
+  const label = document.getElementById('stan-status');
+
+  label.textContent = input.checked ? 'Buka' : 'Tutup';
+  label.className = input.checked
+    ? 'bdg green'
+    : 'bdg red';
+
+  Toast.show(
+    input.checked
+      ? 'Stan sekarang buka.'
+      : 'Stan sekarang tutup.'
+  );
+}
+
+let activeOrderTab = 'baru';
+
+let sellerOrders = [
+  {
+    id: 'A-27',
+    name: 'Febri Ramadhan',
+    menu: 'Nasi Goreng Spesial × 1, Es Teh Manis × 1',
+    total: 20000,
+    status: 'baru'
+  },
+  {
+    id: 'A-28',
+    name: 'Putri',
+    menu: 'Ayam Geprek × 1',
+    total: 17000,
+    status: 'baru'
+  }
+];
+
+function switchOTab(button, status) {
+  activeOrderTab = status;
+
+  document.querySelectorAll('#order-tabs .ctb')
+    .forEach(tab => tab.classList.remove('on'));
+
+  button.classList.add('on');
+
+  renderOrders();
+}
+
+function renderOrders() {
+  const container = document.getElementById('seller-orders');
+
+  container.innerHTML = '';
+
+  const filtered = sellerOrders.filter(
+    order => order.status === activeOrderTab
+  );
+
+  if (filtered.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'no-result';
+    empty.textContent = 'Tidak ada pesanan pada kategori ini.';
+    container.appendChild(empty);
+  }
+
+  filtered.forEach(order => {
+    const card = document.createElement('div');
+    card.className = 'oc';
+
+    const title = document.createElement('h3');
+    title.textContent = 'Pesanan #' + order.id;
+
+    const customer = document.createElement('p');
+    customer.textContent = 'Pelanggan: ' + order.name;
+
+    const menu = document.createElement('p');
+    menu.textContent = order.menu;
+
+    const price = document.createElement('strong');
+    price.style.display = 'block';
+    price.style.marginBottom = '12px';
+    price.textContent = Cart.fmt(order.total);
+
+    card.append(title, customer, menu, price);
+
+    if (order.status === 'baru') {
+      const accept = document.createElement('button');
+      accept.className = 'btn bp2 bsm';
+      accept.textContent = 'Terima';
+      accept.addEventListener('click', () => {
+        updateOrder(order.id, 'proses');
+      });
+
+      const reject = document.createElement('button');
+      reject.className = 'btn bo bsm';
+      reject.style.marginLeft = '8px';
+      reject.textContent = 'Tolak';
+      reject.addEventListener('click', () => {
+        rejectOrder(order.id);
+      });
+
+      card.append(accept, reject);
+    }
+
+    if (order.status === 'proses') {
+      const ready = document.createElement('button');
+      ready.className = 'btn bp2 bsm';
+      ready.textContent = 'Tandai Siap';
+      ready.addEventListener('click', () => {
+        updateOrder(order.id, 'siap');
+      });
+      card.appendChild(ready);
+    }
+
+    if (order.status === 'siap') {
+      const badge = document.createElement('span');
+      badge.className = 'bdg green';
+      badge.textContent = 'Siap diambil';
+      card.appendChild(badge);
+    }
+
+    container.appendChild(card);
+  });
+
+  document.getElementById('seller-new-count').textContent =
+    sellerOrders.filter(order => order.status === 'baru').length;
+
+  document.getElementById('seller-process-count').textContent =
+    sellerOrders.filter(order => order.status === 'proses').length;
+
+  document.getElementById('seller-ready-count').textContent =
+    sellerOrders.filter(order => order.status === 'siap').length;
+}
+
+function updateOrder(id, newStatus) {
+  const order = sellerOrders.find(order => order.id === id);
+
+  if (!order) return;
+
+  order.status = newStatus;
+  renderOrders();
+
+  Toast.show('Status pesanan #' + id + ' diperbarui.');
+}
+
+function rejectOrder(id) {
+  const confirmed = confirm(
+    'Yakin ingin menolak pesanan #' + id + '?'
+  );
+
+  if (!confirmed) return;
+
+  sellerOrders = sellerOrders.filter(
+    order => order.id !== id
+  );
+
+  renderOrders();
+  Toast.show('Pesanan #' + id + ' ditolak.');
+}
+
+function confirmScan() {
+  const input = document.getElementById('scan-in');
+  const value = input.value.trim();
+
+  if (!value) {
+    Toast.show('Masukkan nomor pesanan.');
+    return;
+  }
+
+  Modal.close('scanM');
+  Toast.show('Pengambilan pesanan ' + value + ' dikonfirmasi.');
+  input.value = '';
+}
+
+/* ==============================================
+   LAPORAN PENJUALAN
+============================================== */
+
+const periods = {
+  hari: {
+    rev: 'Rp 1,2 jt',
+    revt: '+12%',
+    ord: '78',
+    ordt: '+8 pesanan',
+    tot: 'Rp 1.200.000'
+  },
+
+  minggu: {
+    rev: 'Rp 7,4 jt',
+    revt: '+5%',
+    ord: '412',
+    ordt: '+22 pesanan',
+    tot: 'Rp 7.400.000'
+  },
+
+  bulan: {
+    rev: 'Rp 28 jt',
+    revt: '+18%',
+    ord: '1.680',
+    ordt: '+120 pesanan',
+    tot: 'Rp 28.000.000'
+  }
+};
+
+function setPeriod(button, key) {
+  document.querySelectorAll('#report-tabs .ctb')
+    .forEach(tab => tab.classList.remove('on'));
+
+  button.classList.add('on');
+
+  const data = periods[key];
+
+  document.getElementById('rev').textContent = data.rev;
+  document.getElementById('revt').textContent = data.revt;
+  document.getElementById('ord').textContent = data.ord;
+  document.getElementById('ordt').textContent = data.ordt;
+  document.getElementById('tot-rep').textContent = data.tot;
+
+  Toast.show('Laporan ' + key + ' diperbarui.');
+}
+
+/* ==============================================
+   INISIALISASI APLIKASI
+============================================== */
+
 Cart.init();
+searchMenus();
+renderOrders();
+
 </script>
+
 </body>
 </html>
