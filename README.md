@@ -22,7 +22,7 @@
 **KantinKita** adalah prototipe web interaktif aplikasi pemesanan makanan kantin kampus yang dikembangkan dari desain Figma Modul 5. Prototipe ini mewujudkan alur pengguna end-to-end untuk dua user: **Mahasiswa** (Febri & Putri) dan **Penjual** (Ibu Kantin).
 
 ### Fitur Utama
-- Login dengan validasi form real-time
+- Login dengan validasi
 - Beranda dengan filter kategori menu dinamis
 - Halaman cari & filter dengan tab interaktif
 - Detail menu stan dengan add-to-cart
