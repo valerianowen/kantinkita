@@ -33,12 +33,23 @@
 - Laporan penjualan dengan grafik per periode
 
 ### Elemen Interaktif Wajib (≥ 2)
-1. **Hamburger Menu / Nav Drawer** — tombol hamburger membuka drawer navigasi dari kiri dengan overlay, mendukung keyboard ESC dan klik overlay untuk menutup
-2. **Category Filter Tabs** — chip filter pada beranda, menu stan, dan laporan memfilter konten secara dinamis tanpa reload halaman
-3. **Cart State Management** — keranjang persisten via localStorage, cart badge terupdate di semua halaman, qty stepper memperbarui total harga secara langsung
-4. **Payment Method Selection** — radio UI interaktif untuk pemilihan metode bayar
-5. **Rating Modal Sheet** — bottom sheet modal dengan bintang rating interaktif
-6. **Seller Order Management** — tombol terima/tolak pesanan, tab filter status pesanan, toggle status stan
+1. **Bilah Navigasi Samping (Hamburger Menu / Nav Drawer)**
+-Tombol hamburger untuk menampilkan panel navigasi dari sisi kiri yang dilengkapi efek overlay.
+-Dapat ditutup dengan menekan tombol**ESC**pada papan ketik (keyboard) atau mengetuk area overlay.
+2. **Tab Penyaring Kategori (Category Filter Tabs)**
+-Chip filter interaktif pada halaman Beranda, Menu Stan, dan Laporan.
+-Berfungsi menyaring dan menampilkan konten secara dinamis tanpa perlu memuat ulang halaman (no page reload).
+3. **Pengelolaan Status Keranjang (Cart State Management)**
+-Data keranjang tersimpan secara permanen menggunakan localStorage.
+-Lencana jumlah pesanan (cart badge) tersinkronisasi otomatis di setiap halaman.
+-Fitur pemilih jumlah (qty stepper) yang langsung mengalkulasi ulang total harga secara real-time.
+4. **Pemilihan Metode Pembayaran (Payment Method Selection)**
+-Antarmuka pilihan berbentuk tombol radio (radio UI) yang interaktif untuk memilih skema pembayaran.
+5. **Jendela Ulasan & Rating (Rating Modal Sheet)**
+- Panel modal bergaya bottom sheet yang dilengkapi bintang penilaian interaktif untuk memberi ulasan.
+6. **Manajemen Pesanan Penjual (Seller Order Management)**
+-Fitur bagi pengelola stan untuk menerima atau menolak pesanan masuk.
+-Dilengkapi tab filter status pesanan serta sakelar (toggle) untuk mengubah status operasional stan (buka/tutup).
 
 ---
 
