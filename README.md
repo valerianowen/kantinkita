@@ -53,14 +53,26 @@
 | localStorage | Browser API       | Persistensi keranjang                 |
 
 ### Alur Demo 
-1. Buka `index.html` → masukkan NIM dan password apapun → klik Masuk
-2. Di beranda: klik filter kategori (Nasi, Ayam, dll) untuk lihat filter dinamis
-3. Klik hamburger ☰ untuk buka nav drawer
-4. Klik "+ Tambah" pada menu untuk memasukkan ke keranjang (lihat badge di nav)
-5. Buka `keranjang.html` → atur qty, pilih jam ambil
-6. Buka `pembayaran.html` → pilih metode bayar → klik Bayar
-7. Lihat `status.html` → countdown timer, beri rating via modal
-8. Buka `dasbor-stan.html` → terima/tolak pesanan, ganti status stan
+1. Autentikasi Awal
+  - Buka halaman index.html.
+  - Masukkan kombinasi NIM dan password apa saja (bebas), lalu klik tombol Masuk.  
+2. Eksplorasi Beranda & KatalogDi halaman utama, gunakan filter kategori (seperti Nasi, Ayam, dan lainnya) untuk menguji     - fitur penyaringan menu secara dinamis.
+  - Ketuk ikon menu hamburger (☰) di pojok layar untuk membuka bilah navigasi samping (nav drawer).
+3. Pengelolaan Keranjang Belanja
+  - Pilih menu yang diinginkan, lalu klik tombol "+ Tambah" untuk memasukkannya ke dalam pesanan.
+  - Perhatikan perubahan angka pada lencana (badge) di ikon keranjang pada menu navigasi.
+4. Konfirmasi Pesanan
+  - Pindah ke halaman keranjang.html.
+  - Sesuaikan jumlah pesanan (quantity) dan tentukan jadwal waktu pengambilan makanan.
+5. Proses Pembayaran
+  - Lanjutkan ke halaman pembayaran.html.
+  - Pilih metode pembayaran yang diinginkan, lalu klik tombol Bayar untuk menyelesaikan transaksi.
+6. Pemantauan & Penilaian
+  - Buka halaman status.html untuk memantau waktu tunggu melalui countdown timer.
+  - Berikan ulasan dan rating pada pesanan melalui jendela pop-up (modal) yang tersedia.
+7.Manajemen Stan (Sisi Penjual)
+  - Buka halaman dasbor-stan.html untuk melihat dasbor pengelola.
+  - Uji fitur interaktif seperti menerima atau menolak pesanan masuk serta memperbarui status operasional stan.
 
 ---
 #### Prompt 1 — CSS Design System
