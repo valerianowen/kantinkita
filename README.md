@@ -63,7 +63,7 @@
 | Google Fonts | Inter             | Tipografi                             |
 | localStorage | Browser API       | Persistensi keranjang                 |
 
-### Alur Demo 
+### Alur Demo Apk
 1. Autentikasi Awal
   - Buka halaman index.html.
   - Masukkan kombinasi NIM dan password apa saja (bebas), lalu klik tombol Masuk.  
