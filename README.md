@@ -32,7 +32,7 @@
 - Dasbor penjual dengan manajemen pesanan real-time
 - Laporan penjualan dengan grafik per periode
 
-### Elemen Interaktif Wajib (≥ 2)
+### Elemen Interaktif Wajib 
 1. **Bilah Navigasi Samping (Hamburger Menu / Nav Drawer)**
 -Tombol hamburger untuk menampilkan panel navigasi dari sisi kiri yang dilengkapi efek overlay.
 -Dapat ditutup dengan menekan tombol**ESC**pada papan ketik (keyboard) atau mengetuk area overlay.
