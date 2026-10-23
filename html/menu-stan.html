@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Menu Stan</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/menu.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-menu">
+
+    <header class="hdr">
+      <button class="ico-btn" data-action="go" data-target="beranda">←</button>
+      <h1 class="hdr-title">Stan A – Nasi &amp; Ayam</h1>
+      <button class="ico-btn" aria-label="Favorit">♡</button>
+    </header>
+
+    <div class="page">
+
+      <div class="sb sba">🍳</div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Stan A – Nasi &amp; Ayam</h2>
+          <span class="rt">★ 4.8</span>
+        </div>
+        <p class="sm">120 m · Buka sampai 14.00 · 230 ulasan</p>
+        <div class="al ay2">
+          🍳 Antrean 3 pesanan · Siap dalam ±10 menit
+        </div>
+      </section>
+
+      <div class="ct" role="tablist">
+        <button class="ctb on" data-action="menu-filter" data-cat3="semua">Semua</button>
+        <button class="ctb" data-action="menu-filter" data-cat3="nasi">Nasi</button>
+        <button class="ctb" data-action="menu-filter" data-cat3="lauk">Lauk</button>
+        <button class="ctb" data-action="menu-filter" data-cat3="minuman">Minuman</button>
+      </div>
+
+      <!-- WADAH KOSONG UNTUK MENAMPUNG MENU DINAMIS DARI JS -->
+      <div id="menu-container" class="sec">
+        <!-- Loader Skeleton / Spinner (Ditampilkan saat data loading) -->
+        <p style="text-align: center; color: #888; padding: 20px 0;">Memuat menu...</p>
+      </div>
+
+    </div>
+
+    <div class="stk">
+      <div class="row">
+        <div class="f1">
+          <p class="hdr-sub">Keranjang</p>
+          <strong id="menu-cart-sum">
+            Tambahkan menu dulu...
+          </strong>
+        </div>
+        <button class="btn bp2 bsm" data-action="go" data-target="keranjang">
+          Lanjut →
+        </button>
+      </div>
+    </div>
+
+    <nav class="bnv">
+      <button class="bni" data-action="go" data-target="beranda"><span class="bnic">🏠</span>Beranda</button>
+      <button class="bni" data-action="go" data-target="cari"><span class="bnic">🔍</span>Cari</button>
+      <button class="bni" data-action="go" data-target="keranjang"><span class="bnic">🛒<span class="cb">0</span></span>Keranjang</button>
+      <button class="bni" data-action="go" data-target="status"><span class="bnic">📋</span>Pesanan</button>
+      <button class="bni" data-action="go" data-target="dasbor"><span class="bnic">🏪</span>Penjual</button>
+    </nav>
+  </div>
+
+</main>
+</div>
+</body>
+</html>

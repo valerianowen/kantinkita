@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Status Pesanan</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/status.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-status">
+
+    <header class="hdr">
+      <button class="ico-btn" data-action="go" data-target="beranda">←</button>
+      <div class="f1">
+        <h1 class="hdr-title" id="status-order-id">Pesanan #A-27</h1>
+        <p class="hdr-sub">Stan KantinKita</p>
+      </div>
+    </header>
+
+    <div class="page wh">
+
+      <section class="cdn">
+        <p>Pesanan siap dalam</p>
+        <div class="row">
+          <strong class="cdnn" id="status-timer">8:00</strong>
+        </div>
+        <p class="cdnl">
+          Slot 12.15 · Gedung B
+        </p>
+      </section>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Alur Pesanan</h2>
+        </div>
+
+        <div class="steps">
+          <div class="stp dn">
+            <span class="sd2">✓</span>
+            Diterima
+          </div>
+          <div class="stp dn">
+            <span class="sd2">✓</span>
+            Konfirmasi
+          </div>
+          <div class="stp ac">
+            <span class="sd2">3</span>
+            Dimasak
+          </div>
+          <div class="stp">
+            <span class="sd2">4</span>
+            Siap
+          </div>
+          <div class="stp">
+            <span class="sd2">5</span>
+            Diambil
+          </div>
+        </div>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Kode Pengambilan</h2>
+        </div>
+
+        <div class="cdn">
+          <strong class="cdnn" id="status-code">A-27</strong>
+          <p class="cdnl">
+            Tunjukkan kode ini kepada penjual saat mengambil pesanan.
+          </p>
+        </div>
+      </section>
+
+      <div class="div"></div>
+
+      <!-- DETAIL PESANAN DINAMIS -->
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Detail Pesanan</h2>
+        </div>
+
+        <!-- Container ini diisi oleh JS -->
+        <div id="status-items-list">
+          <p style="color: #888; font-size: 13px;">Memuat detail pesanan...</p>
+        </div>
+
+        <div class="pt" style="margin-top: 12px; border-top: 1px dashed #ddd; padding-top: 8px;">
+          <span class="pl">Total</span>
+          <span class="pv" id="status-total-price">Rp 0</span>
+        </div>
+      </section>
+
+      <div class="al ag2" role="status">
+        🔔 Pesanan sedang diproses.
+      </div>
+
+      <div class="stk">
+        <button
+          class="btn bp2 bfull"
+          data-action="modal-open"
+          data-modal="ratingM">
+          ⭐ Beri Rating
+        </button>
+      </div>
+    </div>
+
+    <nav class="bnv">
+      <button class="bni" data-action="go" data-target="beranda"><span class="bnic">🏠</span>Beranda</button>
+      <button class="bni" data-action="go" data-target="cari"><span class="bnic">🔍</span>Cari</button>
+      <button class="bni" data-action="go" data-target="keranjang"><span class="bnic">🛒<span class="cb">0</span></span>Keranjang</button>
+      <button class="bni on" data-action="go" data-target="status"><span class="bnic">📋</span>Pesanan</button>
+      <button class="bni" data-action="go" data-target="beranda"><span class="bnic">🏠</span>Menu</button>
+    </nav>
+  </div>
+
+  <!-- MODAL RATING -->
+  <div
+    class="mb"
+    id="ratingM"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Form rating pesanan"
+    data-action="modal-overlay-close"
+    data-modal="ratingM">
+
+    <div class="ms">
+      <div class="mh"></div>
+      <h2 class="mt">⭐ Beri Rating Pesanan</h2>
+
+      <div class="row" id="rating-stars" role="group" aria-label="Pilih rating">
+        <button class="star" data-action="rating-star" data-rating="1">☆</button>
+        <button class="star" data-action="rating-star" data-rating="2">☆</button>
+        <button class="star" data-action="rating-star" data-rating="3">☆</button>
+        <button class="star" data-action="rating-star" data-rating="4">☆</button>
+        <button class="star" data-action="rating-star" data-rating="5">☆</button>
+      </div>
+
+      <input type="hidden" id="star-val" value="0">
+
+      <div class="fg">
+        <label class="fl" for="ulasan">Ulasan</label>
+        <textarea
+          class="fi2"
+          id="ulasan"
+          rows="3"
+          placeholder="Ceritakan pengalamanmu..."></textarea>
+      </div>
+
+      <button class="btn bs bfull" data-action="rating-submit">
+        Kirim Rating
+      </button>
+
+      <button class="btn bo bfull" data-action="modal-close" data-modal="ratingM">
+        Batal
+      </button>
+    </div>
+  </div>
+
+</main>
+</div>
+</body>
+</html>

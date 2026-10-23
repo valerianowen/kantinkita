@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Keranjang</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/cart-page.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-keranjang">
+    <header class="hdr">
+      <button class="ico-btn" data-action="go" data-target="menu">
+        ←
+      </button>
+      <h1 class="hdr-title">Keranjang</h1>
+      <button class="ico-btn" data-action="cart-clear" aria-label="Kosongkan keranjang">
+        🗑
+      </button>
+    </header>
+
+    <div class="page wh">
+
+      <section id="cart-empty" class="hid">
+        <div class="sec">
+          <h2>🛒 Keranjang masih kosong</h2>
+          <p>Tambahkan menu dari stan favoritmu.</p>
+          <button class="btn bp2" data-action="go" data-target="beranda">
+            Lihat Menu
+          </button>
+        </div>
+      </section>
+
+      <div id="cart-content">
+
+        <section class="sec">
+          <div class="sh">
+            <h2 class="stit">Menu yang dipesan</h2>
+          </div>
+
+          <div id="cart-items"></div>
+        </section>
+
+        <div class="div"></div>
+
+        <section class="sec">
+          <div class="sh">
+            <h2 class="stit">Catatan Pesanan</h2>
+          </div>
+
+          <div class="fg">
+            <label class="fl" for="catatan">
+              Catatan untuk penjual
+            </label>
+            <textarea
+              class="fi2"
+              id="catatan"
+              name="catatan"
+              rows="3"
+              placeholder="Contoh: tanpa sambal, nasi sedikit..."></textarea>
+          </div>
+        </section>
+
+        <div class="div"></div>
+
+        <section class="sec">
+          <div class="sh">
+            <h2 class="stit">Pilih Jam Ambil</h2>
+          </div>
+
+          <div class="al ay2">
+            💡 Istirahatmu 12.00–12.45. Disarankan pukul 12.15.
+          </div>
+
+          <div class="fg">
+            <label class="pi">
+              <input type="radio" name="jam" value="12.15" checked>
+              <span>12.15 — Ramai</span>
+              <span class="bdg by">Disarankan</span>
+            </label>
+
+            <label class="pi">
+              <input type="radio" name="jam" value="12.45">
+              <span>12.45 — Sepi</span>
+              <span class="bdg bg">Diskon</span>
+            </label>
+
+            <label class="pi">
+              <input type="radio" name="jam" value="13.15" disabled>
+              <span>13.15 — Penuh</span>
+              <span class="bdg bn">Penuh</span>
+            </label>
+          </div>
+        </section>
+
+        <div class="div"></div>
+
+        <section class="sec">
+          <div class="sh">
+            <h2 class="stit">Ringkasan Harga</h2>
+          </div>
+
+          <div class="pr">
+            <span class="pl">Subtotal</span>
+            <span class="pv" id="cart-sub">Rp 0</span>
+          </div>
+
+          <div class="pr">
+            <span class="pl">Diskon</span>
+            <span class="pv">Rp 0</span>
+          </div>
+
+          <div class="pt">
+            <span class="pl">Total Bayar</span>
+            <span class="pv" id="cart-tot">Rp 0</span>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <<div class="stk">
+  <button
+    class="btn bs bfull blg"
+    id="btn-checkout"
+    type="button">
+    Lanjut ke Pembayaran →
+  </button>
+</div>
+  </div>
+
+</main>
+</div>
+</body>
+</html>
