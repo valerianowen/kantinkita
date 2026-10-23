@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Dasbor Stan</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/seller.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="ov" class="ov" data-action="drawer-close"></div>
+
+  <nav id="drw" class="drw" aria-label="Menu navigasi">
+    <div class="drw-top">
+      <h2>KantinKita</h2>
+      <button class="ico-btn" data-action="drawer-close" aria-label="Tutup menu">✕</button>
+    </div>
+    <div class="drw-sec">
+      <button class="drw-a" data-action="go" data-target="beranda">🏠 Beranda</button>
+      <button class="drw-a" data-action="go" data-target="cari">🔍 Cari Menu</button>
+      <button class="drw-a" data-action="go" data-target="dasbor">🏪 Dasbor Stan</button>
+      <button class="drw-a" data-action="go" data-target="laporan">📊 Laporan</button>
+      <button class="drw-a" data-action="go" data-target="login">🚪 Keluar</button>
+    </div>
+  </nav>
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-dasbor">
+
+    <header class="hdr">
+      <button
+        class="ham"
+        data-action="drawer-open"
+        aria-expanded="false"
+        aria-label="Buka menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="f1">
+        <h1 class="hdr-title">Dasbor Stan A</h1>
+        <p class="hdr-sub">Nasi &amp; Ayam</p>
+      </div>
+      <button class="ico-btn" data-action="go" data-target="laporan">
+        📊
+      </button>
+    </header>
+
+    <div class="page">
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Status Operasi</h2>
+        </div>
+
+        <div class="sp2" role="tablist">
+          <button class="spb s-op" data-action="stan-status" data-st="s-op" data-label="Buka">✅ Buka</button>
+          <button class="spb" data-action="stan-status" data-st="s-bz" data-label="Sibuk">🕒 Sibuk</button>
+          <button class="spb" data-action="stan-status" data-st="s-cl" data-label="Tutup">🔴 Tutup</button>
+        </div>
+
+        <div class="sh">
+          <div>
+            <h3 class="stit">Estimasi Waktu Masak</h3>
+            <p class="hdr-sub">Perkiraan untuk pelanggan</p>
+          </div>
+
+          <div class="qc">
+            <button class="qb" data-action="time-adjust" data-delta="-5">−</button>
+            <span class="qv" id="wv">10</span>
+            <button class="qb qbp" data-action="time-adjust" data-delta="5">+</button>
+          </div>
+        </div>
+
+        <div class="sh">
+          <label for="orders-toggle">
+            Terima pesanan baru
+          </label>
+          <label class="tog">
+            <input
+              id="orders-toggle"
+              type="checkbox"
+              checked
+              data-change-action="orders-toggle">
+            <span class="tt"></span>
+            <span class="th"></span>
+          </label>
+        </div>
+      </section>
+
+      <section class="sts">
+        <div class="stc">
+          <p class="stl">Pendapatan Hari Ini</p>
+          <strong class="stv">Rp 640rb</strong>
+          <p class="stt">+12%</p>
+        </div>
+        <div class="stc">
+          <p class="stl">Total Pesanan</p>
+          <strong class="stv red">42</strong>
+          <p class="stt">+8 pesanan</p>
+        </div>
+      </section>
+
+      <div class="al ay2">
+        🔥 Jam sibuk 12.00–13.00 · Ada pesanan menunggu konfirmasi.
+      </div>
+
+      <div class="ct" role="tablist">
+        <button class="ctb on" data-action="seller-tab" data-panel="o-baru">
+          Baru
+        </button>
+        <button class="ctb" data-action="seller-tab" data-panel="o-proses">
+          Diproses
+        </button>
+        <button class="ctb" data-action="seller-tab" data-panel="o-siap">
+          Siap
+        </button>
+      </div>
+
+      <!-- PESANAN BARU -->
+      <section id="o-baru">
+        <article class="oc">
+          <div class="och">
+            <h3 class="oct">#A-27 · Febri Ramadhan</h3>
+            <span class="bdg by">12.15</span>
+          </div>
+          <div class="ocb">
+            <p>Nasi Goreng ×1, Ayam Geprek ×1</p>
+            <strong>Rp 32.000</strong>
+            <span class="bdg bg">QRIS · Lunas</span>
+          </div>
+          <div class="ocf">
+            <button class="btn bo bsm" data-action="order-reject" data-order-id="A-27">
+              Tolak
+            </button>
+            <button class="btn bp2 bsm" data-action="order-accept" data-order-id="A-27">
+              ✓ Terima
+            </button>
+          </div>
+        </article>
+
+        <article class="oc">
+          <div class="och">
+            <h3 class="oct">#A-28 · Putri Aulia</h3>
+            <span class="bdg by">12.15</span>
+          </div>
+          <div class="ocb">
+            <p>Mie Ayam Spesial ×2</p>
+            <strong>Rp 26.000</strong>
+            <span class="bdg bn">Tunai</span>
+          </div>
+          <div class="ocf">
+            <button class="btn bo bsm" data-action="order-reject" data-order-id="A-28">
+              Tolak
+            </button>
+            <button class="btn bp2 bsm" data-action="order-accept" data-order-id="A-28">
+              ✓ Terima
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- PESANAN DIPROSES -->
+      <section id="o-proses" class="hid">
+        <article class="oc">
+          <div class="och">
+            <h3 class="oct">#A-25 · Rafi</h3>
+            <span class="bdg by">Dimasak</span>
+          </div>
+          <div class="ocb">
+            Nasi Goreng ×1, Es Teh ×2
+          </div>
+          <div class="ocf">
+            <button class="btn bp2 bsm" type="button">
+              Sedang diproses
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- PESANAN SIAP -->
+      <section id="o-siap" class="hid">
+        <div class="al ag2">
+          Belum ada pesanan siap diambil.
+        </div>
+      </section>
+
+      <div class="stk">
+        <button
+          class="btn bp2 bfull"
+          data-action="modal-open"
+          data-modal="scanM">
+          📷 Konfirmasi Pengambilan
+        </button>
+      </div>
+    </div>
+
+    <nav class="bnv">
+      <button class="bni on" data-action="go" data-target="dasbor"><span class="bnic">🏪</span>Pesanan</button>
+      <button class="bni" data-action="go" data-target="laporan"><span class="bnic">📊</span>Laporan</button>
+      <button class="bni" data-action="go" data-target="beranda"><span class="bnic">🏠</span>Beranda</button>
+      <button class="bni" data-action="drawer-open"><span class="bnic">☰</span>Menu</button>
+    </nav>
+  </div>
+
+  <!-- MODAL KONFIRMASI PENGAMBILAN -->
+  <div
+    id="scanM"
+    class="mb"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Konfirmasi pengambilan"
+    data-action="modal-overlay-close"
+    data-modal="scanM">
+
+    <div class="ms">
+      <div class="mh"></div>
+      <h2 class="mt">📷 Konfirmasi Pengambilan</h2>
+
+      <div class="fg">
+        <label class="fl" for="scan-in">Nomor Pesanan</label>
+        <input
+          class="fi2"
+          id="scan-in"
+          placeholder="Contoh: A-27">
+      </div>
+
+      <button class="btn bp2 bfull" data-action="scan-confirm">
+        Konfirmasi
+      </button>
+      <button class="btn bo bfull" data-action="modal-close" data-modal="scanM">
+        Batal
+      </button>
+    </div>
+  </div>
+
+</main>
+</div>
+</body>
+</html>

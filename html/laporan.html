@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Laporan Penjualan</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/reports.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-laporan">
+
+    <header class="hdr">
+      <button class="ico-btn" data-action="go" data-target="dasbor">←</button>
+      <h1 class="hdr-title">Laporan Penjualan</h1>
+      <button class="btn bsm bp2" data-action="export-report">
+        📤 Ekspor
+      </button>
+    </header>
+
+    <div class="page">
+
+      <div class="ct" role="tablist">
+        <button class="ctb on" data-action="report-period" data-period="hari">
+          Hari Ini
+        </button>
+        <button class="ctb" data-action="report-period" data-period="minggu">
+          Minggu Ini
+        </button>
+        <button class="ctb" data-action="report-period" data-period="bulan">
+          Bulan Ini
+        </button>
+      </div>
+
+      <section class="sts">
+        <div class="stc">
+          <p class="stl">Pendapatan</p>
+          <strong class="stv" id="rev">Rp 1,2 jt</strong>
+          <p class="stt" id="revt">+12%</p>
+        </div>
+
+        <div class="stc">
+          <p class="stl">Total Pesanan</p>
+          <strong class="stv red" id="ord">78</strong>
+          <p class="stt" id="ordt">+8 pesanan</p>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Grafik Penjualan</h2>
+        </div>
+
+        <div class="bc">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar hi"></div>
+          <div class="bar hi"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+
+        <div class="bl">
+          <span>10</span>
+          <span>11</span>
+          <span>12</span>
+          <span>13</span>
+          <span>14</span>
+          <span>15</span>
+        </div>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Menu Terlaris</h2>
+        </div>
+
+        <div class="pr">
+          <span class="pl">🥇 Es Teh Manis</span>
+          <span class="bdg bd">41 terjual</span>
+        </div>
+
+        <div class="pr">
+          <span class="pl">🥈 Nasi Goreng Spesial</span>
+          <span class="bdg bd">32 terjual</span>
+        </div>
+
+        <div class="pr">
+          <span class="pl">🥉 Ayam Geprek</span>
+          <span class="bdg bd">24 terjual</span>
+        </div>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Rekap Pembayaran</h2>
+        </div>
+
+        <div class="pr">
+          <span class="pl">QRIS</span>
+          <strong class="pv">82% · Rp 984.000</strong>
+        </div>
+
+        <div class="pr">
+          <span class="pl">Tunai saat ambil</span>
+          <strong class="pv">18% · Rp 216.000</strong>
+        </div>
+
+        <div class="pt">
+          <span class="pl">Total Pendapatan</span>
+          <strong class="pv" id="tot-rep">
+            Rp 1.200.000
+          </strong>
+        </div>
+      </section>
+
+      <div class="al an2">
+        Data ini merupakan contoh untuk demonstrasi prototipe KantinKita.
+      </div>
+
+    </div>
+
+    <nav class="bnv">
+      <button class="bni" data-action="go" data-target="dasbor"><span class="bnic">🏪</span>Dasbor</button>
+      <button class="bni on" data-action="go" data-target="laporan"><span class="bnic">📊</span>Laporan</button>
+      <button class="bni" data-action="go" data-target="beranda"><span class="bnic">🏠</span>Beranda</button>
+      <button class="bni" data-action="go" data-target="login"><span class="bnic">🚪</span>Keluar</button>
+    </nav>
+
+  </div>
+
+</main>
+</div>
+
+</body>
+</html>

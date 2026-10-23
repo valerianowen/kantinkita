@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Beranda</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/home.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="ov" class="ov" data-action="drawer-close"></div>
+
+  <nav id="drw" class="drw" aria-label="Menu navigasi">
+    <div class="drw-top">
+      <div class="hdr-logo">
+        <div class="hdr-box">K</div>
+        <span class="hdr-name">Kantin<em>Kita</em></span>
+      </div>
+      <button class="ico-btn" data-action="drawer-close" aria-label="Tutup menu">✕</button>
+    </div>
+
+    <div class="drw-user">
+      <div class="drw-av">F</div>
+      <div>
+        <div class="drw-name">Febri Ramadhan</div>
+        <div class="drw-nim">NIM: 2024110234</div>
+      </div>
+    </div>
+
+    <div class="drw-sec">
+      <div class="drw-stl">Mahasiswa</div>
+      <button class="drw-a" data-action="go" data-target="beranda">🏠 Beranda</button>
+      <button class="drw-a" data-action="go" data-target="cari">🔍 Cari Menu</button>
+      <button class="drw-a" data-action="go" data-target="keranjang">🛒 Keranjang</button>
+      <button class="drw-a" data-action="go" data-target="status">📋 Pesanan Aktif</button>
+    </div>
+
+    <div class="drw-sec">
+      <div class="drw-stl">Penjual</div>
+      <button class="drw-a" data-action="go" data-target="dasbor">🏪 Dasbor Stan</button>
+      <button class="drw-a" data-action="go" data-target="laporan">📊 Laporan</button>
+    </div>
+
+    <button class="drw-out" data-action="go" data-target="login">
+      🚪 Keluar
+    </button>
+  </nav>
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-beranda">
+
+    <header class="hdr">
+      <button
+        class="ham"
+        data-action="drawer-open"
+        aria-label="Buka menu"
+        aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="hdr-logo">
+        <div class="hdr-box">K</div>
+        <span class="hdr-name">Kantin<em>Kita</em></span>
+      </div>
+
+      <div class="sp"></div>
+      <button class="ico-btn" aria-label="Notifikasi">🔔</button>
+    </header>
+
+    <div class="page">
+
+      <section class="sec">
+        <div class="sh">
+          <div>
+            <p class="hdr-sub">Lokasi kamu</p>
+            <strong>📍 Gedung B</strong>
+          </div>
+          <p>Halo, <strong>Febri</strong>!</p>
+        </div>
+
+        <button
+          class="srb"
+          data-action="go"
+          data-target="cari">
+          <span>🔍</span>
+          <span>Mau makan apa hari ini?</span>
+        </button>
+      </section>
+
+      <section class="bnr">
+        <h2 class="bnr-t">
+          Istirahat jam 12.00?<br>
+          Ambil pesananmu jam 12.15 ✨
+        </h2>
+        <button
+          class="bnr-b"
+          data-action="go"
+          data-target="cari">
+          Pesan Sekarang
+        </button>
+      </section>
+
+      <section class="qg">
+        <button class="qi" data-action="go" data-target="cari">
+          <span class="qic qi-y">⚡</span>
+          <span class="ql">Pickup Cepat</span>
+        </button>
+        <button class="qi" data-action="go" data-target="cari">
+          <span class="qic qi-b">🕒</span>
+          <span class="ql">Terjadwal</span>
+        </button>
+        <button class="qi" data-action="go" data-target="cari">
+          <span class="qic qi-g">💰</span>
+          <span class="ql">Hemat</span>
+        </button>
+        <button class="qi" data-action="go" data-target="status">
+          <span class="qic qi-r">🔄</span>
+          <span class="ql">Pesan Ulang</span>
+        </button>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Menu Kantin</h2>
+        </div>
+
+        <div class="ct" role="tablist">
+          <button class="ctb on" data-action="home-filter" data-cat="semua">Semua</button>
+          <button class="ctb" data-action="home-filter" data-cat="nasi">🍳 Nasi</button>
+          <button class="ctb" data-action="home-filter" data-cat="mie">🍜 Mie</button>
+          <button class="ctb" data-action="home-filter" data-cat="ayam">🍗 Ayam</button>
+          <button class="ctb" data-action="home-filter" data-cat="minuman">🥤 Minuman</button>
+          <button class="ctb" data-action="home-filter" data-cat="diskon">🔥 Diskon</button>
+        </div>
+
+        <!-- WADAH KOSONG UNTUK MENAMPUNG MENU DINAMIS DARI JS -->
+        <div id="home-menu-container">
+          <p style="text-align: center; color: #888; padding: 20px 0;">Memuat menu kantin...</p>
+        </div>
+
+      </section>
+    </div>
+
+    <nav class="bnv">
+      <button class="bni on" data-action="go" data-target="beranda">
+        <span class="bnic">🏠</span>Beranda
+      </button>
+      <button class="bni" data-action="go" data-target="cari">
+        <span class="bnic">🔍</span>Cari
+      </button>
+      <button class="bni" data-action="go" data-target="keranjang">
+        <span class="bnic">🛒<span class="cb">0</span></span>Keranjang
+      </button>
+      <button class="bni" data-action="go" data-target="status">
+        <span class="bnic">📋</span>Pesanan
+      </button>
+      <button class="bni" data-action="drawer-open">
+        <span class="bnic">☰</span>Menu
+      </button>
+    </nav>
+
+  </div>
+</main>
+</div>
+
+</body>
+</html>
