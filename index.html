@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KantinKita – Prototipe</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="wrap">
+<div class="app">
+
+<!-- OVERLAY DAN DRAWER -->
+<div id="ov" class="ov" onclick="Drawer.close()"></div>
+
+<nav id="drw" class="drw" aria-label="Menu navigasi">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div class="logo">
+      <div class="logo-box">K</div>
+      <span>Kantin<em>Kita</em></span>
+    </div>
+    <button class="ico-btn" onclick="Drawer.close()" aria-label="Tutup menu">✕</button>
+  </div>
+
+  <div style="background:var(--yl);padding:16px;border-radius:12px;margin-bottom:20px">
+    <strong>Febri Ramadhan</strong>
+    <p style="font-size:12px;color:var(--n500);margin-top:4px">NIM: 2024110234</p>
+  </div>
+
+  <p style="font-size:11px;color:var(--n500);margin:12px">MAHASISWA</p>
+  <div class="drw-a" onclick="go('beranda')">🏠 Beranda</div>
+  <div class="drw-a" onclick="go('cari')">🔎 Cari Menu</div>
+  <div class="drw-a" onclick="go('keranjang')">🛒 Keranjang</div>
+  <div class="drw-a" onclick="go('status')">📋 Pesanan Aktif</div>
+
+  <p style="font-size:11px;color:var(--n500);margin:20px 12px 12px">PENJUAL</p>
+  <div class="drw-a" onclick="go('dasbor')">🏪 Dasbor Stan</div>
+  <div class="drw-a" onclick="go('laporan')">📊 Laporan Penjualan</div>
+
+  <div class="drw-a" onclick="go('login')" style="color:var(--r);margin-top:30px">
+    🚪 Keluar
+  </div>
+</nav>
+
+<div id="tc" role="status" aria-live="polite"></div>
+
+
+<!-- =========================================
+     SCREEN 1: LOGIN
+========================================= -->
+<div class="screen on" id="s-login">
+  <div class="page" style="background:white">
+    <div class="lh">
+      <div class="ll">K</div>
+      <div class="lt">KantinKita</div>
+      <p style="font-size:13px">Pesan makan kantin kampus — tanpa antri</p>
+    </div>
+
+    <div class="lf">
+      <h1 style="font-size:23px;margin-bottom:6px">Masuk</h1>
+      <p style="color:var(--n500);font-size:14px;margin-bottom:26px">
+        Selamat datang kembali 👋
+      </p>
+
+      <form id="loginForm" novalidate>
+        <div class="fg">
+          <label for="nim" class="fl">NIM atau Email</label>
+          <input id="nim" class="fi2" placeholder="2024110234 atau email@kampus.ac.id">
+          <div class="ferr" id="e-nim">NIM atau email tidak boleh kosong.</div>
+        </div>
+
+        <div class="fg">
+          <label for="pw" class="fl">Kata Sandi</label>
+          <input id="pw" class="fi2" type="password" placeholder="Kata sandi akun kamu">
+          <div class="ferr" id="e-pw">Kata sandi minimal 6 karakter.</div>
+        </div>
+
+        <button type="button" onclick="togglePw()" style="color:var(--yd);font-size:12px;margin-bottom:20px">
+          Lihat / Sembunyikan Password
+        </button>
+
+        <button type="submit" class="btn bs bfull" id="loginBtn">Masuk</button>
+      </form>
+
+      <p style="font-size:13px;color:var(--n500);text-align:center;margin:24px 0">
+        Belum punya akun? <strong style="color:var(--r)">Daftar sekarang</strong>
+      </p>
+
+      <button class="btn bo bfull" onclick="go('dasbor')">
+        🏪 Masuk sebagai Penjual
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- =========================================
+     SCREEN 2: BERANDA
+========================================= -->
+<div class="screen" id="s-beranda">
+  <header class="hdr">
+    <button class="ham" onclick="Drawer.open()" aria-label="Buka menu" aria-controls="drw" aria-expanded="false">☰</button>
+
+    <div class="logo">
+      <div class="logo-box">K</div>
+      <span>Kantin<em>Kita</em></span>
+    </div>
+
+    <div style="flex:1"></div>
+    <button class="ico-btn" aria-label="Notifikasi">🔔</button>
+  </header>
+
+  <div class="page">
+    <div class="sec" style="padding:16px">
+      <p style="color:var(--n500);font-size:11px">Lokasi kamu</p>
+      <strong>📍 Gedung B</strong>
+      <p style="text-align:right;font-size:12px">Halo, Febri!</p>
+
+      <div class="srb" onclick="go('cari')" style="margin-top:14px;cursor:pointer">
+        🔎
+        <span style="font-size:14px;color:var(--n400)">Mau makan apa hari ini?</span>
+      </div>
+    </div>
+
+    <div class="bnr" onclick="go('cari')">
+      <h2>Istirahat jam 12.00?<br>Ambil pesananmu jam 12.15 ✨</h2>
+      <span>Pesan Sekarang</span>
+    </div>
+
+    <div class="qg">
+      <div class="qi" onclick="go('cari')">
+        <div class="qic">⚡</div>Pickup Cepat
+      </div>
+      <div class="qi" onclick="go('cari')">
+        <div class="qic">🕒</div>Terjadwal
+      </div>
+      <div class="qi" onclick="go('cari')">
+        <div class="qic">💰</div>Hemat
+      </div>
+      <div class="qi" onclick="go('status')">
+        <div class="qic">🔄</div>Pesan Ulang
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 style="padding:16px;font-size:17px">Menu Kantin</h2>
+
+      <div class="ct" id="home-tabs">
+        <button class="ctb on" data-cat="semua" onclick="filterMenu(this)">Semua</button>
+        <button class="ctb" data-cat="nasi" onclick="filterMenu(this)">🍳 Nasi</button>
+        <button class="ctb" data-cat="mie" onclick="filterMenu(this)">🍜 Mie</button>
+        <button class="ctb" data-cat="ayam" onclick="filterMenu(this)">🍗 Ayam</button>
+        <button class="ctb" data-cat="minuman" onclick="filterMenu(this)">🥤 Minuman</button>
+        <button class="ctb" data-cat="diskon" onclick="filterMenu(this)">🔥 Diskon</button>
+      </div>
+
+      <div class="sc" onclick="go('menu')">
+        <div class="sb">🍳</div>
+        <div class="sd">
+          <div class="sn">Stan A – Nasi & Ayam ⭐ 4.8</div>
+          <div class="sm">120 m · Buka s/d 14.00 · 230 ulasan</div>
+          <span class="bdg">Antrean 3</span>
+          <span class="bdg green">±10 mnt</span>
+          <span class="bdg red">Diskon 10%</span>
+        </div>
+      </div>
+
+      <div class="mi" data-cat="nasi semua">
+        <div class="fi">🍳</div>
+        <div class="mb2">
+          <div class="mn">Nasi Goreng Spesial</div>
+          <div class="md">Telur ceplok, ayam suwir, kerupuk</div>
+          <div class="mp">Rp 15.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'🍳')">+</button>
+      </div>
+
+      <div class="mi" data-cat="ayam semua">
+        <div class="fi fi-r">🍗</div>
+        <div class="mb2">
+          <div class="mn">Ayam Geprek</div>
+          <div class="md">Ayam krispi, sambal geprek, lalapan</div>
+          <div class="mp">Rp 17.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'🍗')">+</button>
+      </div>
+
+      <div class="mi" data-cat="minuman semua">
+        <div class="fi fi-b">🥤</div>
+        <div class="mb2">
+          <div class="mn">Es Teh Manis</div>
+          <div class="md">Teh segar, es batu, gula aren</div>
+          <div class="mp">Rp 5.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('es-teh','Es Teh Manis',5000,'🥤')">+</button>
+      </div>
+
+      <div class="mi" data-cat="diskon semua">
+        <div class="fi fi-o">🥙</div>
+        <div class="mb2">
+          <div class="mn">Paket Hemat</div>
+          <div class="md">Nasi + Es Teh · Hemat Rp 3.000</div>
+          <div class="mp">Rp 18.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('paket-hemat','Paket Hemat',18000,'🥙')">+</button>
+      </div>
+
+      <div class="sc" onclick="go('menu')">
+        <div class="sb" style="background:var(--rl)">🍜</div>
+        <div class="sd">
+          <div class="sn">Stan B – Mie & Bakso ⭐ 4.6</div>
+          <div class="sm">80 m · Buka s/d 13.30 · 118 ulasan</div>
+          <span class="bdg green">±7 mnt</span>
+        </div>
+      </div>
+
+      <div class="mi" data-cat="mie semua">
+        <div class="fi fi-o">🍜</div>
+        <div class="mb2">
+          <div class="mn">Mie Ayam Spesial</div>
+          <div class="md">Mie kenyal, ayam, pangsit rebus</div>
+          <div class="mp">Rp 13.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('mie-ayam','Mie Ayam Spesial',13000,'🍜')">+</button>
+      </div>
+
+      <div id="no-res" class="no-result hid">Tidak ada menu untuk kategori ini.</div>
+    </div>
+
+    <div style="height:16px"></div>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni on" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 3: CARI DAN FILTER
+========================================= -->
+<div class="screen" id="s-cari">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('beranda')">←</button>
+
+    <div class="srb">
+      <span>🔎</span>
+      <input
+        class="sri"
+        id="search-input"
+        type="search"
+        placeholder="nasi goreng, ayam, mie..."
+        aria-label="Cari menu makanan"
+        oninput="searchMenus()"
+        onkeydown="if(event.key==='Enter')searchMenus()"
+      >
+    </div>
+
+    <button class="btn bsm bp2" onclick="searchMenus()">Cari</button>
+  </header>
+
+  <div class="page">
+    <div class="ct" id="search-tabs" role="tablist">
+      <button class="ctb on" data-cat2="semua" onclick="filterSearch(this)" role="tab">Semua</button>
+      <button class="ctb" data-cat2="cepat" onclick="filterSearch(this)" role="tab">⚡ Tercepat</button>
+      <button class="ctb" data-cat2="murah" onclick="filterSearch(this)" role="tab">💰 Termurah</button>
+      <button class="ctb" data-cat2="diskon" onclick="filterSearch(this)" role="tab">🔥 Diskon</button>
+    </div>
+
+    <div class="results">
+      <strong id="search-count" role="status" aria-live="polite">5 menu ditemukan</strong>
+      <span style="color:var(--n500)">Menu tersedia</span>
+    </div>
+
+    <div class="sec" id="search-menu-list">
+
+      <div class="mi" data-cat2="semua cepat">
+        <div class="fi">🍳</div>
+        <div class="mb2">
+          <div class="mn">Nasi Goreng Spesial</div>
+          <div class="md">Stan A · Rp 15.000</div>
+          <span class="bdg green">±8 mnt</span>
+        </div>
+        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'🍳')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua murah">
+        <div class="fi fi-r">🍗</div>
+        <div class="mb2">
+          <div class="mn">Ayam Geprek</div>
+          <div class="md">Stan A · Rp 17.000</div>
+          <span class="bdg green">±10 mnt</span>
+        </div>
+        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'🍗')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua cepat murah">
+        <div class="fi fi-o">🍜</div>
+        <div class="mb2">
+          <div class="mn">Mie Ayam Spesial</div>
+          <div class="md">Stan B · Rp 13.000</div>
+          <span class="bdg green">±7 mnt</span>
+        </div>
+        <button class="badd" onclick="Cart.add('mie-ayam','Mie Ayam Spesial',13000,'🍜')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua diskon">
+        <div class="fi fi-o">🥙</div>
+        <div class="mb2">
+          <div class="mn">Paket Hemat</div>
+          <div class="md">Stan A · Rp 18.000</div>
+          <span class="bdg red">Diskon 15%</span>
+        </div>
+        <button class="badd" onclick="Cart.add('paket-hemat','Paket Hemat',18000,'🥙')">+</button>
+      </div>
+
+      <div class="mi" data-cat2="semua murah">
+        <div class="fi fi-b">🥤</div>
+        <div class="mb2">
+          <div class="mn">Es Teh Manis</div>
+          <div class="md">Stan A · Rp 5.000</div>
+          <span class="bdg green">Minuman</span>
+        </div>
+        <button class="badd" onclick="Cart.add('es-teh','Es Teh Manis',5000,'🥤')">+</button>
+      </div>
+
+      <div id="no-res2" class="no-result hid" role="status">
+        Tidak ada menu yang cocok dengan pencarian.
+      </div>
+
+    </div>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni on" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 4: MENU STAN
+========================================= -->
+<div class="screen" id="s-menu">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('beranda')">←</button>
+    <h1 class="hdr-title">Stan A – Nasi & Ayam</h1>
+    <button class="ico-btn">♡</button>
+  </header>
+
+  <div class="page">
+    <div style="height:115px;background:var(--y);display:grid;place-items:center;font-size:52px">🍳</div>
+
+    <div class="sec" style="padding:16px">
+      <h2 style="font-size:18px;margin-bottom:8px">Stan A – Nasi & Ayam</h2>
+      <p style="font-size:12px;color:var(--n500);margin-bottom:12px">
+        120 m · Buka s/d 14.00 · ⭐ 4.8
+      </p>
+      <div class="no-result" style="margin:0;padding:12px">
+        Antrean 3 pesanan · Siap dalam ±10 menit
+      </div>
+    </div>
+
+    <div class="ct" id="stan-tabs">
+      <button class="ctb on" data-cat3="semua" onclick="filterMenu3(this)">Semua</button>
+      <button class="ctb" data-cat3="nasi" onclick="filterMenu3(this)">Nasi</button>
+      <button class="ctb" data-cat3="lauk" onclick="filterMenu3(this)">Lauk</button>
+      <button class="ctb" data-cat3="minuman" onclick="filterMenu3(this)">Minuman</button>
+    </div>
+
+    <div class="sec" id="stan-menu-list">
+      <div class="mi" data-cat3="semua nasi">
+        <div class="fi">🍳</div>
+        <div class="mb2">
+          <div class="mn">Nasi Goreng Spesial</div>
+          <div class="md">Telur ceplok, ayam suwir, kerupuk</div>
+          <div class="mp">Rp 15.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('nasi-goreng','Nasi Goreng Spesial',15000,'🍳')">+</button>
+      </div>
+
+      <div class="mi" data-cat3="semua lauk">
+        <div class="fi fi-r">🍗</div>
+        <div class="mb2">
+          <div class="mn">Ayam Geprek</div>
+          <div class="md">Ayam krispi, sambal geprek</div>
+          <div class="mp">Rp 17.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('ayam-geprek','Ayam Geprek',17000,'🍗')">+</button>
+      </div>
+
+      <div class="mi" data-cat3="semua nasi" style="opacity:.5;pointer-events:none">
+        <div class="fi fi-o">🍲</div>
+        <div class="mb2">
+          <div class="mn">Soto Ayam</div>
+          <div class="md">Stok habis hari ini</div>
+          <div class="mp">Rp 14.000</div>
+        </div>
+        <span class="bdg red">Habis</span>
+      </div>
+
+      <div class="mi" data-cat3="semua minuman">
+        <div class="fi fi-b">🥤</div>
+        <div class="mb2">
+          <div class="mn">Es Teh Manis</div>
+          <div class="md">Teh segar, es batu, gula aren</div>
+          <div class="mp">Rp 5.000</div>
+        </div>
+        <button class="badd" onclick="Cart.add('es-teh','Es Teh Manis',5000,'🥤')">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stk" style="display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <p style="font-size:11px;color:var(--n500)">Keranjang</p>
+      <strong id="menu-cart-sum" style="font-size:13px">Tambahkan menu dulu...</strong>
+    </div>
+    <button class="btn bp2 bsm" onclick="go('keranjang')">Lanjut →</button>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 5: KERANJANG
+========================================= -->
+<div class="screen" id="s-keranjang">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('menu')">←</button>
+    <h1 class="hdr-title">Keranjang</h1>
+    <button class="ico-btn" onclick="Cart.clear();renderCart();Toast.show('Keranjang dikosongkan')">🗑</button>
+  </header>
+
+  <div class="page">
+    <div id="cart-empty" class="empty hid">
+      <div style="font-size:50px;margin-bottom:12px">🛒</div>
+      <h2 style="font-size:18px;margin-bottom:10px">Keranjang masih kosong</h2>
+      <p style="font-size:13px;color:var(--n500);margin-bottom:20px">
+        Tambahkan menu dari stan favoritmu
+      </p>
+      <button class="btn bp2" onclick="go('beranda')">Lihat Menu</button>
+    </div>
+
+    <div id="cart-content">
+      <div style="padding:16px;background:white">
+        <h3 style="font-size:14px;margin-bottom:10px">Menu yang dipesan</h3>
+      </div>
+
+      <div id="cart-items"></div>
+
+      <div class="sec" style="padding:16px;margin-top:8px">
+        <label for="catatan" class="fl">Catatan Pesanan</label>
+        <textarea id="catatan" class="fi2" rows="2" placeholder="Contoh: tanpa sambal"></textarea>
+      </div>
+
+      <div class="sec" style="padding:16px">
+        <h3 style="font-size:15px;margin-bottom:14px">Pilih Jam Ambil</h3>
+
+        <label style="display:block;margin-bottom:14px;font-size:13px">
+          <input type="radio" name="jam" value="12.15" checked>
+          <strong>12.15</strong> — Disarankan
+        </label>
+
+        <label style="display:block;margin-bottom:14px;font-size:13px">
+          <input type="radio" name="jam" value="12.45">
+          <strong>12.45</strong> — Sepi
+        </label>
+
+        <label style="display:block;font-size:13px;opacity:.5">
+          <input type="radio" name="jam" disabled>
+          <strong>13.15</strong> — Penuh
+        </label>
+      </div>
+
+      <div class="sec" style="padding:12px 0">
+        <div class="pr">
+          <span>Subtotal</span>
+          <strong id="cart-sub">Rp 0</strong>
+        </div>
+
+        <div class="pr total">
+          <span>Total</span>
+          <span id="cart-tot">Rp 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stk">
+    <button class="btn bs bfull" onclick="checkout()">Lanjut ke Pembayaran →</button>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni on" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 6: PEMBAYARAN
+========================================= -->
+<div class="screen" id="s-bayar">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('keranjang')">←</button>
+    <h1 class="hdr-title">Pembayaran</h1>
+  </header>
+
+  <div class="page">
+    <div class="sec" style="padding:16px">
+      <h3 style="margin-bottom:12px;font-size:15px">Ringkasan Pesanan</h3>
+      <div id="pay-detail"></div>
+      <div class="pr total">
+        <span>Total Bayar</span>
+        <span id="pay-total">Rp 0</span>
+      </div>
+    </div>
+
+    <div class="sec" style="padding:16px">
+      <h3 style="font-size:15px;margin-bottom:16px">Pilih Metode Pembayaran</h3>
+
+      <label style="display:block;margin-bottom:18px;font-size:14px">
+        <input type="radio" name="payment" value="qris" checked>
+        📱 QRIS
+      </label>
+
+      <label style="display:block;margin-bottom:18px;font-size:14px">
+        <input type="radio" name="payment" value="transfer">
+        🏦 Transfer Bank
+      </label>
+
+      <label style="display:block;font-size:14px">
+        <input type="radio" name="payment" value="tunai">
+        💵 Bayar di Kantin
+      </label>
+    </div>
+  </div>
+
+  <div class="stk">
+    <p style="font-size:12px;color:var(--n500);margin-bottom:8px">Total Pembayaran</p>
+    <h2 id="pay-tot2" style="margin-bottom:16px">Rp 0</h2>
+    <button class="btn bs bfull" id="pay-btn" onclick="doPay()">Bayar Sekarang</button>
+  </div>
+</div>
+
+
+<!-- =========================================
+     SCREEN 7: STATUS PESANAN
+========================================= -->
+<div class="screen" id="s-status">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('beranda')">←</button>
+    <h1 class="hdr-title">Status Pesanan</h1>
+  </header>
+
+  <div class="page">
+    <div class="sec" style="text-align:center;padding:30px 16px">
+      <div style="font-size:48px;margin-bottom:14px">✅</div>
+      <h2 style="font-size:19px;margin-bottom:10px">Pesanan Diproses</h2>
+      <p style="font-size:13px;color:var(--n500)">
+        Pesanan kamu sedang disiapkan oleh penjual.
+      </p>
+    </div>
+
+    <div class="sec" style="text-align:center;padding:24px 16px">
+      <p style="font-size:13px;color:var(--n500)">Estimasi Siap Dalam</p>
+      <div id="status-timer" role="status"
+        style="font-size:52px;font-weight:900;margin:14px">
+        8:00
+      </div>
+      <span class="bdg green">Sedang disiapkan</span>
+    </div>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:20px">Perjalanan Pesanan</h3>
+      <p style="margin-bottom:16px">✅ Pesanan diterima</p>
+      <p style="margin-bottom:16px">✅ Pembayaran dikonfirmasi</p>
+      <p style="margin-bottom:16px">🟡 Pesanan sedang dimasak</p>
+      <p style="color:var(--n400)">⚪ Siap diambil</p>
+    </div>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:8px">Nomor Pesanan</h3>
+      <h2>#A-27</h2>
+    </div>
+  </div>
+
+  <div class="stk">
+    <button class="btn bp2 bfull" onclick="Modal.open('ratingM')">⭐ Beri Rating</button>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('beranda')"><div class="bnic">🏠</div>Beranda</div>
+    <div class="bni" onclick="go('cari')"><div class="bnic">🔎</div>Cari</div>
+    <div class="bni" onclick="go('keranjang')"><div class="bnic">🛒<span class="cb">0</span></div>Keranjang</div>
+    <div class="bni on" onclick="go('status')"><div class="bnic">📋</div>Pesanan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 8: DASBOR PENJUAL
+========================================= -->
+<div class="screen" id="s-dasbor">
+  <header class="hdr">
+    <button class="ham" onclick="Drawer.open()" aria-label="Buka menu" aria-controls="drw" aria-expanded="false">☰</button>
+    <h1 class="hdr-title">Dasbor Stan</h1>
+    <button class="ico-btn" onclick="go('laporan')">📊</button>
+  </header>
+
+  <div class="page">
+    <div class="sec" style="padding:16px">
+      <h2 style="font-size:18px;margin-bottom:8px">Stan A – Nasi & Ayam</h2>
+      <p style="font-size:13px;color:var(--n500);margin-bottom:14px">
+        Kelola pesanan dan status stan.
+      </p>
+
+      <label style="display:flex;align-items:center;gap:10px;font-size:14px">
+        <input id="stan-open" type="checkbox" checked onchange="toggleStan(this)">
+        Stan Buka
+      </label>
+
+      <span id="stan-status" class="bdg green" style="margin-top:12px">Buka</span>
+    </div>
+
+    <div class="sts">
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Pesanan Baru</p>
+        <div class="stv" id="seller-new-count">2</div>
+      </div>
+
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Diproses</p>
+        <div class="stv" id="seller-process-count">0</div>
+      </div>
+
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Siap</p>
+        <div class="stv" id="seller-ready-count">0</div>
+      </div>
+    </div>
+
+    <div class="ct" id="order-tabs">
+      <button class="ctb on" data-order-tab="baru" onclick="switchOTab(this,'baru')">Baru</button>
+      <button class="ctb" data-order-tab="proses" onclick="switchOTab(this,'proses')">Diproses</button>
+      <button class="ctb" data-order-tab="siap" onclick="switchOTab(this,'siap')">Siap</button>
+    </div>
+
+    <div id="seller-orders"></div>
+
+    <div class="sec" style="padding:16px">
+      <h3 style="font-size:15px;margin-bottom:12px">Estimasi Waktu Masak</h3>
+
+      <div style="display:flex;gap:14px;align-items:center">
+        <button class="qb" onclick="adjTime(-1)">−</button>
+        <strong><span id="wv">10</span> menit</strong>
+        <button class="qb plus" onclick="adjTime(1)">+</button>
+      </div>
+    </div>
+
+    <div style="padding:16px">
+      <button class="btn bp2 bfull" onclick="Modal.open('scanM')">
+        📷 Konfirmasi Pengambilan
+      </button>
+    </div>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni on" onclick="go('dasbor')"><div class="bnic">🏪</div>Dasbor</div>
+    <div class="bni" onclick="go('laporan')"><div class="bnic">📊</div>Laporan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     SCREEN 9: LAPORAN PENJUALAN
+========================================= -->
+<div class="screen" id="s-laporan">
+  <header class="hdr">
+    <button class="ico-btn" onclick="go('dasbor')">←</button>
+    <h1 class="hdr-title">Laporan Penjualan</h1>
+  </header>
+
+  <div class="page">
+    <div class="ct" id="report-tabs">
+      <button class="ctb on" onclick="setPeriod(this,'hari')">Hari Ini</button>
+      <button class="ctb" onclick="setPeriod(this,'minggu')">Minggu Ini</button>
+      <button class="ctb" onclick="setPeriod(this,'bulan')">Bulan Ini</button>
+    </div>
+
+    <div class="sts">
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Pendapatan</p>
+        <div class="stv" id="rev" style="font-size:20px">Rp 1,2 jt</div>
+        <span id="revt" class="bdg green">+12%</span>
+      </div>
+
+      <div class="stc">
+        <p style="font-size:12px;color:var(--n500)">Total Pesanan</p>
+        <div class="stv" id="ord">78</div>
+        <span id="ordt" class="bdg green">+8 pesanan</span>
+      </div>
+    </div>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:16px">Grafik Penjualan</h3>
+
+      <div class="bar-chart">
+        <div class="bar-col"><div class="bar" style="height:35px"></div>Sen</div>
+        <div class="bar-col"><div class="bar" style="height:70px"></div>Sel</div>
+        <div class="bar-col"><div class="bar" style="height:55px"></div>Rab</div>
+        <div class="bar-col"><div class="bar" style="height:85px"></div>Kam</div>
+        <div class="bar-col"><div class="bar" style="height:110px"></div>Jum</div>
+        <div class="bar-col"><div class="bar" style="height:80px"></div>Sab</div>
+        <div class="bar-col"><div class="bar" style="height:60px"></div>Min</div>
+      </div>
+    </div>
+
+    <div class="sec" style="padding:20px 16px">
+      <h3 style="font-size:15px;margin-bottom:16px">Ringkasan Pendapatan</h3>
+
+      <div class="pr">
+        <span>Total Penjualan</span>
+        <strong id="tot-rep">Rp 1.200.000</strong>
+      </div>
+
+      <div class="pr">
+        <span>Menu Terlaris</span>
+        <strong>Nasi Goreng Spesial</strong>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bnv">
+    <div class="bni" onclick="go('dasbor')"><div class="bnic">🏪</div>Dasbor</div>
+    <div class="bni on" onclick="go('laporan')"><div class="bnic">📊</div>Laporan</div>
+    <div class="bni" onclick="Drawer.open()"><div class="bnic">☰</div>Menu</div>
+  </nav>
+</div>
+
+
+<!-- =========================================
+     MODAL RATING
+========================================= -->
+<div class="mb" id="ratingM" role="dialog" aria-modal="true"
+     onclick="if(event.target===this)Modal.close('ratingM')">
+  <div class="ms">
+    <h2 style="font-size:20px;margin-bottom:12px">⭐ Beri Rating Pesanan</h2>
+
+    <p style="font-size:13px;color:var(--n500);margin-bottom:16px">
+      Bagaimana pengalaman pesan makananmu?
+    </p>
+
+    <div id="rating-stars" style="text-align:center;margin:20px 0">
+      <button class="star" onclick="setStar(1)">☆</button>
+      <button class="star" onclick="setStar(2)">☆</button>
+      <button class="star" onclick="setStar(3)">☆</button>
+      <button class="star" onclick="setStar(4)">☆</button>
+      <button class="star" onclick="setStar(5)">☆</button>
+    </div>
+
+    <textarea class="fi2" id="rating-comment" rows="3"
+      placeholder="Tulis ulasan kamu..."></textarea>
+
+    <button class="btn bs bfull" style="margin-top:16px" onclick="submitRating()">
+      Kirim Rating
+    </button>
+
+    <button class="btn bo bfull" style="margin-top:10px"
+      onclick="Modal.close('ratingM')">
+      Batal
+    </button>
+  </div>
+</div>
+
+
+<!-- =========================================
+     MODAL KONFIRMASI PESANAN
+========================================= -->
+<div class="mb" id="scanM" role="dialog" aria-modal="true"
+     onclick="if(event.target===this)Modal.close('scanM')">
+  <div class="ms">
+    <h2 style="font-size:20px;margin-bottom:16px">📷 Konfirmasi Pengambilan</h2>
+
+    <label for="scan-in" class="fl">Nomor Pesanan</label>
+    <input class="fi2" id="scan-in" placeholder="Contoh: A-27">
+
+    <button class="btn bp2 bfull" style="margin-top:16px"
+      onclick="confirmScan()">
+      Konfirmasi
+    </button>
+
+    <button class="btn bo bfull" style="margin-top:10px"
+      onclick="Modal.close('scanM')">
+      Tutup
+    </button>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
