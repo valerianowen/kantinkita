@@ -19,8 +19,8 @@
 ---
 
 ## 🌐 Link Live Demo
-- **URL Production:** [https://kantinkita.vercel.app](https://kantinkita.vercel.app) *(Ganti dengan link hasil deploy Vercel/Netlify milik kelompokmu)*
-- **Repository GitHub:** [https://github.com/valerianowen/kantinkita](https://github.com/valerianowen/kantinkita) *(Pastikan repo di-set Public)*
+- **URL Production:** (https://wwwkantinkitacom-peach.vercel.app/)
+- **Repository GitHub:** [https://github.com/valerianowen/kantinkita](https://github.com/valerianowen/kantinkita) *
 
 ---
 
