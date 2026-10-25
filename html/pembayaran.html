@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -56,6 +55,61 @@
         <div class="pt">
           <span class="pl">Total</span>
           <span class="pv" id="pay-tot2">Rp 0</span>
+        </div>
+      </section>
+
+      <div class="div"></div>
+
+      <section class="sec">
+        <div class="sh">
+          <h2 class="stit">Data Pembeli</h2>
+        </div>
+
+        <div class="fg">
+          <label class="fl" for="buyer-name">
+            Nama Pembeli
+          </label>
+
+          <input
+            type="text"
+            class="fi2"
+            id="buyer-name"
+            name="buyer-name"
+            placeholder="Masukkan nama pembeli"
+            autocomplete="name"
+            required
+          >
+
+          <div
+            class="ferr"
+            id="e-buyer-name"
+            role="alert">
+            Nama pembeli tidak boleh kosong.
+          </div>
+        </div>
+
+        <div class="fg">
+          <label class="fl" for="buyer-phone">
+            Nomor Telepon
+          </label>
+
+          <input
+            type="tel"
+            class="fi2"
+            id="buyer-phone"
+            name="buyer-phone"
+            placeholder="Contoh: 081234567890"
+            inputmode="tel"
+            autocomplete="tel"
+            required
+          >
+
+          <div
+            class="ferr"
+            id="e-buyer-phone"
+            role="alert">
+            Nomor telepon tidak valid.
+          </div>
         </div>
       </section>
 

@@ -1,19 +1,66 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   const payTotal = document.getElementById('pay-total');
   const payTot2 = document.getElementById('pay-tot2');
   const payDetail = document.getElementById('pay-detail');
   const payBtn = document.getElementById('pay-btn');
 
+  // Ambil input form pemesan (Misi 2 Validasi)
+  const nameInput = document.getElementById('buyer-name');
+  const phoneInput = document.getElementById('buyer-phone');
+  const nameError = document.getElementById('e-buyer-name');
+  const phoneError = document.getElementById('e-buyer-phone');
+
+  // Tampilkan atau hilangkan pesan error pada input
+  function setFieldError(input, errorElement, message) {
+    if (!input || !errorElement) return;
+
+    const hasError = Boolean(message);
+
+    input.classList.toggle('err', hasError);
+    input.setAttribute('aria-invalid', String(hasError));
+
+    errorElement.classList.toggle('on', hasError);
+
+    if (hasError) {
+      errorElement.textContent = message;
+    }
+  }
+
+  // Validasi format nomor telepon Indonesia
+  function validPhone(phone) {
+    return /^(?:08|\+628|628)\d{8,11}$/.test(phone);
+  }
+
+  // Hapus pesan error ketika nama sudah valid
+  if (nameInput) {
+    nameInput.addEventListener('input', () => {
+      if (nameInput.value.trim().length >= 2) {
+        setFieldError(nameInput, nameError, '');
+      }
+    });
+  }
+
+  // Hapus pesan error ketika nomor telepon sudah valid
+  if (phoneInput) {
+    phoneInput.addEventListener('input', () => {
+      if (validPhone(phoneInput.value.trim())) {
+        setFieldError(phoneInput, phoneError, '');
+      }
+    });
+  }
+
   // Variable untuk menyimpan metode pembayaran yang dipilih (default: QRIS)
   let selectedMethod = 'QRIS';
 
   // 1. Ambil data keranjang dari KantinCart atau Storage
   let cartItems = window.KantinCart ? window.KantinCart.getItems() : [];
-  
+
   if (cartItems.length === 0) {
     try {
       cartItems = JSON.parse(localStorage.getItem('kantinkita_cart_v1') || '[]');
-    } catch (e) {      cartItems = [];
+    } catch (e) {
+      cartItems = [];
     }
   }
 
@@ -59,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. PENANGANAN PILIHAN METODE PEMBAYARAN (QRIS, e-Wallet, Tunai)
   const payOptions = document.querySelectorAll('[data-action="pay-select"]');
+
   payOptions.forEach(option => {
     option.addEventListener('click', () => {
       // Hapus kelas 'on' dari semua pilihan
@@ -73,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Ambil nama metode pembayaran dari elemen yang diklik
       const methodName = option.querySelector('.pn')?.textContent.trim();
+
       if (methodName) {
         selectedMethod = methodName;
       }
@@ -85,18 +134,71 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       if (cartItems.length === 0) {
-        if (typeof Toast !== 'undefined') Toast.show('Keranjang masih kosong!', 'error');
-        else alert('Keranjang masih kosong! Silakan pilih menu terlebih dahulu.');
+        if (typeof Toast !== 'undefined') {
+          Toast.show('Keranjang masih kosong!', 'error');
+        } else {
+          alert('Keranjang masih kosong! Silakan pilih menu terlebih dahulu.');
+        }
         return;
       }
 
-      // Ambil input form pemesan (Misi 2 Validasi)
-      const nameInput = document.getElementById('buyer-name');
-      const phoneInput = document.getElementById('buyer-phone');
+      // Pastikan form data pembeli tersedia
+      if (!nameInput || !phoneInput) {
+        if (typeof Toast !== 'undefined') {
+          Toast.show('Form data pembeli tidak ditemukan.', 'error');
+        }
+        return;
+      }
+
+      // Ambil dan bersihkan data pembeli
+      const buyerName = nameInput.value.trim();
+      const buyerPhone = phoneInput.value.trim();
       const notesInput = document.getElementById('buyer-notes');
 
-      const buyerName = nameInput ? nameInput.value.trim() : 'Febri';
-      const buyerPhone = phoneInput ? phoneInput.value.trim() : '-';
+      // Validasi nama dan nomor telepon pembeli
+      let isValid = true;
+      let firstInvalid = null;
+
+      if (buyerName.length < 2) {
+        setFieldError(
+          nameInput,
+          nameError,
+          buyerName.length === 0
+            ? 'Nama pembeli tidak boleh kosong.'
+            : 'Nama pembeli minimal 2 karakter.'
+        );
+        isValid = false;
+        firstInvalid = nameInput;
+      } else {
+        setFieldError(nameInput, nameError, '');
+      }
+
+      if (!validPhone(buyerPhone)) {
+        setFieldError(
+          phoneInput,
+          phoneError,
+          buyerPhone.length === 0
+            ? 'Nomor telepon tidak boleh kosong.'
+            : 'Gunakan nomor HP valid, misalnya 081234567890.'
+        );
+        isValid = false;
+
+        if (!firstInvalid) {
+          firstInvalid = phoneInput;
+        }
+      } else {
+        setFieldError(phoneInput, phoneError, '');
+      }
+
+      // Hentikan pembayaran jika input tidak valid
+      if (!isValid) {
+        firstInvalid?.focus();
+
+        if (typeof Toast !== 'undefined') {
+          Toast.show('Periksa kembali data pembeli.', 'error');
+        }
+        return;
+      }
 
       // Objek pesanan lengkap
       const orderData = {
@@ -116,7 +218,19 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       // Simpan transaksi ke localStorage
-      localStorage.setItem('kantinkita_last_order_v1', JSON.stringify(orderData));
+      try {
+        localStorage.setItem(
+          'kantinkita_last_order_v1',
+          JSON.stringify(orderData)
+        );
+      } catch (error) {
+        console.error('Gagal menyimpan pesanan:', error);
+
+        if (typeof Toast !== 'undefined') {
+          Toast.show('Pesanan gagal disimpan. Coba lagi.', 'error');
+        }
+        return;
+      }
 
       // Kosongkan keranjang belanja
       if (window.KantinCart && typeof window.KantinCart.clearCart === 'function') {
@@ -130,7 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
       payBtn.textContent = 'Memproses Pesanan...';
 
       setTimeout(() => {
-        if (typeof Toast !== 'undefined') Toast.show('Pembayaran Berhasil! 🎉');
+        if (typeof Toast !== 'undefined') {
+          Toast.show('Pembayaran Berhasil! 🎉');
+        }
         window.location.href = 'status.html';
       }, 1000);
     });
