@@ -1,0 +1,47 @@
+[
+  {
+    "id": "nasi-goreng",
+    "nama": "Nasi Goreng Spesial",
+    "deskripsi": "Telur ceplok, ayam suwir, kerupuk.",
+    "harga": 15000,
+    "kategori": "nasi",
+    "icon": "🍳",
+    "bgClass": "fi-y"
+  },
+  {
+    "id": "ayam-geprek",
+    "nama": "Ayam Geprek",
+    "deskripsi": "Ayam goreng krispi, sambal, lalapan.",
+    "harga": 17000,
+    "kategori": "ayam",
+    "icon": "🍗",
+    "bgClass": "fi-r"
+  },
+  {
+    "id": "mie-ayam",
+    "nama": "Mie Ayam Spesial",
+    "deskripsi": "Mie kenyal, ayam, pangsit rebus.",
+    "harga": 13000,
+    "kategori": "mie",
+    "icon": "🍜",
+    "bgClass": "fi-o"
+  },
+  {
+    "id": "es-teh",
+    "nama": "Es Teh Manis",
+    "deskripsi": "Teh segar, es batu, gula aren.",
+    "harga": 5000,
+    "kategori": "minuman",
+    "icon": "🥤",
+    "bgClass": "fi-b"
+  },
+  {
+    "id": "paket-hemat",
+    "nama": "Paket Hemat",
+    "deskripsi": "Nasi + Es Teh · Hemat Rp 3.000",
+    "harga": 18000,
+    "kategori": "diskon",
+    "icon": "🍱",
+    "bgClass": "fi-o"
+  }
+]

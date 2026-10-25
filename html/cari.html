@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KantinKita - Cari Menu</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script defer src="../js/common.js"></script>
+  <script defer src="../js/cart.js"></script>
+  <script defer src="../js/search.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<main class="app">
+
+  <div id="ov" class="ov" data-action="drawer-close"></div>
+
+  <nav id="drw" class="drw" aria-label="Menu navigasi">
+    <div class="drw-top">
+      <div class="hdr-logo">
+        <div class="hdr-box">K</div>
+        <span class="hdr-name">Kantin<em>Kita</em></span>
+      </div>
+      <button class="ico-btn" data-action="drawer-close" aria-label="Tutup menu">✕</button>
+    </div>
+    <div class="drw-sec">
+      <button class="drw-a" data-action="go" data-target="beranda">🏠 Beranda</button>
+      <button class="drw-a" data-action="go" data-target="cari">🔍 Cari Menu</button>
+      <button class="drw-a" data-action="go" data-target="keranjang">🛒 Keranjang</button>
+      <button class="drw-a" data-action="go" data-target="status">📋 Pesanan</button>
+      <button class="drw-a" data-action="go" data-target="dasbor">🏪 Dasbor Stan</button>
+      <button class="drw-a" data-action="go" data-target="laporan">📊 Laporan</button>
+    </div>
+  </nav>
+
+  <div id="tc" role="status" aria-live="polite"></div>
+
+  <div class="screen on" id="s-cari">
+    <header class="hdr">
+      <button class="ico-btn" data-action="go" data-target="beranda" aria-label="Kembali">
+        ←
+      </button>
+
+      <div class="srb">
+        <span>🔍</span>
+        <input
+          id="search-input"
+          class="sri"
+          type="search"
+          placeholder="nasi goreng, ayam, mie..."
+          aria-label="Cari nama makanan"
+          autofocus>
+      </div>
+
+      <button class="btn bsm bp2" id="search-btn">
+        Cari
+      </button>
+    </header>
+
+    <div class="page">
+
+      <div class="ct" role="tablist">
+        <button class="ctb on" data-action="search-filter" data-cat2="semua">Semua</button>
+        <button class="ctb" data-action="search-filter" data-cat2="cepat">⚡ Tercepat</button>
+        <button class="ctb" data-action="search-filter" data-cat2="murah">💰 Termurah</button>
+        <button class="ctb" data-action="search-filter" data-cat2="diskon">🔥 Diskon</button>
+      </div>
+
+      <div class="sec">
+        <div class="sh">
+          <strong id="search-count" aria-live="polite">
+            Memuat menu...
+          </strong>
+        </div>
+
+        <!-- WADAH KOSONG UNTUK MENAMPUNG HASIL PENCARIAN DINAMIS -->
+        <div id="search-results-container">
+          <p style="text-align: center; color: #888; padding: 20px 0;">Memuat data pencarian...</p>
+        </div>
+
+      </div>
+    </div>
+
+    <nav class="bnv">
+      <button class="bni" data-action="go" data-target="beranda"><span class="bnic">🏠</span>Beranda</button>
+      <button class="bni on" data-action="go" data-target="cari"><span class="bnic">🔍</span>Cari</button>
+      <button class="bni" data-action="go" data-target="keranjang"><span class="bnic">🛒<span class="cb">0</span></span>Keranjang</button>
+      <button class="bni" data-action="go" data-target="status"><span class="bnic">📋</span>Pesanan</button>
+      <button class="bni" data-action="drawer-open"><span class="bnic">☰</span>Menu</button>
+    </nav>
+  </div>
+
+</main>
+</div>
+
+</body>
+</html>
