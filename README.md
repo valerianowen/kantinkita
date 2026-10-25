@@ -19,7 +19,7 @@
 ---
 
 ## 🌐 Link Live Demo
-- **URL Production:** (https://wwwkantinkitacom-peach.vercel.app/)
+- **URL Production:** (https://wwwkantincom.vercel.app/)
 - **Repository GitHub:** [https://github.com/valerianowen/kantinkita](https://github.com/valerianowen/kantinkita) *
 
 ---
