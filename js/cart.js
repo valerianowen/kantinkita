@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* ==========================================
@@ -10,7 +9,7 @@
   const STORAGE_KEY = "kantinkita_cart_v1";
 
   function rupiah(angka) {
-    return "Rp " + Number(angka).toLocaleString("id-ID");
+    return "Rp " + Number(angka || 0).toLocaleString("id-ID");
   }
 
   function getItems() {
@@ -78,6 +77,15 @@
   }
 
   function addItem(item) {
+    // PROTEKSI STATUS STAN (Jika stan Tutup / Tidak Terima Pesanan)
+    const stanStatus = localStorage.getItem("kantinkita_stan_status") || "Buka";
+    const acceptOrders = localStorage.getItem("kantinkita_accept_orders") !== "false";
+
+    if (stanStatus === "Tutup" || !acceptOrders) {
+      notify("Maaf, stan sedang TUTUP. Tidak bisa menambah pesanan.", "error");
+      return;
+    }
+
     const id = String(item.id || "").trim();
     const name = String(item.name || "").trim();
     const price = Number(item.price);
@@ -180,7 +188,7 @@
     const count = getCount();
     const total = getTotal();
 
-    // Memperbarui seluruh badge keranjang
+    // Memperbarui seluruh badge keranjang (.cb)
     document.querySelectorAll(".cb").forEach(badge => {
       badge.textContent = count > 99 ? "99+" : count;
       badge.classList.toggle("on", count > 0);
@@ -217,12 +225,10 @@
       content.classList.toggle("hid", items.length === 0);
     }
 
-    const checkout = document.querySelector(
-      '[data-action="go"][data-target="bayar"]'
-    );
+    const checkoutBtn = document.getElementById("btn-checkout") || document.querySelector('[data-action="go"][data-target="bayar"]');
 
-    if (checkout) {
-      checkout.disabled = items.length === 0;
+    if (checkoutBtn) {
+      checkoutBtn.disabled = items.length === 0;
     }
 
     cartItems.replaceChildren();
@@ -343,7 +349,7 @@
   });
 
   /* ======================================
-     API UNTUK FITUR PEMBAYARAN
+     API UNTUK FITUR PEMBAYARAN & LAINNYA
   ====================================== */
 
   window.KantinCart = {

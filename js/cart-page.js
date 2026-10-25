@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* KANTINKITA - HALAMAN KERANJANG */
@@ -25,7 +24,6 @@
     const checked = document.querySelector(
       'input[name="jam"]:checked'
     );
-
     const catatan = document.getElementById("catatan");
 
     const prefs = {
@@ -47,15 +45,18 @@
 
     const prefs = getPrefs();
     const subtotal = KantinCart.getTotal();
+    const count = KantinCart.getCount();
 
+    // Diskon 10% jika memilih jam 12.45
     const diskon = prefs.jam === "12.45"
       ? Math.floor(subtotal * 0.10)
       : 0;
 
-    const total = subtotal - diskon;
+    const total = Math.max(0, subtotal - diskon);
 
     const sub = document.getElementById("cart-sub");
     const totalElement = document.getElementById("cart-tot");
+    const checkoutBtn = document.getElementById("btn-checkout");
 
     if (sub) {
       sub.textContent = KantinCart.rupiah(subtotal);
@@ -65,15 +66,16 @@
       totalElement.textContent = KantinCart.rupiah(total);
     }
 
-    // Baris diskon pada HTML keranjang
-    const priceRows = document.querySelectorAll(
-      "#cart-content .pr"
-    );
+    // Aktifkan / Nonaktifkan Tombol Checkout berdasarkan isi keranjang
+    if (checkoutBtn) {
+      checkoutBtn.disabled = count === 0;
+    }
 
+    // Update Tampilan Baris Diskon
+    const priceRows = document.querySelectorAll("#cart-content .pr");
     priceRows.forEach(row => {
       if (row.textContent.toLowerCase().includes("diskon")) {
         const value = row.querySelector(".pv");
-
         if (value) {
           value.textContent = diskon > 0
             ? "- " + KantinCart.rupiah(diskon)
@@ -85,18 +87,19 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     const prefs = getPrefs();
-
     const catatan = document.getElementById("catatan");
+    const checkoutBtn = document.getElementById("btn-checkout");
 
+    // Load Preferensi Catatan
     if (catatan) {
       catatan.value = prefs.catatan;
       catatan.addEventListener("input", savePrefs);
     }
 
+    // Load Preferensi Jam
     const selected = document.querySelector(
       'input[name="jam"][value="' + prefs.jam + '"]'
     );
-
     if (selected) selected.checked = true;
 
     document.querySelectorAll(
@@ -104,6 +107,30 @@
     ).forEach(input => {
       input.addEventListener("change", savePrefs);
     });
+
+    // Menangani Klik Tombol Lanjut ke Pembayaran
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const items = window.KantinCart ? KantinCart.getItems() : [];
+
+        if (items.length === 0) {
+          if (typeof Toast !== "undefined") {
+            Toast.show("Keranjang masih kosong!", "error");
+          } else {
+            alert("Keranjang masih kosong!");
+          }
+          return;
+        }
+
+        // Simpan preferensi jam & catatan terbaru
+        savePrefs();
+
+        // Pindah ke Halaman Pembayaran
+        window.location.href = "pembayaran.html";
+      });
+    }
 
     updateSummary();
   });

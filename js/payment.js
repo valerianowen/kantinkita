@@ -1,226 +1,138 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const payTotal = document.getElementById('pay-total');
+  const payTot2 = document.getElementById('pay-tot2');
+  const payDetail = document.getElementById('pay-detail');
+  const payBtn = document.getElementById('pay-btn');
 
-"use strict";
+  // Variable untuk menyimpan metode pembayaran yang dipilih (default: QRIS)
+  let selectedMethod = 'QRIS';
 
-/* ==========================================
-   KANTINKITA - PAYMENT.JS
-   Simulasi Pembayaran dan Pembuatan Pesanan
-========================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-  const cart = window.KantinCart;
-  if (!cart) return;
-
-  const payButton = document.getElementById("pay-btn");
-  const payTotal = document.getElementById("pay-total");
-  const payTotal2 = document.getElementById("pay-tot2");
-  const detail = document.getElementById("pay-detail");
-
-  const options = document.querySelectorAll(
-    '[data-action="pay-select"]'
-  );
-
-  let selectedMethod = "QRIS";
-
-  function getPreferences() {
+  // 1. Ambil data keranjang dari KantinCart atau Storage
+  let cartItems = window.KantinCart ? window.KantinCart.getItems() : [];
+  
+  if (cartItems.length === 0) {
     try {
-      return JSON.parse(
-        localStorage.getItem("kantinkita_checkout_prefs") || "{}"
-      );
-    } catch {
-      return {};
+      cartItems = JSON.parse(localStorage.getItem('kantinkita_cart_v1') || '[]');
+    } catch (e) {      cartItems = [];
     }
   }
 
-  function calculateTotal() {
-    const subtotal = cart.getTotal();
-    const prefs = getPreferences();
-
-    const discount = prefs.jam === "12.45"
-      ? Math.floor(subtotal * 0.10)
-      : 0;
-
-    return {
-      subtotal,
-      discount,
-      total: subtotal - discount,
-      jam: prefs.jam === "12.45" ? "12.45" : "12.15",
-      catatan: String(prefs.catatan || "")
-    };
+  // 2. Ambil preferensi checkout (jam & catatan dari cart-page.js)
+  let prefs = { jam: "12.15", catatan: "" };
+  try {
+    prefs = JSON.parse(localStorage.getItem("kantinkita_checkout_prefs") || "{}");
+  } catch (e) {
+    console.error("Gagal membaca preferensi checkout:", e);
   }
 
-  function renderPayment() {
-    const items = cart.getItems();
-    const calculation = calculateTotal();
+  const rupiah = (num) => "Rp " + Number(num || 0).toLocaleString("id-ID");
 
-    if (payTotal) {
-      payTotal.textContent = cart.rupiah(calculation.total);
+  // Hitung subtotal & diskon jam 12.45 (10%)
+  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  const diskon = prefs.jam === "12.45" ? Math.floor(subtotal * 0.10) : 0;
+  const totalHarga = Math.max(0, subtotal - diskon);
+
+  // 3. Render Detail Pesanan
+  if (cartItems.length > 0 && payDetail) {
+    payDetail.innerHTML = cartItems.map(item => `
+      <div class="pr">
+        <span class="pl">${item.name} ×${item.qty}</span>
+        <span class="pv">${rupiah(item.price * item.qty)}</span>
+      </div>
+    `).join('');
+
+    if (diskon > 0) {
+      payDetail.innerHTML += `
+        <div class="pr" style="color: #28a745;">
+          <span class="pl">Diskon Jam (12.45)</span>
+          <span class="pv">- ${rupiah(diskon)}</span>
+        </div>
+      `;
     }
-
-    if (payTotal2) {
-      payTotal2.textContent = cart.rupiah(calculation.total);
-    }
-
-    if (payButton) {
-      payButton.disabled = items.length === 0;
-    }
-
-    if (!detail) return;
-
-    detail.replaceChildren();
-
-    if (items.length === 0) {
-      const message = document.createElement("p");
-      message.className = "al ay2";
-      message.textContent =
-        "Keranjang kosong. Tambahkan makanan terlebih dahulu.";
-      detail.appendChild(message);
-      return;
-    }
-
-    items.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "pr";
-
-      const name = document.createElement("span");
-      name.className = "pl";
-      name.textContent = item.name + " ×" + item.qty;
-
-      const price = document.createElement("span");
-      price.className = "pv";
-      price.textContent = cart.rupiah(
-        item.price * item.qty
-      );
-
-      row.append(name, price);
-      detail.appendChild(row);
-    });
-
-    if (calculation.discount > 0) {
-      const row = document.createElement("div");
-      row.className = "pr";
-
-      const label = document.createElement("span");
-      label.className = "pl";
-      label.textContent = "Diskon slot 12.45 (10%)";
-
-      const value = document.createElement("span");
-      value.className = "pv";
-      value.textContent = "- " +
-        cart.rupiah(calculation.discount);
-
-      row.append(label, value);
-      detail.appendChild(row);
-    }
+  } else if (payDetail) {
+    payDetail.innerHTML = '<p style="font-size: 13px; color: #888;">Keranjang belanjaan kamu kosong. Tambahkan menu dulu dari beranda.</p>';
   }
 
-  /* PILIH METODE PEMBAYARAN */
+  // Tampilkan Nominal Total Bayar
+  if (payTotal) payTotal.textContent = rupiah(totalHarga);
+  if (payTot2) payTot2.textContent = rupiah(totalHarga);
 
-  function selectMethod(option) {
-    options.forEach(item => {
-      const active = item === option;
+  // 4. PENANGANAN PILIHAN METODE PEMBAYARAN (QRIS, e-Wallet, Tunai)
+  const payOptions = document.querySelectorAll('[data-action="pay-select"]');
+  payOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      // Hapus kelas 'on' dari semua pilihan
+      payOptions.forEach(opt => {
+        opt.classList.remove('on');
+        opt.setAttribute('aria-checked', 'false');
+      });
 
-      item.classList.toggle("on", active);
-      item.setAttribute(
-        "aria-checked",
-        String(active)
-      );
-    });
+      // Aktifkan pilihan yang diklik
+      option.classList.add('on');
+      option.setAttribute('aria-checked', 'true');
 
-    const methodName = option.querySelector(".pn");
-
-    selectedMethod = methodName
-      ? methodName.textContent.trim()
-      : "QRIS";
-  }
-
-  options.forEach(option => {
-    option.addEventListener("click", function () {
-      selectMethod(option);
-    });
-
-    option.addEventListener("keydown", function (event) {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        selectMethod(option);
+      // Ambil nama metode pembayaran dari elemen yang diklik
+      const methodName = option.querySelector('.pn')?.textContent.trim();
+      if (methodName) {
+        selectedMethod = methodName;
       }
     });
   });
 
-  /* BUAT PESANAN */
+  // 5. Proses Klik Tombol Bayar Sekarang
+  if (payBtn) {
+    payBtn.addEventListener('click', (e) => {
+      e.preventDefault();
 
-  function createOrder() {
-    const items = cart.getItems();
+      if (cartItems.length === 0) {
+        if (typeof Toast !== 'undefined') Toast.show('Keranjang masih kosong!', 'error');
+        else alert('Keranjang masih kosong! Silakan pilih menu terlebih dahulu.');
+        return;
+      }
 
-    if (items.length === 0) {
-      Toast.show("Keranjang masih kosong.", "error");
-      return;
-    }
+      // Ambil input form pemesan (Misi 2 Validasi)
+      const nameInput = document.getElementById('buyer-name');
+      const phoneInput = document.getElementById('buyer-phone');
+      const notesInput = document.getElementById('buyer-notes');
 
-    const calculation = calculateTotal();
+      const buyerName = nameInput ? nameInput.value.trim() : 'Febri';
+      const buyerPhone = phoneInput ? phoneInput.value.trim() : '-';
 
-    let sequence = Number(
-      localStorage.getItem("kantinkita_order_sequence") || "28"
-    );
+      // Objek pesanan lengkap
+      const orderData = {
+        id: 'A-' + Math.floor(10 + Math.random() * 90),
+        name: buyerName,
+        phone: buyerPhone,
+        items: cartItems,
+        subtotal: subtotal,
+        discount: diskon,
+        total: totalHarga,
+        totalPrice: totalHarga,
+        jam: prefs.jam || "12.15",
+        catatan: notesInput ? notesInput.value.trim() : (prefs.catatan || ""),
+        method: selectedMethod, // Metode pembayaran dinamis (QRIS / Saldo e-Wallet / Tunai)
+        createdAt: Date.now(),
+        status: 'baru'
+      };
 
-    if (!Number.isSafeInteger(sequence) || sequence < 28) {
-      sequence = 28;
-    }
+      // Simpan transaksi ke localStorage
+      localStorage.setItem('kantinkita_last_order_v1', JSON.stringify(orderData));
 
-    const orderId = "A-" + sequence;
-    const createdAt = Date.now();
+      // Kosongkan keranjang belanja
+      if (window.KantinCart && typeof window.KantinCart.clearCart === 'function') {
+        window.KantinCart.clearCart();
+      } else {
+        localStorage.removeItem('kantinkita_cart_v1');
+      }
 
-    const order = {
-      id: orderId,
-      name: "Mahasiswa",
-      items: items,
-      subtotal: calculation.subtotal,
-      discount: calculation.discount,
-      total: calculation.total,
-      jam: calculation.jam,
-      catatan: calculation.catatan,
-      method: selectedMethod,
-      status: "baru",
-      createdAt: createdAt
-    };
+      // Animasi Loading & Pindah Halaman
+      payBtn.disabled = true;
+      payBtn.textContent = 'Memproses Pesanan...';
 
-    try {
-      localStorage.setItem(
-        "kantinkita_last_order_v1",
-        JSON.stringify(order)
-      );
-
-      const history = JSON.parse(
-        localStorage.getItem("kantinkita_orders_v1") || "[]"
-      );
-
-      const orders = Array.isArray(history)
-        ? history
-        : [];
-
-      orders.push(order);
-
-      localStorage.setItem(
-        "kantinkita_orders_v1",
-        JSON.stringify(orders)
-      );
-
-      localStorage.setItem(
-        "kantinkita_order_sequence",
-        String(sequence + 1)
-      );
-    } catch (error) {
-      console.error("Gagal menyimpan pesanan:", error);
-      Toast.show("Pesanan gagal disimpan.", "error");
-      return;
-    }
-
-    cart.clearCart();
-    go("status");
+      setTimeout(() => {
+        if (typeof Toast !== 'undefined') Toast.show('Pembayaran Berhasil! 🎉');
+        window.location.href = 'status.html';
+      }, 1000);
+    });
   }
-
-  if (payButton) {
-    payButton.addEventListener("click", createOrder);
-  }
-
-  renderPayment();
 });

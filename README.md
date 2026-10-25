@@ -1,4 +1,4 @@
-# KantinKita – Prototipe
+# KantinKita – Prototipe Web Fungsional (Modul 7 & Modul 8)
 
 ## Anggota Kelompok
 | Nama                  |
@@ -9,115 +9,109 @@
 | Elsa Melania Putri    | 
 | Firda Dwi Agustina    |
 
-> Modul 7 
+> Modul 7 (UI/UX Prototipe Statis) & Modul 8 (Data Dinamis & Logika Aplikasi)
 
 [![HTML5](https://img.shields.io/badge/HTML5-Semantic-orange)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-Custom%20Properties-blue)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JS-Vanilla%20ES6-yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Status](https://img.shields.io/badge/Deploy-Live%20Web-brightgreen)](#-link-live-demo)
+
+---
+
+## 🌐 Link Live Demo
+- **URL Production:** [https://kantinkita.vercel.app](https://kantinkita.vercel.app) *(Ganti dengan link hasil deploy Vercel/Netlify milik kelompokmu)*
+- **Repository GitHub:** [https://github.com/valerianowen/kantinkita](https://github.com/valerianowen/kantinkita) *(Pastikan repo di-set Public)*
 
 ---
 
 ## Deskripsi Proyek
 
-**KantinKita** adalah prototipe web interaktif aplikasi pemesanan makanan kantin kampus yang dikembangkan dari desain Figma Modul 5. Prototipe ini mewujudkan alur pengguna end-to-end untuk dua user: **Mahasiswa** (Febri & Putri) dan **Penjual** (Ibu Kantin).
+**KantinKita** adalah aplikasi web pemesanan makanan kantin kampus yang dikembangkan secara bertahap dari desain Figma. Aplikasi ini menyediakan alur pengguna *end-to-end* untuk dua tipe pengguna: **Mahasiswa** (pemesan) dan **Penjual** (pemilik stan).
 
-### Fitur Utama
-- Login dengan validasi form real-time
-- Beranda dengan filter kategori menu dinamis
-- Halaman cari & filter dengan tab interaktif
-- Detail menu stan dengan add-to-cart
-- Keranjang dengan qty controls & perhitungan harga otomatis
-- Pembayaran dengan pemilihan metode interaktif
-- Status pesanan live dengan countdown timer & modal rating
-- Dasbor penjual dengan manajemen pesanan real-time
-- Laporan penjualan dengan grafik per periode
-
-### Elemen Interaktif Wajib (≥ 2)
-1. **Hamburger Menu / Nav Drawer** — tombol hamburger membuka drawer navigasi dari kiri dengan overlay, mendukung keyboard ESC dan klik overlay untuk menutup
-2. **Category Filter Tabs** — chip filter pada beranda, menu stan, dan laporan memfilter konten secara dinamis tanpa reload halaman
-3. **Cart State Management** — keranjang persisten via localStorage, cart badge terupdate di semua halaman, qty stepper memperbarui total harga secara langsung
-4. **Payment Method Selection** — radio UI interaktif untuk pemilihan metode bayar
-5. **Rating Modal Sheet** — bottom sheet modal dengan bintang rating interaktif
-6. **Seller Order Management** — tombol terima/tolak pesanan, tab filter status pesanan, toggle status stan
+- **Modul 7:** Pembangunan antarmuka UI/UX, tata letak responsif, *design system*, dan elemen interaktif dasar (prototipe statis).
+- **Modul 8:** Peningkatan ke **aplikasi web interaktif fungsional** dengan mengintegrasikan data dinamis (`data-menu.json`), validasi formulir input, manajemen *state* keranjang persisten, serta penerapan *UX States* (Skeleton Loading, Empty State, Error State, & Toast Notification).
 
 ---
 
-## Teknologi yang Digunakan
+## Fitur Utama
 
-| Teknologi    | Versi             | Kegunaan                              |
-|--------------|-------------------|---------------------------------------|
-| HTML5        | Standar           | Struktur semantik                     |
-| CSS3         | Custom Properties | Design system (8pt grid, token warna) |
-| JavaScript   | ES6 Vanilla       | Interaktivitas stateful               |
-| Google Fonts | Inter             | Tipografi                             |
-| localStorage | Browser API       | Persistensi keranjang                 |
+### 1. Fitur Mahasiswa (Client App)
+- **Login & Akses Sesi:** Validasi form login dan pengelolaan status login via `localStorage`.
+- **Beranda & Filter Kategori:** Menampilkan daftar menu dari `data-menu.json` dengan tab filter kategori dinamis.
+- **Pencarian Live:** Pencarian kata kunci menu makanan secara *real-time* di `cari.html`.
+- **Manajemen Keranjang (Cart State):** *Add to cart*, penyesuaian kuantitas (*qty stepper*), perhitungan total harga otomatis, dan *cart badge* ter-update di seluruh halaman.
+- **Pemesanan & Pembayaran:** Pemilihan slot waktu ambil pesanan, alur pembayaran dengan validasi sanitasi input (`.trim()`), serta notifikasi toast sukses.
+- **Status Pesanan & Rating:** Indikator status pesanan *live* (dengan *countdown timer*) dan *bottom sheet modal* untuk pemberian ulasan/rating bintang.
 
-### Alur Demo 
-1. Buka `index.html` → masukkan NIM dan password apapun → klik Masuk
-2. Di beranda: klik filter kategori (Nasi, Ayam, dll) untuk lihat filter dinamis
-3. Klik hamburger ☰ untuk buka nav drawer
-4. Klik "+ Tambah" pada menu untuk memasukkan ke keranjang (lihat badge di nav)
-5. Buka `keranjang.html` → atur qty, pilih jam ambil
-6. Buka `pembayaran.html` → pilih metode bayar → klik Bayar
-7. Lihat `status.html` → countdown timer, beri rating via modal
-8. Buka `dasbor-stan.html` → terima/tolak pesanan, ganti status stan
+### 2. Fitur Penjual (Vendor Dashboard)
+- **Dasbor Pesanan Masuk:** Manajemen penerimaan/penolakan pesanan secara *real-time*.
+- **Kelola Status Stan:** *Toggle* status keaktifan stan (Buka / Sibuk / Tutup).
+- **Laporan Penjualan:** Ringkasan laporan harian dan grafik pesanan per jam di `laporan.html`.
+
+### 3. Penerapan UX States (Modul 8 Target)
+- **Loading State:** Animasi *Skeleton Loading* saat membaca data menu dari `data-menu.json`.
+- **Empty State:** Tampilan pesan ramah pengguna dan tombol *reset* jika kata kunci pencarian menu tidak ditemukan.
+- **Error State:** Penanganan potensi kegagalan pengambilan data menggunakan blok `try...catch`.
+- **Toast Notification:** Pop-up notifikasi halus (menggantikan `alert()` kaku browser) saat menambahkan item ke keranjang dan setelah submit form pembayaran.
 
 ---
-#### Prompt 1 — CSS Design System
-```
-Buatkan CSS design system untuk aplikasi mobile KantinKita.
-Token warna: primary yellow #FFC107, secondary red #E53935.
-Gunakan 8-point grid (4,8,12,16,20,24,32...px).
-Buat: header, nav drawer, bottom nav, category tabs, card, badge, 
-button, form input, toast notification, modal sheet, toggle, qty stepper.
-Tidak ada framework, pure CSS custom properties.
-Mobile-first, max-width 480px, centered on desktop.
-```
-**Evaluasi:** Output baik, tapi awalnya menggunakan class name panjang (`.navigation-drawer`). Direfaktor menjadi pendek dan konsisten (`.drawer`).
 
-#### Prompt 2 — Hamburger Menu JS
-```
-Buat hamburger menu yang membuka nav drawer dari kiri.
-Fitur: toggle open/close, overlay click to close, ESC key close,
-aria-expanded attribute update, body scroll lock saat open.
-Vanilla JS, ES6, no jQuery.
-```
-**Evaluasi:** Berfungsi baik. Ditambahkan `aria-controls` dan `role` attribute untuk aksesibilitas.
+## Elemen Interaktif Wajib
 
-#### Prompt 3 — Category Filter dengan Data Attribute
-```
-Buat filter tab sistem menggunakan data-cat attribute pada item.
-Click tab → update active class → show/hide items dengan class toggle.
-Tidak menggunakan jQuery. Juga handle section header (data-cat-section).
-Tambahkan 'no result' message.
-```
-**Evaluasi:** Awalnya menggunakan `display:none` langsung di JS, diubah ke toggle class `.hidden` untuk konsistensi.
+1. **Hamburger Menu / Nav Drawer:** Tombol hamburger membuka *drawer* navigasi dari kiri dengan *overlay*, mendukung tombol `ESC` dan klik luar untuk menutup.
+2. **Category Filter Tabs:** *Chip* filter pada beranda dan menu stan untuk menyaring konten secara dinamis tanpa *reload* halaman.
+3. **Cart State Management:** Keranjang persisten via `localStorage`, *cart badge* diperbarui di semua halaman.
+4. **Payment Method Selection:** Pemilihan metode bayar (*radio UI*) interaktif.
+5. **Rating Modal Sheet:** *Bottom sheet modal* dengan bintang rating interaktif dan validasi ulasan.
+6. **Seller Order Management:** Tombol terima/tolak pesanan dan *toggle* status stan.
 
-#### Prompt 4 — Cart State dengan localStorage
-```
-Buat cart state management dengan localStorage.
-Fitur: add(id,name,price,emoji), updateQty(id,delta), remove(id),
-getCount(), getTotal(), formatRp(n), save(), renderCartPage().
-Cart badge di semua halaman terupdate otomatis.
-Render tabel keranjang dinamis dengan qty stepper inline.
-```
-**Evaluasi:** Ada bug pada `renderCartPage()` — tbody innerHTML tidak dikosongkan dahulu. Fixed dengan menambahkan `tbody.innerHTML = ''` di awal.
+---
 
-#### Prompt 5 — Rating Modal Sheet
-```
-Buat bottom sheet modal untuk form rating pesanan.
-5 bintang interaktif (toggle filled/outline saat diklik).
-Textarea untuk ulasan. Submit button dengan validasi.
-Animasi slide-up dari bawah. Overlay click untuk tutup.
-```
-**Evaluasi:** Berfungsi baik. Ditambahkan `aria-modal` dan `role="dialog"` untuk aksesibilitas.
+## Teknologi & Sumber Data
+
+| Teknologi / Services | Versi / Tipe      | Kegunaan                                              |
+|----------------------|-------------------|-------------------------------------------------------|
+| **HTML5**            | Standar Semantik  | Struktur halaman web                                  |
+| **CSS3**             | Custom Properties | Design system (8pt grid, token warna, responsif)      |
+| **JavaScript**       | ES6 Vanilla       | Logika interaktif & manipulasi DOM                    |
+| **Sumber Data**      | `data-menu.json`  | Penyimpanan data menu dinamis                         |
+| **Browser Storage**  | `localStorage`    | Persistensi data keranjang dan sesi login             |
+| **Google Fonts**     | Inter             | Tipografi standar                                     |
+| **Deployment**       | Vercel / Netlify  | Hosting publik aplikasi web                           |
+
+---
+
+## Alur Pengujian Aplikasi (Panduan Demo)
+
+1. Buka link **Live Web**.
+2. **Login:** Buka `index.html` → masukkan NIM & password → klik **Masuk**.
+3. **Beranda:** Amati animasi *Loading Skeleton* sebelum data dimuat dari `data-menu.json`. Coba klik *chip* kategori (Nasi, Ayam, Minuman) untuk menyaring menu.
+4. **Navigasi Drawer:** Klik tombol hamburger (☰) untuk membuka *nav drawer*.
+5. **Pencarian (`cari.html`):** Ketik nama makanan. Coba ketik kata acak untuk melihat tampilan *Empty State*.
+6. **Keranjang (`keranjang.html`):** Tambahkan item ke keranjang, klik tombol `+` / `-` pada *qty stepper*, dan pastikan total harga ter-update secara otomatis.
+7. **Pembayaran (`pembayaran.html`):** Pilih metode pembayaran. Coba kosongkan input untuk melihat pesan validasi error. Setelah diisi benar, klik **Bayar** dan amati *Toast Notification* sukses.
+8. **Status Pesanan (`status.html`):** Amati *countdown timer* dan uji coba pengisian ulasan bintang pada *Rating Modal Sheet*.
+9. **Dasbor Penjual (`dasbor-stan.html`):** Uji coba tombol terima/tolak pesanan dan *toggle* status stan.
+
+---
+
+## Log Prompt AI & Perbaikan Manual
+
+### Prompt AI yang Digunakan
+- **Prompt 1 (CSS Design System - Modul 7):**
+  > *"Buatkan CSS design system untuk aplikasi mobile KantinKita. Token warna: primary yellow #FFC107, secondary red #E53935. Gunakan 8-point grid. Mobile-first, max-width 480px."*
+- **Prompt 2 (Hamburger Menu JS - Modul 7):**
+  > *"Buat hamburger menu yang membuka nav drawer dari kiri. Fitur: toggle open/close, overlay click to close, ESC key close, body scroll lock."*
+- **Prompt 3 (Category Filter & Cart - Modul 7):**
+  > *"Buat cart state management dengan localStorage. Fitur: add, updateQty, remove, getCount, getTotal, renderCartPage."*
+- **Prompt 4 (Penerapan Data Dinamis JSON - Modul 8):**
+  > *"Buatkan fungsi async fetch untuk mengambil data-menu.json dan merender elemen card secara dinamis menggunakan .map()."*
+- **Prompt 5 (Validasi Form & Toast UX - Modul 8):**
+  > *"Buatkan fungsi validasi pada form pembayaran di payment.js untuk mencegah input kosong dan tampilkan notifikasi toast."*
 
 ### Perbaikan Manual yang Dilakukan
-1. Memperbaiki `submitRating()` — harus tutup modal dulu sebelum show toast
-2. Menambahkan `aria-label` dan `aria-expanded` pada hamburger button
-3. Memperbaiki z-index hierarchy (drawer > overlay > modal > toast)
-4. Menambahkan `pointer-events:none` pada menu item yang habis stok
-5. Memperbaiki cart badge tidak terupdate di pembayaran.html
-6. Menambahkan `role="status"` pada live pill dan countdown untuk screen reader
-7. Memastikan semua link navigasi antar halaman berfungsi
-8. Menambahkan `tabindex="0"` pada pay-item agar bisa diakses via keyboard
+1. **Refactoring CSS Class:** Mengubah nama class panjang (misal `.navigation-drawer`) menjadi lebih ringkas (`.drawer`).
+2. **Cart Render Bug Fix:** Memperbaiki bug pada `renderCartPage()` dengan mengosongkan `tbody.innerHTML = ''` terlebih dahulu sebelum melakukan re-render.
+3. **Input Sanitization:** Menambahkan `.trim()` pada validasi input formulir pembayaran agar tidak lolos saat hanya diisi spasi.
+4. **Z-Index & UX Fix:** Menyesuaikan tingkatan *z-index* agar *Toast Notification* berada di atas *Modal Sheet* dan *Nav Drawer*, serta memastikan modal rating tertutup secara otomatis saat toast berhasil ditampilkan.
+5. **Aksesibilitas (A11y):** Menambahkan `aria-expanded`, `aria-label`, `role="status"`, dan `tabindex="0"` pada elemen navigasi dan tombol interaktif.

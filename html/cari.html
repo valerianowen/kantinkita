@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -54,12 +53,10 @@
           type="search"
           placeholder="nasi goreng, ayam, mie..."
           aria-label="Cari nama makanan"
-          data-input-action="search"
-          data-keydown-action="search"
           autofocus>
       </div>
 
-      <button class="btn bsm bp2" data-action="search">
+      <button class="btn bsm bp2" id="search-btn">
         Cari
       </button>
     </header>
@@ -76,83 +73,15 @@
       <div class="sec">
         <div class="sh">
           <strong id="search-count" aria-live="polite">
-            5 menu ditemukan
+            Memuat menu...
           </strong>
         </div>
 
-        <article class="mi" data-cat2="semua cepat">
-          <div class="fi fi-m fi-y">🍳</div>
-          <div class="mb2">
-            <h3 class="mn">Nasi Goreng Spesial</h3>
-            <p class="md">Stan A · Rp 15.000</p>
-            <span class="bdg bg">±8 menit</span>
-          </div>
-          <button class="badd" data-action="cart-add"
-            data-item-id="nasi-goreng"
-            data-item-name="Nasi Goreng Spesial"
-            data-item-price="15000"
-            data-item-emoji="🍳">+</button>
-        </article>
-
-        <article class="mi" data-cat2="semua murah">
-          <div class="fi fi-m fi-r">🍗</div>
-          <div class="mb2">
-            <h3 class="mn">Ayam Geprek</h3>
-            <p class="md">Stan A · Rp 17.000</p>
-            <span class="bdg bg">±10 menit</span>
-          </div>
-          <button class="badd" data-action="cart-add"
-            data-item-id="ayam-geprek"
-            data-item-name="Ayam Geprek"
-            data-item-price="17000"
-            data-item-emoji="🍗">+</button>
-        </article>
-
-        <article class="mi" data-cat2="semua cepat murah">
-          <div class="fi fi-m fi-o">🍜</div>
-          <div class="mb2">
-            <h3 class="mn">Mie Ayam Spesial</h3>
-            <p class="md">Stan B · Rp 13.000</p>
-            <span class="bdg bg">±7 menit</span>
-          </div>
-          <button class="badd" data-action="cart-add"
-            data-item-id="mie-ayam"
-            data-item-name="Mie Ayam Spesial"
-            data-item-price="13000"
-            data-item-emoji="🍜">+</button>
-        </article>
-
-        <article class="mi" data-cat2="semua diskon">
-          <div class="fi fi-m fi-o">🍱</div>
-          <div class="mb2">
-            <h3 class="mn">Paket Hemat</h3>
-            <p class="md">Stan A · Rp 18.000</p>
-            <span class="bdg br">Diskon 15%</span>
-          </div>
-          <button class="badd" data-action="cart-add"
-            data-item-id="paket-hemat"
-            data-item-name="Paket Hemat"
-            data-item-price="18000"
-            data-item-emoji="🍱">+</button>
-        </article>
-
-        <article class="mi" data-cat2="semua murah">
-          <div class="fi fi-m fi-b">🥤</div>
-          <div class="mb2">
-            <h3 class="mn">Es Teh Manis</h3>
-            <p class="md">Stan A · Rp 5.000</p>
-            <span class="bdg bg">Minuman</span>
-          </div>
-          <button class="badd" data-action="cart-add"
-            data-item-id="es-teh"
-            data-item-name="Es Teh Manis"
-            data-item-price="5000"
-            data-item-emoji="🥤">+</button>
-        </article>
-
-        <div id="no-res2" class="al ay2 hid" role="status">
-          Tidak ada menu yang cocok dengan pencarian.
+        <!-- WADAH KOSONG UNTUK MENAMPUNG HASIL PENCARIAN DINAMIS -->
+        <div id="search-results-container">
+          <p style="text-align: center; color: #888; padding: 20px 0;">Memuat data pencarian...</p>
         </div>
+
       </div>
     </div>
 

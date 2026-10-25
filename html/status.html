@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -25,8 +24,8 @@
     <header class="hdr">
       <button class="ico-btn" data-action="go" data-target="beranda">←</button>
       <div class="f1">
-        <h1 class="hdr-title">Pesanan #A-27</h1>
-        <p class="hdr-sub">Stan A – Nasi &amp; Ayam</p>
+        <h1 class="hdr-title" id="status-order-id">Pesanan #A-27</h1>
+        <p class="hdr-sub">Stan KantinKita</p>
       </div>
     </header>
 
@@ -38,7 +37,7 @@
           <strong class="cdnn" id="status-timer">8:00</strong>
         </div>
         <p class="cdnl">
-          Slot 12.15 · Stan A, Gedung B
+          Slot 12.15 · Gedung B
         </p>
       </section>
 
@@ -79,7 +78,7 @@
         </div>
 
         <div class="cdn">
-          <strong class="cdnn">A-27</strong>
+          <strong class="cdnn" id="status-code">A-27</strong>
           <p class="cdnl">
             Tunjukkan kode ini kepada penjual saat mengambil pesanan.
           </p>
@@ -88,24 +87,20 @@
 
       <div class="div"></div>
 
-      <section class="sec" id="status-order-detail">
+      <!-- DETAIL PESANAN DINAMIS -->
+      <section class="sec">
         <div class="sh">
           <h2 class="stit">Detail Pesanan</h2>
         </div>
 
-        <div class="pr">
-          <span class="pl">Nasi Goreng Spesial ×1</span>
-          <span class="pv">Rp 15.000</span>
+        <!-- Container ini diisi oleh JS -->
+        <div id="status-items-list">
+          <p style="color: #888; font-size: 13px;">Memuat detail pesanan...</p>
         </div>
 
-        <div class="pr">
-          <span class="pl">Ayam Geprek ×1</span>
-          <span class="pv">Rp 17.000</span>
-        </div>
-
-        <div class="pt">
+        <div class="pt" style="margin-top: 12px; border-top: 1px dashed #ddd; padding-top: 8px;">
           <span class="pl">Total</span>
-          <span class="pv">Rp 32.000</span>
+          <span class="pv" id="status-total-price">Rp 0</span>
         </div>
       </section>
 

@@ -1,165 +1,87 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('search-input');
+  const searchBtn = document.getElementById('search-btn');
+  const resultsContainer = document.getElementById('search-results-container');
+  const searchCount = document.getElementById('search-count');
+  
+  let allMenu = [];
 
-"use strict";
-
-/* ==========================================
-   KANTINKITA - SEARCH.JS
-   Pencarian Menu + Filter Kategori
-========================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-  const searchInput = document.getElementById(
-    "search-input"
-  );
-
-  const searchCount = document.getElementById(
-    "search-count"
-  );
-
-  const noResult = document.getElementById(
-    "no-res2"
-  );
-
-  const filterButtons = document.querySelectorAll(
-    '[data-action="search-filter"]'
-  );
-
-  const menuItems = document.querySelectorAll(
-    ".mi[data-cat2]"
-  );
-
-  if (!searchInput) return;
-
-  let activeCategory = "semua";
-
-  /* NORMALISASI TEKS */
-
-  function normalize(text) {
-    return String(text || "")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLocaleLowerCase("id-ID")
-      .trim();
-  }
-
-  /* MENJALANKAN PENCARIAN */
-
-  function searchMenu() {
-    const keyword = normalize(searchInput.value);
-
-    let totalFound = 0;
-
-    menuItems.forEach(menu => {
-      const nameElement = menu.querySelector(".mn");
-      const descriptionElement = menu.querySelector(".md");
-
-      const name = normalize(
-        nameElement ? nameElement.textContent : ""
-      );
-
-      const description = normalize(
-        descriptionElement
-          ? descriptionElement.textContent
-          : ""
-      );
-
-      const categories = (
-        menu.dataset.cat2 || ""
-      ).split(/\s+/);
-
-      // Cocok dengan nama atau deskripsi
-      const matchKeyword =
-        keyword === "" ||
-        name.includes(keyword) ||
-        description.includes(keyword);
-
-      // Cocok dengan kategori yang sedang aktif
-      const matchCategory =
-        activeCategory === "semua" ||
-        categories.includes(activeCategory);
-
-      // Keduanya harus cocok
-      const visible = matchKeyword && matchCategory;
-
-      menu.classList.toggle("hid", !visible);
-
-      if (visible) {
-        totalFound++;
-      }
+  // 1. Fetch Data
+  fetch('../data-menu.json')
+    .then(res => res.json())
+    .then(data => {
+      allMenu = data;
+      renderResults(allMenu);
+    })
+    .catch(err => {
+      console.error(err);
+      resultsContainer.innerHTML = '<p style="text-align: center; color: red;">Gagal memuat menu pencarian.</p>';
     });
 
-    /* JUMLAH HASIL */
+  // 2. Fungsi Render Hasil Pencarian
+  function renderResults(items) {
+    searchCount.textContent = `${items.length} menu ditemukan`;
 
-    if (searchCount) {
-      searchCount.textContent =
-        totalFound + " menu ditemukan";
-    }
-
-    /* KONDISI TIDAK DITEMUKAN */
-
-    if (noResult) {
-      noResult.classList.toggle(
-        "hid",
-        totalFound > 0
-      );
-
-      if (totalFound === 0) {
-        noResult.textContent =
-          keyword
-            ? 'Tidak ada menu yang cocok dengan "' +
-              searchInput.value.trim() + '".'
-            : "Tidak ada menu pada kategori ini.";
-      }
-    }
-  }
-
-  /* PENCARIAN LANGSUNG SAAT MENGETIK */
-
-  searchInput.addEventListener("input", searchMenu);
-
-  /* PENCARIAN DENGAN TOMBOL CARI */
-
-  const searchButton = document.querySelector(
-    '[data-action="search"]'
-  );
-
-  if (searchButton) {
-    searchButton.addEventListener(
-      "click",
-      searchMenu
-    );
-  }
-
-  /* PENCARIAN DENGAN TOMBOL ENTER */
-
-  searchInput.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      searchMenu();
-    }
-  });
-
-  /* FILTER KATEGORI */
-
-  filterButtons.forEach(button => {
-    button.addEventListener("click", function () {
-      activeCategory = button.dataset.cat2 || "semua";
-
-      filterButtons.forEach(item => {
-        const active =
-          item.dataset.cat2 === activeCategory;
-
-        item.classList.toggle("on", active);
-        item.setAttribute(
-          "aria-selected",
-          String(active)
-        );
+    // Empty State (UX State Misi 3)
+    if (items.length === 0) {
+      resultsContainer.innerHTML = `
+        <div style="text-align: center; padding: 30px 10px;">
+          <p style="color: #666; margin-bottom: 12px;">Yah, menu tidak ditemukan 😢</p>
+          <button id="reset-search-btn" class="btn bsm bp2">Reset Pencarian</button>
+        </div>
+      `;
+      
+      document.getElementById('reset-search-btn')?.addEventListener('click', () => {
+        searchInput.value = '';
+        renderResults(allMenu);
       });
+      return;
+    }
 
-      searchMenu();
+    resultsContainer.innerHTML = items.map(item => `
+      <article class="mi">
+        <div class="fi fi-m ${item.bgClass}">${item.icon}</div>
+        <div class="mb2">
+          <h3 class="mn">${item.nama}</h3>
+          <p class="md">${item.deskripsi || 'Stan A'} · Rp ${item.harga.toLocaleString('id-ID')}</p>
+          <span class="bdg bg">Tersedia</span>
+        </div>
+        <button class="badd" data-action="cart-add"
+          data-item-id="${item.id}"
+          data-item-name="${item.nama}"
+          data-item-price="${item.harga}"
+          data-item-emoji="${item.icon}">+</button>
+      </article>
+    `).join('');
+  }
+
+  // 3. Event Listener Input Search Real-time
+  function handleSearch() {
+    const query = searchInput.value.toLowerCase().trim();
+    const filtered = allMenu.filter(item => 
+      item.nama.toLowerCase().includes(query) || 
+      (item.deskripsi && item.deskripsi.toLowerCase().includes(query))
+    );
+    renderResults(filtered);
+  }
+
+  searchInput.addEventListener('input', handleSearch);
+  if (searchBtn) searchBtn.addEventListener('click', handleSearch);
+
+  // 4. Filter Kategori
+  const filterBtns = document.querySelectorAll('[data-action="search-filter"]');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+
+      const cat = btn.getAttribute('data-cat2');
+      if (cat === 'semua') {
+        renderResults(allMenu);
+      } else {
+        const filtered = allMenu.filter(item => item.kategori === cat || (cat === 'murah' && item.harga <= 15000));
+        renderResults(filtered);
+      }
     });
   });
-
-  /* KONDISI AWAL */
-
-  searchMenu();
 });

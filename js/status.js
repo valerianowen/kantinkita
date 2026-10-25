@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* KANTINKITA - STATUS PESANAN */
@@ -9,33 +8,33 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectedRating = 0;
   let order = null;
 
-  try {
-    order = JSON.parse(
-      localStorage.getItem(ORDER_KEY) || "null"
-    );
-  } catch {
-    order = null;
+  function getOrder() {
+    try {
+      return JSON.parse(localStorage.getItem(ORDER_KEY) || "null");
+    } catch {
+      return null;
+    }
   }
 
-  const title = document.querySelector(
-    "#s-status .hdr-title"
-  );
+  order = getOrder();
 
-  const subtitle = document.querySelector(
-    "#s-status .hdr-sub"
-  );
-
+  const title = document.querySelector("#s-status .hdr-title");
+  const subtitle = document.querySelector("#s-status .hdr-sub");
   const timer = document.getElementById("status-timer");
-  const detail = document.getElementById("status-order-detail");
-  const countdown = document.querySelector(".cdn");
+  const statusNote = document.querySelector(".al.ag2");
+
+  let detail = document.getElementById("status-order-detail");
+  if (!detail) {
+    detail = document.querySelector("#s-status .page .sec:nth-of-type(4)");
+  }
 
   function rupiah(number) {
-    return "Rp " + Number(number).toLocaleString("id-ID");
+    return "Rp " + Number(number || 0).toLocaleString("id-ID");
   }
 
-  function makeRow(label, value, total = false) {
+  function makeRow(label, value, isTotal = false) {
     const row = document.createElement("div");
-    row.className = total ? "pt" : "pr";
+    row.className = isTotal ? "pt" : "pr";
 
     const left = document.createElement("span");
     left.className = "pl";
@@ -49,201 +48,183 @@ document.addEventListener("DOMContentLoaded", function () {
     return row;
   }
 
-  /* MENAMPILKAN DETAIL PESANAN */
+  /* RENDER INDIKATOR ALUR PESANAN (STEPS) */
+  function updateStepsUI(currentStatus) {
+    const steps = document.querySelectorAll(".steps .stp");
+    if (steps.length < 5) return;
 
-  if (order && order.id) {
-    if (title) {
-      title.textContent = "Pesanan #" + order.id;
+    // Reset semua step
+    steps.forEach((stp, idx) => {
+      stp.className = "stp";
+      const numSpan = stp.querySelector(".sd2");
+      if (numSpan) numSpan.textContent = String(idx + 1);
+    });
+
+    // Tentukan step mana yang aktif / selesai berdasarkan status
+    let activeIndex = 2; // Default: Dimasak (step 3)
+
+    if (currentStatus === "baru") activeIndex = 0;
+    else if (currentStatus === "konfirmasi") activeIndex = 1;
+    else if (currentStatus === "diproses") activeIndex = 2;
+    else if (currentStatus === "siap") activeIndex = 3;
+    else if (currentStatus === "selesai") activeIndex = 4;
+
+    steps.forEach((stp, idx) => {
+      const numSpan = stp.querySelector(".sd2");
+      if (idx < activeIndex) {
+        stp.className = "stp dn"; // Step selesai (centang)
+        if (numSpan) numSpan.textContent = "✓";
+      } else if (idx === activeIndex) {
+        stp.className = "stp ac"; // Step aktif saat ini
+        if (numSpan) numSpan.textContent = "✓";
+      }
+    });
+
+    // Update Pesan Notifikasi Hijau di Bawah
+    if (statusNote) {
+      if (currentStatus === "siap") {
+        statusNote.textContent = "🔔 Pesanan kamu sudah SIAP! Silakan ambil di stan.";
+        statusNote.style.background = "#d4edda";
+        statusNote.style.color = "#155724";
+      } else if (currentStatus === "selesai") {
+        statusNote.textContent = "🎉 Pesanan sudah selesai diambil. Terima kasih!";
+      } else if (currentStatus === "ditolak") {
+        statusNote.textContent = "❌ Pesanan kamu ditolak oleh penjual.";
+        statusNote.style.background = "#f8d7da";
+        statusNote.style.color = "#721c24";
+      } else {
+        statusNote.textContent = "🔔 Pesanan sedang diproses.";
+      }
     }
+  }
 
-    if (subtitle) {
-      subtitle.textContent = "Stan KantinKita";
-    }
+  /* RENDER DETAIL PESANAN DINAMIS */
+  function renderOrderDetail() {
+    order = getOrder();
+    if (!order) return;
 
-    // Perbarui kode pengambilan
-    const code = document.querySelectorAll(
-      ".cdn .cdnn"
-    );
+    const orderId = order.id || order.orderId || "A-74";
 
-    if (code.length > 1) {
-      code[1].textContent = order.id;
-    }
+    if (title) title.textContent = "Pesanan #" + orderId;
+    if (subtitle) subtitle.textContent = "Stan KantinKita";
+
+    // Update Kode Pengambilan
+    const codeElements = document.querySelectorAll(".cdn .cdnn");
+    codeElements.forEach(el => {
+      if (el.id !== "status-timer") el.textContent = orderId;
+    });
 
     const pickup = document.querySelector(".cdnl");
-
     if (pickup) {
-      pickup.textContent =
-        "Slot " + (order.jam || "12.15") +
-        " · Gedung B";
+      pickup.textContent = "Slot " + (order.jam || "12.45") + " · Gedung B";
     }
 
-    if (detail && Array.isArray(order.items)) {
+    // Update Indikator Visual Step
+    updateStepsUI(order.status || "diproses");
+
+    // Render Rincian Item Makanan
+    if (detail) {
       detail.replaceChildren();
 
       const heading = document.createElement("h2");
       heading.className = "stit";
       heading.textContent = "Detail Pesanan";
-
       detail.appendChild(heading);
 
-      order.items.forEach(item => {
-        detail.appendChild(
-          makeRow(
-            item.name + " ×" + item.qty,
-            rupiah(item.price * item.qty)
-          )
-        );
-      });
+      const itemsList = order.items || order.cart || [];
 
-      if (order.discount > 0) {
-        detail.appendChild(
-          makeRow(
-            "Diskon",
-            "- " + rupiah(order.discount)
-          )
-        );
+      if (Array.isArray(itemsList) && itemsList.length > 0) {
+        let calculatedTotal = 0;
+
+        itemsList.forEach(item => {
+          const qty = Number(item.qty || item.quantity || 1);
+          const price = Number(item.price || item.harga || 0);
+          const subtotal = price * qty;
+          calculatedTotal += subtotal;
+
+          detail.appendChild(
+            makeRow(
+              (item.name || item.nama) + " ×" + qty,
+              rupiah(subtotal)
+            )
+          );
+        });
+
+        const discountVal = Number(order.discount || order.diskon || 0);
+        if (discountVal > 0) {
+          detail.appendChild(makeRow("Diskon", "- " + rupiah(discountVal)));
+        }
+
+        let finalTotal = calculatedTotal - discountVal;
+        if (order.total !== undefined && order.total !== null) {
+          finalTotal = Number(order.total);
+        }
+
+        detail.appendChild(makeRow("Total", rupiah(finalTotal), true));
+        detail.appendChild(makeRow("Pembayaran", order.method || "Tunai saat Ambil"));
+      } else {
+        detail.appendChild(makeRow("Status", "Belum ada item pesanan."));
       }
-
-      detail.appendChild(
-        makeRow("Total", rupiah(order.total), true)
-      );
-
-      detail.appendChild(
-        makeRow(
-          "Pembayaran",
-          order.method || "Simulasi"
-        )
-      );
     }
   }
 
-  /* STATUS DAN HITUNG MUNDUR */
-
+  /* REFRESH REAL-TIME DAN HITUNG MUNDUR */
   function refreshOrder() {
+    order = getOrder();
     if (!order) return;
 
-    try {
-      const latest = JSON.parse(
-        localStorage.getItem(ORDER_KEY) || "null"
-      );
+    const currentStatus = order.status || "diproses";
+    updateStepsUI(currentStatus);
 
-      if (latest && latest.id === order.id) {
-        order = latest;
-      }
-    } catch {
-      // Gunakan data yang sudah dibaca
-    }
-
-    const status = order.status || "baru";
-
-    if (status === "siap" || status === "selesai") {
-      if (timer) {
-        timer.textContent = status === "selesai"
-          ? "Selesai"
-          : "Siap!";
-      }
+    if (currentStatus === "siap") {
+      if (timer) timer.textContent = "Siap!";
       return;
     }
 
-    if (status === "ditolak") {
+    if (currentStatus === "selesai") {
+      if (timer) timer.textContent = "Selesai";
+      return;
+    }
+
+    if (currentStatus === "ditolak") {
       if (timer) timer.textContent = "Dibatalkan";
       return;
     }
 
     const createdAt = Number(order.createdAt) || Date.now();
-    const remaining = Math.max(
-      0,
-      createdAt + 8 * 60 * 1000 - Date.now()
-    );
+    const remaining = Math.max(0, createdAt + 8 * 60 * 1000 - Date.now());
 
     const minutes = Math.floor(remaining / 60000);
     const seconds = Math.floor((remaining % 60000) / 1000);
 
     if (timer) {
-      timer.textContent =
-        minutes + ":" + String(seconds).padStart(2, "0");
-    }
-
-    if (remaining === 0 && countdown) {
-      const note = countdown.querySelector("p");
-
-      if (note) {
-        note.textContent =
-          "Estimasi selesai. Konfirmasi kesiapan pada penjual.";
-      }
+      timer.textContent = minutes + ":" + String(seconds).padStart(2, "0");
     }
   }
 
-  refreshOrder();
+  renderOrderDetail();
   setInterval(refreshOrder, 1000);
 
-  /* PILIH RATING BINTANG */
-
-  const stars = document.querySelectorAll(
-    '[data-action="rating-star"]'
-  );
-
-  function showStars() {
-    stars.forEach(star => {
-      const value = Number(star.dataset.rating);
-
-      star.textContent = value <= selectedRating
-        ? "★"
-        : "☆";
-    });
-
-    const input = document.getElementById("star-val");
-
-    if (input) input.value = String(selectedRating);
-  }
-
+  /* RATING BINTANG */
+  const stars = document.querySelectorAll('[data-action="rating-star"]');
   stars.forEach(star => {
     star.addEventListener("click", function () {
       selectedRating = Number(star.dataset.rating);
-      showStars();
+      stars.forEach(s => {
+        s.textContent = Number(s.dataset.rating) <= selectedRating ? "★" : "☆";
+      });
     });
   });
 
-  /* KIRIM RATING */
-
-  const submit = document.querySelector(
-    '[data-action="rating-submit"]'
-  );
-
+  const submit = document.querySelector('[data-action="rating-submit"]');
   if (submit) {
     submit.addEventListener("click", function () {
       if (selectedRating < 1) {
-        Toast.show("Pilih bintang dahulu.", "error");
+        if (typeof Toast !== "undefined") Toast.show("Pilih bintang dahulu.", "error");
         return;
       }
-
-      const review = document.getElementById("ulasan");
-
-      const rating = {
-        orderId: order ? order.id : "DEMO",
-        stars: selectedRating,
-        review: review ? review.value.trim() : "",
-        createdAt: Date.now()
-      };
-
-      try {
-        localStorage.setItem(
-          "kantinkita_order_rating_v1",
-          JSON.stringify(rating)
-        );
-      } catch (error) {
-        console.error("Rating gagal disimpan:", error);
-        Toast.show("Rating gagal disimpan.", "error");
-        return;
-      }
-
-      Modal.close("ratingM");
-      Toast.show("Terima kasih atas rating kamu!");
-
-      selectedRating = 0;
-      showStars();
-
-      if (review) review.value = "";
+      if (typeof Modal !== "undefined") Modal.close("ratingM");
+      if (typeof Toast !== "undefined") Toast.show("Terima kasih atas rating kamu!");
     });
   }
 });
